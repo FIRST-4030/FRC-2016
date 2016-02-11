@@ -1,14 +1,27 @@
 package org.usfirst.frc.team4030.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
-public class DriveBase extends Subsystem {
+public class DriveBase extends PIDSubsystem {
 	
-	//I'm not sure exactly how the PIDDrive manages the robot, whether it
-	//just deals with one side of the robot or both, so I'm mimicking last year
+	Talon driveMotor;
+    Encoder driveEncoder;
 
-	public DriveBase() {
+	public DriveBase(int wheelNum) {
+		super("PIDDrive" + wheelNum, 1.0, 0.0, 0.0);
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	protected double returnPIDInput() {
+		return driveEncoder.getRaw();
+	}
+
+	@Override
+	protected void usePIDOutput(double output) {
+		driveMotor.set(output);
 	}
 
 	@Override

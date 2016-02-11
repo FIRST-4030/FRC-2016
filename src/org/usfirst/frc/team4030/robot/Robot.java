@@ -5,8 +5,14 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
 import org.usfirst.frc.team4030.robot.commands.ExampleCommand;
+import org.usfirst.frc.team4030.robot.subsystems.Arm;
+import org.usfirst.frc.team4030.robot.subsystems.DriveBase;
 import org.usfirst.frc.team4030.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team4030.robot.subsystems.Kicker;
+import org.usfirst.frc.team4030.robot.subsystems.ShooterWheels;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -20,6 +26,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	public static final Arm robotArm = new Arm(1.0, 0.0, 0.0);
+	public static final DriveBase robotDrive = new DriveBase(1);
+	public static final Kicker robotKicker = new Kicker();
+	public static final ShooterWheels robotShooter = new ShooterWheels(1.0, 0.0, 0.0);
 	public static OI oi;
 
     Command autonomousCommand;

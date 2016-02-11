@@ -1,29 +1,14 @@
 package org.usfirst.frc.team4030.robot.commands;
 
+import org.usfirst.frc.team4030.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.PIDCommand;
 
 public class RunPIDDrive extends PIDCommand {
-	
-	//Should this be a PIDCommand or a Command?
 
-	public RunPIDDrive(double p, double i, double d) {
-		super(p, i, d);
-		// TODO Auto-generated constructor stub
-	}
-
-	public RunPIDDrive(String name, double p, double i, double d) {
-		super(name, p, i, d);
-		// TODO Auto-generated constructor stub
-	}
-
-	public RunPIDDrive(double p, double i, double d, double period) {
-		super(p, i, d, period);
-		// TODO Auto-generated constructor stub
-	}
-
-	public RunPIDDrive(String name, double p, double i, double d, double period) {
-		super(name, p, i, d, period);
-		// TODO Auto-generated constructor stub
+	public RunPIDDrive() {
+		super(1.0, 0.0, 0.0);
+		requires(Robot.robotDrive);
 	}
 
 	@Override
