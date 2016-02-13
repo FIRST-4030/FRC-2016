@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.vision.USBCamera;
 /**
  *
  */
-public class Camera extends Subsystem {
+public class TargetCamera extends Subsystem {
 
 	private USBCamera cam;
 
@@ -23,7 +23,7 @@ public class Camera extends Subsystem {
     	if (isRunning()) {
     		return;
     	}
-    	cam = new USBCamera(RobotMap.usbCamera);
+    	cam = new USBCamera(RobotMap.usbTargetCamera);
     	cam.openCamera();
     }
     

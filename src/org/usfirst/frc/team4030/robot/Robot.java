@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team4030.robot.subsystems.Arm;
 import org.usfirst.frc.team4030.robot.subsystems.DriveBase;
+import org.usfirst.frc.team4030.robot.subsystems.DriverCamera;
 import org.usfirst.frc.team4030.robot.subsystems.Kicker;
 import org.usfirst.frc.team4030.robot.subsystems.ShooterWheels;
 
@@ -27,6 +28,7 @@ public class Robot extends IterativeRobot {
 	public static final DriveBase robotDrive = new DriveBase(1);
 	public static final Kicker robotKicker = new Kicker();
 	public static final ShooterWheels robotShooter = new ShooterWheels(1.0, 0.0, 0.0);
+	public static final DriverCamera driverCamera = new DriverCamera();
 	public static OI oi;
 
     Command autonomousCommand;
