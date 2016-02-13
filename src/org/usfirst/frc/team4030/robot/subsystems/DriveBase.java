@@ -10,8 +10,8 @@ public class DriveBase extends Subsystem {
 	
 	Talon motorLeft = new Talon(RobotMap.pwmDriveLeft);
 	Talon motorRight = new Talon(RobotMap.pwmDriveRight);
-    Encoder encoderLeft = new Encoder(RobotMap.dioEncoderLeftA, RobotMap.dioEncoderLeftB);
-    Encoder encoderRight = new Encoder(RobotMap.dioEncoderRightA, RobotMap.dioEncoderRightB);
+    Encoder encoderLeft = new Encoder(RobotMap.dioDriveLeftA, RobotMap.dioDriveLeftB);
+    Encoder encoderRight = new Encoder(RobotMap.dioDriveRightA, RobotMap.dioDriveRightB);
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
