@@ -3,8 +3,7 @@ package org.usfirst.frc.team4030.robot.subsystems;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class Kicker extends Subsystem {
-	
+public class Kicker extends Subsystem {	
 	Talon kickMotor;
 
 	public Kicker() {
@@ -13,7 +12,5 @@ public class Kicker extends Subsystem {
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
-
 	}
-
 }

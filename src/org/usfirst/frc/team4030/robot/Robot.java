@@ -24,10 +24,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static final Arm robotArm = new Arm(1.0, 0.0, 0.0);
-	public static final DriveBase robotDrive = new DriveBase(1);
+	public static final Arm robotArm = new Arm();
+	public static final DriveBase robotDrive = new DriveBase();
 	public static final Kicker robotKicker = new Kicker();
-	public static final ShooterWheels robotShooter = new ShooterWheels(1.0, 0.0, 0.0);
+	public static final ShooterWheels robotShooter = new ShooterWheels();
 	public static final DriverCamera driverCamera = new DriverCamera();
 	public static OI oi;
 

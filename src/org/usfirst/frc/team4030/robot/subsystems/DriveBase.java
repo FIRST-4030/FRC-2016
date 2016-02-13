@@ -1,33 +1,28 @@
 package org.usfirst.frc.team4030.robot.subsystems;
 
+import org.usfirst.frc.team4030.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class DriveBase extends PIDSubsystem {
+public class DriveBase extends Subsystem {
 	
-	Talon driveMotor;
-    Encoder driveEncoder;
+	Talon motorLeft = new Talon(RobotMap.pwmDriveLeft);
+	Talon motorRight = new Talon(RobotMap.pwmDriveRight);
+    Encoder encoderLeft = new Encoder(RobotMap.dioEncoderLeftA, RobotMap.dioEncoderLeftB);
+    Encoder encoderRight = new Encoder(RobotMap.dioEncoderRightA, RobotMap.dioEncoderRightB);
 
-	public DriveBase(int wheelNum) {
-		super("PIDDrive" + wheelNum, 1.0, 0.0, 0.0);
-		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	protected double returnPIDInput() {
-		return driveEncoder.getRaw();
-	}
-
-	@Override
-	protected void usePIDOutput(double output) {
-		driveMotor.set(output);
-	}
-
-	@Override
-	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
-
-	}
-
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+       // setDefaultCommand(new Drive());
+    }
+    
+    public void start() {
+    }
+    
+    public void stop() {
+    	motorLeft.disable();
+    	motorRight.disable();
+    }
 }
