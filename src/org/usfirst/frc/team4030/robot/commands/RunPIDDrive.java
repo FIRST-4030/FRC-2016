@@ -8,7 +8,7 @@ public class RunPIDDrive extends PIDCommand {
 
 	public RunPIDDrive() {
 		super(1.0, 0.0, 0.0);
-		requires(Robot.robotDrive);
+		requires(Robot.drive);
 	}
 
 	@Override

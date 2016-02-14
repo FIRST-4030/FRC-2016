@@ -2,6 +2,10 @@ package org.usfirst.frc.team4030.robot;
 
 public class RobotMap {
 	
+	// Joysticks
+	public static final int joyDriveLeft = 1;
+	public static final int joyDriveRight = 2;
+	
 	// USB
 	public static final String usbTargetCamera = "cam0";
 	public static final String usbDriverCamera = "cam1";
@@ -20,5 +24,6 @@ public class RobotMap {
 	public static final int dioDriveRightB = 3;
 	public static final int dioArmA = 4;
 	public static final int dioArmB = 5;
-	public static final int dioShooter = 6;
+	public static final int dioArmSwitch = 6;
+	public static final int dioShooter = 7;
 }

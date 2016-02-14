@@ -11,6 +11,7 @@ import org.usfirst.frc.team4030.robot.subsystems.DriveBase;
 import org.usfirst.frc.team4030.robot.subsystems.DriverCamera;
 import org.usfirst.frc.team4030.robot.subsystems.Kicker;
 import org.usfirst.frc.team4030.robot.subsystems.ShooterWheels;
+import org.usfirst.frc.team4030.robot.subsystems.TargetCamera;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,11 +25,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static final Arm robotArm = new Arm();
-	public static final DriveBase robotDrive = new DriveBase();
-	public static final Kicker robotKicker = new Kicker();
-	public static final ShooterWheels robotShooter = new ShooterWheels();
-	public static final DriverCamera driverCamera = new DriverCamera();
+	public static final Arm arm = new Arm();
+	public static final DriveBase drive = new DriveBase();
+	public static final Kicker kicker = new Kicker();
+	public static final ShooterWheels shooter = new ShooterWheels();
+	public static final DriverCamera camDriver = new DriverCamera();
+	public static final TargetCamera camTarget = new TargetCamera();
 	public static OI oi;
 
     Command autonomousCommand;
