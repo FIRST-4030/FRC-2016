@@ -13,6 +13,7 @@ public class OI {
 	// Raw joysticks
 	public Joystick driveLeft = new Joystick(RobotMap.joyDriveLeft);
 	public Joystick driveRight = new Joystick(RobotMap.joyDriveRight);
+	public Joystick arm = new Joystick(RobotMap.joyArm);
 	
     //// TRIGGERING COMMANDS WITH BUTTONS
     // Once you have a button, it's trivial to bind it to a button in one of

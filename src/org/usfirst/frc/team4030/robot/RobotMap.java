@@ -5,6 +5,7 @@ public class RobotMap {
 	// Joysticks
 	public static final int joyDriveLeft = 1;
 	public static final int joyDriveRight = 2;
+	public static final int joyArm = 3;
 	
 	// USB
 	public static final String usbTargetCamera = "cam0";
