@@ -2,28 +2,26 @@ package org.ingrahamrobotics.robot.commands;
 
 import org.ingrahamrobotics.robot.Robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ArmManual extends Command {
+/**
+ *
+ */
+public class ArmZero extends Command {
 
-	private Joystick arm = Robot.oi.arm;
-	
-    public ArmManual() {
-        requires(Robot.arm);
+    public ArmZero() {
+    	requires(Robot.arm);
     }
 
     protected void initialize() {
-    	Robot.arm.start();
     }
 
     protected void execute() {
-    	double y = arm.getY();
-    	Robot.arm.set(y);
+    	Robot.arm.zero();
     }
 
     protected boolean isFinished() {
-        return false;
+    	return Robot.arm.checkZero();
     }
 
     protected void end() {
