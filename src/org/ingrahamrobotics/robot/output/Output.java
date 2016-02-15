@@ -77,7 +77,7 @@ public class Output {
     }
 
     public static void initialized(String system) {
-        output(OutputLevel.INITIALIZED_SYSTEMS, system, true);
+        output(OutputLevel.DEBUG, system, true);
     }
 
     public static RobotTablesClient getRobotTables() {

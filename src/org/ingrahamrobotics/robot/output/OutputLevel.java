@@ -2,7 +2,7 @@ package org.ingrahamrobotics.robot.output;
 
 public enum OutputLevel {
     DEBUG(0, "Debug", false),
-    INITIALIZED_SYSTEMS(1, "Initialized", false),
+    PID(1, "PID", false),
     MOTORS(2, "Motors", true),
     SENSORS(3, "Sensors", true),
     AUTO(4, "Autonomous", true),
