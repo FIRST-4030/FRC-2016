@@ -1,6 +1,8 @@
 package org.ingrahamrobotics.robot.subsystems;
 
 import org.ingrahamrobotics.robot.RobotMap;
+import org.ingrahamrobotics.robot.output.Output;
+import org.ingrahamrobotics.robot.output.OutputLevel;
 
 import com.ni.vision.NIVision;
 
@@ -13,9 +15,13 @@ import edu.wpi.first.wpilibj.vision.USBCamera;
 public class TargetCamera extends Subsystem {
 
 	private USBCamera cam;
+	
+	public TargetCamera() {
+		super();
+		stop();
+	}
 
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
     
@@ -25,11 +31,15 @@ public class TargetCamera extends Subsystem {
     	}
     	cam = new USBCamera(RobotMap.usbTargetCamera);
     	cam.openCamera();
+		Output.output(OutputLevel.SENSORS, getName() + "-camera", RobotMap.usbTargetCamera);
+		Output.output(OutputLevel.SENSORS, getName() + "-open", true);
     }
     
     public void stop() {
     	cam.closeCamera();
     	cam = null;
+		Output.output(OutputLevel.SENSORS, getName() + "-camera", "<Disabled>");
+		Output.output(OutputLevel.SENSORS, getName() + "-open", false);
     }
     
     public boolean isRunning() {
@@ -42,5 +52,6 @@ public class TargetCamera extends Subsystem {
     public void capture(NIVision.Image image) {
     	this.start();
     	cam.getImage(image);
+		Output.output(OutputLevel.SENSORS, getName() + "-captured", System.currentTimeMillis());
     }
 }
