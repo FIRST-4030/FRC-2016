@@ -5,21 +5,21 @@ import org.ingrahamrobotics.robot.Robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ArmManual extends Command {
+public class ShooterManual extends Command {
 
 	private Joystick shooterJoystick = Robot.oi.arm;
 	
-    public ArmManual() {
-        requires(Robot.arm);
+    public ShooterManual() {
+        requires(Robot.shooter);
     }
 
     protected void initialize() {
-    	Robot.arm.start();
+    	Robot.shooter.start();
     }
 
     protected void execute() {
-    	double y = shooterJoystick.getY();
-    	Robot.arm.set(y);
+    	double x = shooterJoystick.getX();
+    	Robot.shooter.set(x);
     }
 
     protected boolean isFinished() {
@@ -27,7 +27,7 @@ public class ArmManual extends Command {
     }
 
     protected void end() {
-    	Robot.arm.stop();
+    	Robot.shooter.stop();
     }
 
     protected void interrupted() {
