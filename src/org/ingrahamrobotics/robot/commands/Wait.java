@@ -4,13 +4,16 @@ import org.ingrahamrobotics.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class Kick extends Command {
+public class Wait extends Command {
 	
-	public static final int duration = 500;
+	// Wait duration in ms
+	public int duration = 500;
+	
+	// When should we stop
 	private long done = 0;
 
-	public Kick() {
-    	requires(Robot.kicker);
+	public Wait(int duration) {
+    	this.duration = duration;
 	}
 
 	protected void initialize() {
@@ -18,7 +21,6 @@ public class Kick extends Command {
 	}
 	
 	protected void execute() {
-		Robot.kicker.kick();
 	}
 
 	protected boolean isFinished() {
@@ -26,7 +28,6 @@ public class Kick extends Command {
 	}
 
 	protected void end() {
-		Robot.kicker.stop();
 	}
 
 	protected void interrupted() {
