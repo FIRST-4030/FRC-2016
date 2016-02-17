@@ -56,7 +56,7 @@ public class Arm extends PIDSubsystem {
 	}
 	
 	public boolean checkZero() {
-		boolean atZero = zeroSwitch.get();
+		boolean atZero = !zeroSwitch.get();
 		Output.output(OutputLevel.PID, getName() + "-atZero", atZero);
 		if (!ready && atZero) {
 			atZero();
@@ -76,6 +76,7 @@ public class Arm extends PIDSubsystem {
 	@Override
 	protected double returnPIDInput() {
 		double pidInput = (encoder.getRaw());
+		checkZero();
 		Output.output(OutputLevel.PID, getName() + "-encoder", pidInput);
 		return pidInput;
 	}
