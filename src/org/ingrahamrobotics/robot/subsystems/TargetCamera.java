@@ -14,44 +14,43 @@ import edu.wpi.first.wpilibj.vision.USBCamera;
  */
 public class TargetCamera extends Subsystem {
 
-	private USBCamera cam;
-	
+	private USBCamera cam = null;
+
 	public TargetCamera() {
 		super();
 		stop();
 	}
 
-    public void initDefaultCommand() {
-        //setDefaultCommand(new MySpecialCommand());
-    }
-    
-    public void start() {
-    	if (isRunning()) {
-    		return;
-    	}
-    	cam = new USBCamera(RobotMap.usbTargetCamera);
-    	cam.openCamera();
+	public void initDefaultCommand() {
+		// setDefaultCommand(new MySpecialCommand());
+	}
+
+	public void start() {
+		if (isRunning()) {
+			return;
+		}
+		cam = new USBCamera(RobotMap.usbTargetCamera);
+		cam.openCamera();
 		Output.output(OutputLevel.SENSORS, getName() + "-camera", RobotMap.usbTargetCamera);
 		Output.output(OutputLevel.SENSORS, getName() + "-open", true);
-    }
-    
-    public void stop() {
-    	cam.closeCamera();
-    	cam = null;
+	}
+
+	public void stop() {
+		if (isRunning()) {
+			cam.closeCamera();
+		}
+		cam = null;
 		Output.output(OutputLevel.SENSORS, getName() + "-camera", "<Disabled>");
 		Output.output(OutputLevel.SENSORS, getName() + "-open", false);
-    }
-    
-    public boolean isRunning() {
-    	if (cam == null) {
-    		return false;
-    	}
-    	return true;
-    }
-    
-    public void capture(NIVision.Image image) {
-    	this.start();
-    	cam.getImage(image);
+	}
+
+	public boolean isRunning() {
+		return (cam == null);
+	}
+
+	public void capture(NIVision.Image image) {
+		this.start();
+		cam.getImage(image);
 		Output.output(OutputLevel.SENSORS, getName() + "-captured", System.currentTimeMillis());
-    }
+	}
 }

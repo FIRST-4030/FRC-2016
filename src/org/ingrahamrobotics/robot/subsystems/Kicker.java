@@ -10,9 +10,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Kicker extends Subsystem {
 	Talon motor = new Talon(RobotMap.pwmKicker);
 	public static final double speed = 0.5;
-	
-	public Kicker() {
-	}
 
 	@Override
 	protected void initDefaultCommand() {
