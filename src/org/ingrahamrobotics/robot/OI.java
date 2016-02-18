@@ -1,9 +1,11 @@
 package org.ingrahamrobotics.robot;
 
 import org.ingrahamrobotics.robot.RobotMap;
+import org.ingrahamrobotics.robot.commands.*;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -15,20 +17,27 @@ public class OI {
 	public Joystick driveRight = new Joystick(RobotMap.joyDriveRight);
 	public Joystick arm = new Joystick(RobotMap.joyArm);
 	
-    //// TRIGGERING COMMANDS WITH BUTTONS
-    // Once you have a button, it's trivial to bind it to a button in one of
-    // three ways:
-    
-    // Start the command when the button is pressed and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenPressed(new ExampleCommand());
-    
-    // Run the command while the button is being held down and interrupt it once
-    // the button is released.
-    // button.whileHeld(new ExampleCommand());
-    
-    // Start the command when the button is released  and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenReleased(new ExampleCommand());
+	// Command buttons
+	public Button fire = new JoystickButton(arm, RobotMap.joyArmFire);
+
+	// Test buttons
+	private Button armTest = new JoystickButton(arm, 2);
+	private Button armZeroTest = new JoystickButton(arm, 3);
+	private Button shooterTest = new JoystickButton(arm, 4);
+	private Button kickTest = new JoystickButton(arm, 5);
+	private Button captureTest = new JoystickButton(arm, 6);
+	
+	public OI() {
+
+		// Button-activated commands
+		fire.whenPressed(new Shoot());
+		
+		// Test button commands
+		armTest.toggleWhenPressed(new ArmManual());
+		armZeroTest.whenReleased(new ArmZero());
+		shooterTest.toggleWhenPressed(new ShooterManual());
+		kickTest.whenReleased(new Kick());
+		captureTest.whenReleased(new Capture());
+	}
 }
 
