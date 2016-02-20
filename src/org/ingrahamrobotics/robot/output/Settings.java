@@ -18,9 +18,18 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
      * Possible keys for input settings
      */
     public static enum Key {
-        ARM_PID_P("Arm PID: P", "1.0"),
-        ARM_PID_I("Arm PID: I", "0.0"),
-        ARM_PID_D("Arm PID: D", "0.0")
+        ARM_PID_P("Arm P", "1.0"),
+        ARM_PID_I("Arm I", "0.0"),
+        ARM_PID_D("Arm D", "0.0"),
+
+        ARM_ZERO_SPEED("Arm Homing Speed", "0.5"),
+        ARM_COLLECT_POSITION("Arm Collect Position", "1000"),
+
+        SHOOTER_PID_P("Shooter P", "1.0"),
+        SHOOTER_PID_I("Shooter I", "0.0"),
+        SHOOTER_PID_D("Shooter D", "0.0"),
+        
+        KICKER_SPEED("Kicker Speed", "0.5"),
         // Comment to let ; be on new line
         ;
 

@@ -18,6 +18,7 @@ public class ShooterManual extends Command {
     }
 
     protected void execute() {
+    	Robot.shooter.updatePID();
     	double x = shooterJoystick.getX();
     	Robot.shooter.set(x);
     }

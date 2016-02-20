@@ -1,6 +1,7 @@
 package org.ingrahamrobotics.robot.commands;
 
 import org.ingrahamrobotics.robot.Robot;
+import org.ingrahamrobotics.robot.output.Settings;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -17,7 +18,8 @@ public class LowBarArm extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.arm.set(Robot.arm.PARALLEL_TO_FLOOR);
+		int position = Settings.Key.ARM_COLLECT_POSITION.getInt();
+		Robot.arm.set(position);
 	}
 
 	@Override

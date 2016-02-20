@@ -3,6 +3,7 @@ package org.ingrahamrobotics.robot.subsystems;
 import org.ingrahamrobotics.robot.RobotMap;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
+import org.ingrahamrobotics.robot.output.Settings;
 
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.Talon;
@@ -16,11 +17,7 @@ public class ShooterWheels extends PIDSubsystem {
 	public ShooterWheels() {
 		super(1.0, 0.0, 0.0);
 	}
-	
-	public void setPID(double p, double i, double d) {
-		this.setPID(p, i, d);
-	}
-	
+		
 	public void start() {
 		this.getPIDController().enable();
 	}
@@ -38,6 +35,13 @@ public class ShooterWheels extends PIDSubsystem {
 	public boolean isEnabled() {
 		return this.getPIDController().isEnabled();
 	}
+	
+    public void updatePID() {
+        double p = Settings.Key.SHOOTER_PID_P.getDouble();
+        double i = Settings.Key.SHOOTER_PID_I.getDouble();
+        double d = Settings.Key.SHOOTER_PID_D.getDouble();
+		this.getPIDController().setPID(p, i, d);
+    }
 
 	@Override
 	protected double returnPIDInput() {

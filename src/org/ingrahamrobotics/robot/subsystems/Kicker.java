@@ -3,13 +3,13 @@ package org.ingrahamrobotics.robot.subsystems;
 import org.ingrahamrobotics.robot.RobotMap;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
+import org.ingrahamrobotics.robot.output.Settings;
 
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Kicker extends Subsystem {
 	Talon motor = new Talon(RobotMap.pwmKicker);
-	public static final double speed = 0.5;
 
 	@Override
 	protected void initDefaultCommand() {
@@ -17,10 +17,12 @@ public class Kicker extends Subsystem {
 	}
 
 	public void kick() {
+		double speed = Settings.Key.KICKER_SPEED.getDouble();
 		set(speed);
 	}
 
 	public void capture() {
+		double speed = Settings.Key.KICKER_SPEED.getDouble();
 		set(-speed);
 	}
 	

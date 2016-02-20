@@ -15,21 +15,12 @@ public class Arm extends PIDSubsystem {
 
 	private Talon motor = new Talon(RobotMap.pwmArm);
 	private Encoder encoder = new Encoder(RobotMap.dioArmA, RobotMap.dioArmB);
-	private DigitalInput zeroSwitch = new DigitalInput(RobotMap.dioArmSwitch);
-	
-	//These variables can be moved, and are completely untested :D
-	public final double PARALLEL_TO_FLOOR = -100;
-	
+	private DigitalInput zeroSwitch = new DigitalInput(RobotMap.dioArmSwitch);	
 	private boolean ready = false;
-	public static final double zeroSpeed = 0.5;
 
 	public Arm() {
 		super(1.0, 0.0, 0.0);
 		ready = false;
-	}
-
-	public void setPID(double p, double i, double d) {
-		this.getPIDController().setPID(p, i, d);
 	}
 
 	public void start() {
@@ -49,7 +40,8 @@ public class Arm extends PIDSubsystem {
 	public void zero() {
 		stop();
 		ready = false;
-		motor.set(zeroSpeed);
+		double speed = Settings.Key.ARM_ZERO_SPEED.getDouble();
+		motor.set(speed);
 		Output.output(OutputLevel.PID, getName() + "-zero", true);
 	}
 
@@ -80,11 +72,11 @@ public class Arm extends PIDSubsystem {
 	/**
      * Sets the arm pid settings from Settings.
      */
-    public void updateArmPID() {
+    public void updatePID() {
         double p = Settings.Key.ARM_PID_P.getDouble();
         double i = Settings.Key.ARM_PID_I.getDouble();
         double d = Settings.Key.ARM_PID_D.getDouble();
-        setPID(p, i, d);
+		this.getPIDController().setPID(p, i, d);
     }
 
 	@Override

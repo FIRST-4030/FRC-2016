@@ -18,6 +18,7 @@ public class ArmManual extends Command {
     }
 
     protected void execute() {
+    	Robot.arm.updatePID();
     	double y = shooterJoystick.getY();
     	Robot.arm.set(y);
     }
