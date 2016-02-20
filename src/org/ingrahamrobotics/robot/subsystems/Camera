@@ -70,7 +70,6 @@ public class Camera extends Subsystem
 		}catch(Exception e)	{
 			System.err.println("Done goofed, cannot retrieve image");
 		}
-		img = (ColorImage)(new RGBImage("C://Users/Mike/Desktop/Image.jpg"));
 		try	{
 			BinaryImage = img.HSLThreshold();
 		}catch(Exception e)
