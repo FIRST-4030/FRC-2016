@@ -1,26 +1,23 @@
 package org.ingrahamrobotics.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 import org.ingrahamrobotics.robot.RobotMap;
+import org.ingrahamrobotics.robot.commands.TankDrive;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
 import org.ingrahamrobotics.robot.output.Settings;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
-
 public class Arm extends PIDSubsystem {
 
-	private Talon motor = new Talon(RobotMap.pwmArm);
-	private Encoder encoder = new Encoder(RobotMap.dioArmA, RobotMap.dioArmB);
-	private DigitalInput zeroSwitch = new DigitalInput(RobotMap.dioArmSwitch);	
+	private Talon motor;
 	private boolean ready = false;
 
 	public Arm() {
 		super(1.0, 0.0, 0.0);
 		ready = false;
+		motor = new Talon(RobotMap.pwmArm);
 	}
 
 	public void start() {
@@ -46,14 +43,13 @@ public class Arm extends PIDSubsystem {
 	}
 
 	private void atZero() {
-		encoder.reset();
+		Sensors.Sensor.ARM_ENCODER.reset();
 		ready = true;
 		Output.output(OutputLevel.PID, getName() + "-zero", false);
 	}
 	
 	public boolean checkZero() {
-		boolean atZero = !zeroSwitch.get();
-		Output.output(OutputLevel.PID, getName() + "-atZero", atZero);
+		boolean atZero = Sensors.Sensor.ARM_SWITCH.getBoolean();
 		if (!ready && atZero) {
 			atZero();
 		}
@@ -81,10 +77,8 @@ public class Arm extends PIDSubsystem {
 
 	@Override
 	protected double returnPIDInput() {
-		double pidInput = (encoder.getRaw());
 		checkZero();
-		Output.output(OutputLevel.PID, getName() + "-encoder", pidInput);
-		return pidInput;
+		return Sensors.Sensor.ARM_ENCODER.getDouble();
 	}
 
 	@Override
@@ -98,6 +92,6 @@ public class Arm extends PIDSubsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
+		setDefaultCommand(new TankDrive());
 	}
 }

@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class TankDrive extends Command {
 	
-	private Joystick left = Robot.oi.driveLeft;
-	private Joystick right = Robot.oi.driveRight;
+	private Joystick left = Robot.oi.joyLeft;
+	private Joystick right = Robot.oi.joyRight;
 	
     public TankDrive() {
         requires(Robot.drive);

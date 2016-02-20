@@ -3,9 +3,9 @@ package org.ingrahamrobotics.robot;
 public class RobotMap {
 	
 	// Joysticks
-	public static final int joyDriveLeft = 1;
-	public static final int joyDriveRight = 2;
-	public static final int joyArm = 3;
+	public static final int joyDriveLeft = 0;
+	public static final int joyDriveRight = 1;
+	public static final int joyArm = 2;
 	
 	// Joystick Buttons
 	public static final int joyArmFire = 1;

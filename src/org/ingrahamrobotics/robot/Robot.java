@@ -27,6 +27,7 @@ public class Robot extends IterativeRobot {
 	public static final ShooterWheels shooter = new ShooterWheels();
 	public static final DriverCamera camDriver = new DriverCamera();
 	public static final TargetCamera camTarget = new TargetCamera();
+	public static final Sensors sensors = new Sensors();
 	
 	public static OI oi;
 

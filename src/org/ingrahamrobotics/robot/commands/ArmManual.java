@@ -7,19 +7,20 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ArmManual extends Command {
 
-	private Joystick shooterJoystick = Robot.oi.arm;
+	private Joystick stick;
 	
     public ArmManual() {
         requires(Robot.arm);
     }
 
     protected void initialize() {
+    	stick = Robot.oi.joyArm;
     	Robot.arm.start();
     }
 
     protected void execute() {
     	Robot.arm.updatePID();
-    	double y = shooterJoystick.getY();
+    	double y = stick.getY();
     	Robot.arm.set(y);
     }
 

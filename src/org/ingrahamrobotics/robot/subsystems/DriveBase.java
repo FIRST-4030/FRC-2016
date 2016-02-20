@@ -24,11 +24,17 @@ public class DriveBase extends Subsystem {
         setDefaultCommand(new TankDrive());
     }
     
+    public DriveBase() {
+    	motorLeft.setInverted(true);
+    }
+    
     public void drive(GenericHID stick) {
     	drive.arcadeDrive(stick);
     }
 
     public void drive(GenericHID left, GenericHID right) {
+		Output.output(OutputLevel.MOTORS, getName() + "-left", left.getY());
+		Output.output(OutputLevel.MOTORS, getName() + "-right", right.getY());
     	drive.tankDrive(left, right);
     }
     

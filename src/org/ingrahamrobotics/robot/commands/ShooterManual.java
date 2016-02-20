@@ -7,19 +7,20 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ShooterManual extends Command {
 
-	private Joystick shooterJoystick = Robot.oi.arm;
+	private Joystick stick;
 	
     public ShooterManual() {
         requires(Robot.shooter);
     }
 
     protected void initialize() {
+    	stick = Robot.oi.joyArm;
     	Robot.shooter.start();
     }
 
     protected void execute() {
     	Robot.shooter.updatePID();
-    	double x = shooterJoystick.getX();
+    	double x = stick.getX();
     	Robot.shooter.set(x);
     }
 

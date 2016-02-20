@@ -13,19 +13,19 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 	// Raw joysticks
-	public Joystick driveLeft = new Joystick(RobotMap.joyDriveLeft);
-	public Joystick driveRight = new Joystick(RobotMap.joyDriveRight);
-	public Joystick arm = new Joystick(RobotMap.joyArm);
+	public Joystick joyLeft = new Joystick(RobotMap.joyDriveLeft);
+	public Joystick joyRight = new Joystick(RobotMap.joyDriveRight);
+	public Joystick joyArm = new Joystick(RobotMap.joyArm);
 	
 	// Command buttons
-	public Button fire = new JoystickButton(arm, RobotMap.joyArmFire);
+	public Button fire = new JoystickButton(joyArm, RobotMap.joyArmFire);
 
 	// Test buttons
-	private Button armTest = new JoystickButton(arm, 2);
-	private Button armZeroTest = new JoystickButton(arm, 3);
-	private Button shooterTest = new JoystickButton(arm, 4);
-	private Button kickTest = new JoystickButton(arm, 5);
-	private Button captureTest = new JoystickButton(arm, 6);
+	private Button armTest = new JoystickButton(joyArm, 2);
+	private Button armZeroTest = new JoystickButton(joyArm, 3);
+	private Button shooterTest = new JoystickButton(joyArm, 4);
+	private Button kickTest = new JoystickButton(joyArm, 5);
+	private Button captureTest = new JoystickButton(joyArm, 6);
 	
 	public OI() {
 
@@ -33,11 +33,11 @@ public class OI {
 		fire.whenPressed(new Shoot());
 		
 		// Test button commands
-		/*armTest.toggleWhenPressed(new ArmManual());
+		armTest.toggleWhenPressed(new ArmManual());
 		armZeroTest.whenReleased(new ArmZero());
 		shooterTest.toggleWhenPressed(new ShooterManual());
 		kickTest.whenReleased(new Kick());
-		captureTest.whenReleased(new Capture());*/
+		captureTest.whenReleased(new Capture());
 	}
 }
 

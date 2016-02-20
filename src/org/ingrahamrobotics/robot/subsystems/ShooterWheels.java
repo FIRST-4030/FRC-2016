@@ -11,20 +11,22 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 public class ShooterWheels extends PIDSubsystem {
 
-	Talon motor = new Talon(RobotMap.pwmShooter);
-	Counter encoder = new Counter(RobotMap.dioShooter);
+	Talon motor;
 	
 	public ShooterWheels() {
 		super(1.0, 0.0, 0.0);
+		motor = new Talon(RobotMap.pwmShooter);
 	}
 		
 	public void start() {
 		this.getPIDController().enable();
+		Output.output(OutputLevel.PID, getName() + "-enabled", this.isEnabled());
 	}
 	
 	public void stop() {
 		this.getPIDController().disable();
 		motor.disable();
+		Output.output(OutputLevel.PID, getName() + "-enabled", this.isEnabled());
 	}
 
 	public void set(double setpoint) {
@@ -45,9 +47,7 @@ public class ShooterWheels extends PIDSubsystem {
 
 	@Override
 	protected double returnPIDInput() {
-		double pidInput = (encoder.getRate());
-		Output.output(OutputLevel.PID, getName() + "-encoder", pidInput);
-		return pidInput;
+		return Sensors.Sensor.SHOOTER_ENCODER.getDouble();
 	}
 
 	@Override
