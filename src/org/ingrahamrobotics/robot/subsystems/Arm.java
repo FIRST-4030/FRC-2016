@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Talon;
 import org.ingrahamrobotics.robot.RobotMap;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
+import org.ingrahamrobotics.robot.output.Settings;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
@@ -16,6 +17,9 @@ public class Arm extends PIDSubsystem {
 	private Encoder encoder = new Encoder(RobotMap.dioArmA, RobotMap.dioArmB);
 	private DigitalInput zeroSwitch = new DigitalInput(RobotMap.dioArmSwitch);
 	
+	//These variables can be moved, and are completely untested :D
+	public final double PARALLEL_TO_FLOOR = -100;
+	
 	private boolean ready = false;
 	public static final double zeroSpeed = 0.5;
 
@@ -25,7 +29,7 @@ public class Arm extends PIDSubsystem {
 	}
 
 	public void setPID(double p, double i, double d) {
-		this.setPID(p, i, d);
+		this.getPIDController().setPID(p, i, d);
 	}
 
 	public void start() {
@@ -72,6 +76,16 @@ public class Arm extends PIDSubsystem {
 	public boolean isEnabled() {
 		return this.getPIDController().isEnabled();
 	}
+	
+	/**
+     * Sets the arm pid settings from Settings.
+     */
+    public void updateArmPID() {
+        double p = Settings.Key.ARM_PID_P.getDouble();
+        double i = Settings.Key.ARM_PID_I.getDouble();
+        double d = Settings.Key.ARM_PID_D.getDouble();
+        setPID(p, i, d);
+    }
 
 	@Override
 	protected double returnPIDInput() {

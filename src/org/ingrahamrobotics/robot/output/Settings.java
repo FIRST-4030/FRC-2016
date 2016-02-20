@@ -18,8 +18,11 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
      * Possible keys for input settings
      */
     public static enum Key {
-        SAMPLE_SETTING_1("Sample 1", "100"),
-        SAMPLE_SETTING_B("Sample B", "B");
+        ARM_PID_P("Arm PID: P", "1.0"),
+        ARM_PID_I("Arm PID: I", "0.0"),
+        ARM_PID_D("Arm PID: D", "0.0")
+        // Comment to let ; be on new line
+        ;
 
         /**
          * this is just so we can easily change this, rather than commenting out values.
