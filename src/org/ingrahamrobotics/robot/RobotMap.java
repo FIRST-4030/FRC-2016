@@ -32,4 +32,12 @@ public class RobotMap {
 	public static final int dioDriveLeftB = 5;
 	public static final int dioDriveRightA = 6;
 	public static final int dioDriveRightB = 7;
+	
+	//Target HSV Thresholds
+	private static final int HUE_LOW = 50;
+	private static final int HUE_HIGH = 155;
+	private static final int SAT_LOW = 60;
+	private static final int SAT_HIGH = 255;
+	private static final int LUM_LOW = 60;
+	private static final int LUM_HIGH = 255;
 }
