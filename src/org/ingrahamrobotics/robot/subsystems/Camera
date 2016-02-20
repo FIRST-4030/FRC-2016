@@ -11,7 +11,7 @@ public class Camera extends Subsystem
 {
 	private ColorImage img = null;
 	private BinaryImage thresholdHSLImage = null;
-	private AxisCamera camera = new AxisCamera("000.00.000.00");
+	private TargetCamera camera = null;
 	private int imagenumber = 0;
 	private Target target = null;
 
