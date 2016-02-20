@@ -12,15 +12,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Sensors extends Subsystem {
 
-	private static Encoder armEncoder = new Encoder(RobotMap.dioArmA,
+	private static final Encoder armEncoder = new Encoder(RobotMap.dioArmA,
 			RobotMap.dioArmB);
-	private static DigitalInput armSwitch = new DigitalInput(
+	private static final DigitalInput armSwitch = new DigitalInput(
 			RobotMap.dioArmSwitch);
-	private static Counter shooterEncoder = new Counter(RobotMap.dioShooter);
-	private static Encoder driveLeftEncoder = new Encoder(
+	private static final Counter shooterEncoder = new Counter(RobotMap.dioShooter);
+	/*private static final Encoder driveLeftEncoder = new Encoder(
 			RobotMap.dioDriveLeftA, RobotMap.dioDriveLeftB);
-	private static Encoder driveRightEncoder = new Encoder(
+	private static final Encoder driveRightEncoder = new Encoder(
 			RobotMap.dioDriveRightA, RobotMap.dioDriveRightB);
+	*/
 
 	public enum Sensor {
 		ARM_SWITCH(
@@ -28,11 +29,11 @@ public class Sensors extends Subsystem {
 		ARM_ENCODER(
 			"Arm Encoder", armEncoder, SensorType.ENCODER),
 		SHOOTER_ENCODER(
-			"Shooter Speed", shooterEncoder, SensorType.COUNTER),
-		DRIVE_ENCODER_LEFT(
+			"Shooter Speed", shooterEncoder, SensorType.COUNTER_RATE),
+		/*DRIVE_ENCODER_LEFT(
 			"Drive Encoder Left", driveLeftEncoder, SensorType.ENCODER),
 		DRIVE_ENCODER_RIGHT(
-			"Drive Encoder Right", driveRightEncoder, SensorType.ENCODER),
+			"Drive Encoder Right", driveRightEncoder, SensorType.ENCODER),*/
 		;
 
 		public final String name;
@@ -129,27 +130,27 @@ public class Sensors extends Subsystem {
 			switch (sensor.type) {
 			case SWITCH:
 				b = ((DigitalInput) sensor.device).get();
-				Output.output(OutputLevel.PID, sensor.name, b);
+				Output.output(OutputLevel.SENSORS, sensor.name, b);
 				sensor.value = Boolean.toString(b);
 				break;
 			case COUNTER:
 				i = ((Counter) sensor.device).get();
-				Output.output(OutputLevel.PID, sensor.name, i);
+				Output.output(OutputLevel.SENSORS, sensor.name, i);
 				sensor.value = Integer.toString(i);
 				break;
 			case COUNTER_RATE:
 				d = ((Counter) sensor.device).getRate();
-				Output.output(OutputLevel.PID, sensor.name, d);
+				Output.output(OutputLevel.SENSORS, sensor.name, d);
 				sensor.value = Double.toString(d);
 				break;
 			case ENCODER:
 				i = ((Encoder) sensor.device).getRaw();
-				Output.output(OutputLevel.PID, sensor.name, i);
+				Output.output(OutputLevel.SENSORS, sensor.name, i);
 				sensor.value = Integer.toString(i);
 				break;
 			case ENCODER_RATE:
 				d = ((Encoder) sensor.device).getRaw();
-				Output.output(OutputLevel.PID, sensor.name, d);
+				Output.output(OutputLevel.SENSORS, sensor.name, d);
 				sensor.value = Double.toString(d);
 				break;
 			}

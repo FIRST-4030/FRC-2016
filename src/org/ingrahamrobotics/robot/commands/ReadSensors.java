@@ -1,6 +1,7 @@
 package org.ingrahamrobotics.robot.commands;
 
 import org.ingrahamrobotics.robot.Robot;
+import org.ingrahamrobotics.robot.subsystems.Sensors;
 
 import edu.wpi.first.wpilibj.command.Command;
 
