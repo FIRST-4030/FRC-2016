@@ -33,11 +33,11 @@ public class OI {
 		fire.whenPressed(new Shoot());
 		
 		// Test button commands
-		armTest.toggleWhenPressed(new ArmManual());
+		/*armTest.toggleWhenPressed(new ArmManual());
 		armZeroTest.whenReleased(new ArmZero());
 		shooterTest.toggleWhenPressed(new ShooterManual());
 		kickTest.whenReleased(new Kick());
-		captureTest.whenReleased(new Capture());
+		captureTest.whenReleased(new Capture());*/
 	}
 }
 

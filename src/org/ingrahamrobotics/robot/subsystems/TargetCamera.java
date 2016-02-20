@@ -16,11 +16,6 @@ public class TargetCamera extends Subsystem {
 
 	private USBCamera cam = null;
 
-	public TargetCamera() {
-		super();
-		stop();
-	}
-
 	public void initDefaultCommand() {
 		// setDefaultCommand(new MySpecialCommand());
 	}

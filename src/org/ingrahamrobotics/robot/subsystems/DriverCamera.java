@@ -12,11 +12,6 @@ public class DriverCamera extends Subsystem {
 
     CameraServer server = null;
     
-    public DriverCamera() {
-    	super();
-    	stop();
-    }
-    
     public void initDefaultCommand() {
         setDefaultCommand(new DriverView());
     }
