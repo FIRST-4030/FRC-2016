@@ -31,12 +31,12 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         
         KICKER_SPEED("Kicker Speed", "0.5"),
         // Comment to let ; be on new line
-        VISION_H_LOW("200"),
-        VISION_H_HIGH("260"),
-        VISION_S_LOW("60"),
-        VISION_S_HIGH("255"),
-        VISION_L_LOW("60"),
-        VISION_L_HIGH("255"),
+        VISION_H_LOW("Vision Hue Low","200"),
+        VISION_H_HIGH("Vision Hue High","260"),
+        VISION_S_LOW("Vision Saturation Low","60"),
+        VISION_S_HIGH("Vision Saturation High","255"),
+        VISION_L_LOW("Vision Lum Low","60"),
+        VISION_L_HIGH("Vision Lum High", "255"),
         ;
 
         /**
