@@ -1,15 +1,11 @@
 package org.ingrahamrobotics.robot.commands;
 
 import org.ingrahamrobotics.robot.Robot;
+import org.ingrahamrobotics.robot.output.Settings;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class Capture extends Command {
-	
-	// Kick motion duration in ms
-	public static final int duration = 500;
-	
-	// When should we stop
 	private long done = 0;
 
 	public Capture() {
@@ -17,6 +13,7 @@ public class Capture extends Command {
 	}
 
 	protected void initialize() {
+		int duration = Settings.Key.KICKER_TIME.getInt();
 		done = System.currentTimeMillis() + duration;
 	}
 	

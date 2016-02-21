@@ -34,13 +34,16 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         SHOOTER_SETPOINT("Shooter Setpoint", "0"),
         
         KICKER_SPEED("Kicker Speed", "0.5"),
-        // Comment to let ; be on new line
+        KICKER_TIME("Kicker Duration", "555"),
+
         VISION_H_LOW("Vision Hue Low","200"),
         VISION_H_HIGH("Vision Hue High","260"),
         VISION_S_LOW("Vision Saturation Low","60"),
         VISION_S_HIGH("Vision Saturation High","255"),
         VISION_L_LOW("Vision Lum Low","60"),
         VISION_L_HIGH("Vision Lum High", "255"),
+        
+        // Comment to let ; be on new line
         ;
 
         /**

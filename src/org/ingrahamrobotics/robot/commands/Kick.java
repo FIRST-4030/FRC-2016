@@ -1,12 +1,12 @@
 package org.ingrahamrobotics.robot.commands;
 
 import org.ingrahamrobotics.robot.Robot;
+import org.ingrahamrobotics.robot.output.Settings;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class Kick extends Command {
 	
-	public static final int duration = 500;
 	private long done = 0;
 
 	public Kick() {
@@ -14,6 +14,7 @@ public class Kick extends Command {
 	}
 
 	protected void initialize() {
+		int duration = Settings.Key.KICKER_TIME.getInt();
 		done = System.currentTimeMillis() + duration;
 	}
 	

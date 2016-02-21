@@ -18,7 +18,7 @@ public class LowBarArm extends Command {
 
 	@Override
 	protected void execute() {
-		int position = Settings.Key.ARM_COLLECT_SETPOINT.getInt();
+		int position = Settings.Key.ARM_PRESET_COLLECT.getInt();
 		Robot.arm.set(position);
 	}
 
