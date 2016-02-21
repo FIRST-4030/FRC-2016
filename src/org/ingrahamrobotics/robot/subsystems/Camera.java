@@ -1,4 +1,6 @@
-package org.usfirst.frc.team4030.robot.subsytems;
+package org.ingrahamrobotics.robot.subsystems;
+
+import org.ingrahamrobotics.robot.output.Settings;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.image.BinaryImage;
@@ -62,7 +64,8 @@ public class Camera extends Subsystem
         thresholdHSLImage.write("/Test_Capture"+imagenumber+++".png");
     } 
     
-    public void refreshImage() throwsAxisCameraException,NIVisionException
+/*
+    public void refreshImage() throws NIVisionException
 	{
 		//try to get image
 		try	{
@@ -83,7 +86,7 @@ public class Camera extends Subsystem
 			System.err.println("Done goofed, could not identify targets");
 		}
 	}
-    
+*/
     private BinaryImage HSLThreshold() throws NIVisionException
 	{
 	        if(img==null)
