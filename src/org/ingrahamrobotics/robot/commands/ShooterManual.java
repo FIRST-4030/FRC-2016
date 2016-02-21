@@ -1,27 +1,25 @@
 package org.ingrahamrobotics.robot.commands;
 
 import org.ingrahamrobotics.robot.Robot;
+import org.ingrahamrobotics.robot.output.Settings;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ShooterManual extends Command {
-
-	private Joystick stick;
 	
     public ShooterManual() {
         requires(Robot.shooter);
     }
 
     protected void initialize() {
-    	stick = Robot.oi.joyArm;
     	Robot.shooter.start();
     }
 
     protected void execute() {
     	Robot.shooter.updatePID();
-    	double x = stick.getX();
-    	Robot.shooter.set(x);
+    	int setpoint = Settings.Key.SHOOTER_SETPOINT.getInt();
+    	Robot.shooter.set(setpoint);
     }
 
     protected boolean isFinished() {
