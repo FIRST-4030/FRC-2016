@@ -28,11 +28,11 @@ public class Camera extends Subsystem
 		private Target(ParticleAnalysisReport report)
 		{
 			height=report.boundingRectHeight;
-            width=report.boundingRectWidth;
-            x=report.boundingRectLeft;
-            y=report.boundingRectTop;
-            centerX=x+width/2;
-            centerY=y+height/2;
+            		width=report.boundingRectWidth;
+            		x=report.boundingRectLeft;
+            		y=report.boundingRectTop;
+            		centerX=x+width/2;
+            		centerY=y+height/2;
 		}
 		
 	}
@@ -92,7 +92,7 @@ public class Camera extends Subsystem
 	        }
 	        else
 	        {
-	        	return img.thresholdHSL(RobotMap.HUE_LOW, RobotMap.HUE_HIGH, RobotMap.SAT_LOW, RobotMap.SAT_HIGH, RobotMap.LUM_LOW, RobotMap.LUM_HIGH);
+	        	return img.thresholdHSL(Settings.Key.VISION_H_LOW.getInt(), Settings.Key.VISION_H_HIGH.getInt(),  Settings.Key.VISION_S_LOW.getInt(), Settings.Key.VISION_S_HIGH.getInt(), Settings.Key.VISION_L_LOW.getInt(),Settings.Key.VISION_L_HIGH.getInt());
 	        }
 	}
 	
