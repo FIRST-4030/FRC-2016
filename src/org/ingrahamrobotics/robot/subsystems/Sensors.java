@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Sensors extends Subsystem {
-
+	
+	public static final int kRATE_PERIOD = 10;
+	
 	private static final Encoder armEncoder = new Encoder(RobotMap.dioArmA,
 			RobotMap.dioArmB);
 	private static final DigitalInput armSwitch = new DigitalInput(
@@ -40,6 +42,8 @@ public class Sensors extends Subsystem {
 		public final Object device;
 		public final SensorType type;
 		public String value;
+		public long lastTime = 0;
+		public long lastValue = 0;
 
 		private Sensor(String name, Object device, SensorType type) {
 			this.name = name;
@@ -54,6 +58,8 @@ public class Sensors extends Subsystem {
 
 		public void reset() {
 			value = "";
+			lastValue = 0;
+			lastTime = 0;
 			switch (type) {
 			case COUNTER:
 			case COUNTER_RATE:
@@ -122,6 +128,8 @@ public class Sensors extends Subsystem {
 	}
 
 	public void update() {
+		long now = System.currentTimeMillis();
+		
 		for (Sensor sensor : Sensor.values()) {
 			boolean b;
 			int i;
@@ -129,7 +137,7 @@ public class Sensors extends Subsystem {
 
 			switch (sensor.type) {
 			case SWITCH:
-				b = ((DigitalInput) sensor.device).get();
+				b = !((DigitalInput) sensor.device).get();
 				Output.output(OutputLevel.SENSORS, sensor.name, b);
 				sensor.value = Boolean.toString(b);
 				break;
@@ -139,7 +147,9 @@ public class Sensors extends Subsystem {
 				sensor.value = Integer.toString(i);
 				break;
 			case COUNTER_RATE:
-				d = ((Counter) sensor.device).getRate();
+				i = ((Counter) sensor.device).get();
+				Output.output(OutputLevel.SENSORS, sensor.name + "-raw", i);
+				d = calculateRate(sensor, i, now);
 				Output.output(OutputLevel.SENSORS, sensor.name, d);
 				sensor.value = Double.toString(d);
 				break;
@@ -149,12 +159,28 @@ public class Sensors extends Subsystem {
 				sensor.value = Integer.toString(i);
 				break;
 			case ENCODER_RATE:
-				d = ((Encoder) sensor.device).getRaw();
+				i = ((Encoder) sensor.device).getRaw();
+				Output.output(OutputLevel.SENSORS, sensor.name + "-raw", i);
+				d = calculateRate(sensor, i, now);
 				Output.output(OutputLevel.SENSORS, sensor.name, d);
 				sensor.value = Double.toString(d);
 				break;
 			}
 		}
+	}
+	
+	private double calculateRate(Sensor sensor, long value, long now) {
+		double diffT = (now - sensor.lastTime);
+		
+		// Only update the rate every kRATE_PERIOD milliseconds
+		if (diffT < kRATE_PERIOD) {
+			return sensor.getDouble();
+		}
+
+		long diffV = value - sensor.lastValue;
+		sensor.lastValue = value;
+		sensor.lastTime = now;
+		return diffV / diffT;
 	}
 
 	@Override
