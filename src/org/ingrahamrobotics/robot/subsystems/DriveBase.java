@@ -32,9 +32,9 @@ public class DriveBase extends Subsystem {
     	drive.arcadeDrive(stick);
     }
 
-    public void drive(GenericHID left, GenericHID right) {
-		Output.output(OutputLevel.MOTORS, getName() + "-left", left.getY());
-		Output.output(OutputLevel.MOTORS, getName() + "-right", right.getY());
+    public void drive(double left, double right) {
+		Output.output(OutputLevel.MOTORS, getName() + "-left", left);
+		Output.output(OutputLevel.MOTORS, getName() + "-right", right);
     	drive.tankDrive(left, right);
     }
     

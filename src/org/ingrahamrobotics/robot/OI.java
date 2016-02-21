@@ -16,28 +16,23 @@ public class OI {
 	public Joystick joyLeft = new Joystick(RobotMap.joyDriveLeft);
 	public Joystick joyRight = new Joystick(RobotMap.joyDriveRight);
 	public Joystick joyArm = new Joystick(RobotMap.joyArm);
+	public Joystick joyTest = new Joystick(RobotMap.joyTest);
 	
 	// Command buttons
-	public Button fire = new JoystickButton(joyArm, RobotMap.joyArmFire);
-
+	
 	// Test buttons
-	private Button armTest = new JoystickButton(joyArm, 2);
-	private Button armZeroTest = new JoystickButton(joyArm, 3);
-	private Button shooterTest = new JoystickButton(joyArm, 4);
-	private Button kickTest = new JoystickButton(joyArm, 5);
-	private Button captureTest = new JoystickButton(joyArm, 6);
+	public Button testFire = new JoystickButton(joyTest, 6); // RB
+	public Button testArm = new JoystickButton(joyTest, 4); // Y
+	public Button testArmZero = new JoystickButton(joyTest, 1); // A
+	public Button testShooter = new JoystickButton(joyTest, 5); // LB
 	
 	public OI() {
 
-		// Button-activated commands
-		fire.whenPressed(new Shoot());
-		
 		// Test button commands
-		armTest.toggleWhenPressed(new ArmManual());
-		armZeroTest.whenReleased(new ArmZero());
-		shooterTest.toggleWhenPressed(new ShooterManual());
-		kickTest.whenReleased(new Kick());
-		captureTest.whenReleased(new Capture());
+		testFire.whenPressed(new Shoot());
+		testArm.toggleWhenPressed(new ArmManual());
+		testArmZero.whenReleased(new ArmZero());
+		testShooter.toggleWhenPressed(new ShooterManual());
 	}
 }
 
