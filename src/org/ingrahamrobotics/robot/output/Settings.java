@@ -35,7 +35,8 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         COLLECT_SPEED("Collection Speed", "-0.4"),
         
         KICKER_SPEED("Kicker Speed", "0.75"),
-        KICKER_TIME("Kicker Duration", "500"),
+        KICKER_TIME("Kicker Duration", "400"),
+        KICKER_SHOOT_TIME("Kicker Shoot Time", "1000"),
 
         VISION_H_LOW("Vision Hue Low","200"),
         VISION_H_HIGH("Vision Hue High","260"),

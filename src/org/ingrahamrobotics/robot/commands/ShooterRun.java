@@ -6,9 +6,9 @@ import org.ingrahamrobotics.robot.output.Settings;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ShooterManual extends Command {
-	
-    public ShooterManual() {
+public class ShooterRun extends Command {
+		
+    public ShooterRun() {
         requires(Robot.shooter);
     }
 
@@ -21,7 +21,7 @@ public class ShooterManual extends Command {
     	int setpoint = Settings.Key.SHOOTER_SETPOINT.getInt();
     	Robot.shooter.set(setpoint);
     }
-
+    
     protected boolean isFinished() {
         return false;
     }

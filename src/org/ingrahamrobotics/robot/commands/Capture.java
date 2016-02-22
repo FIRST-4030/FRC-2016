@@ -10,6 +10,7 @@ public class Capture extends Command {
 
 	public Capture() {
     	requires(Robot.kicker);
+    	requires(Robot.shooter);
 	}
 
 	protected void initialize() {

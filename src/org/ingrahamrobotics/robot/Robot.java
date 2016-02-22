@@ -2,6 +2,7 @@
 package org.ingrahamrobotics.robot;
 
 import org.ingrahamrobotics.robot.subsystems.*;
+import org.ingrahamrobotics.robot.commands.*;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.Settings;
 
@@ -29,6 +30,8 @@ public class Robot extends IterativeRobot {
 	public static final TargetCamera camTarget = new TargetCamera();
 	public static final Sensors sensors = new Sensors();
 	public static final Collector collector = new Collector();
+	
+	public static ShooterRun shooterCmd = new ShooterRun();
 	
 	public static OI oi;
 

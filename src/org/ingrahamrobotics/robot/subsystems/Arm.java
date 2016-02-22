@@ -18,6 +18,7 @@ public class Arm extends PIDSubsystem {
 		super(1.0, 0.0, 0.0);
 		ready = false;
 		motor = new Talon(RobotMap.pwmArm);
+		motor.setInverted(true);
 	}
 
 	public void start() {

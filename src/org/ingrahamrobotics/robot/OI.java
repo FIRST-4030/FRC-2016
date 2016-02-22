@@ -33,7 +33,7 @@ public class OI {
 		testFire.whenPressed(new Shoot());
 		testArm.toggleWhenPressed(new ArmManual());
 		testArmZero.whenReleased(new ArmZero());
-		testShooter.toggleWhenPressed(new ShooterManual());
+		testShooter.toggleWhenPressed(new ShooterRun());
 		testCollect.toggleWhenPressed(new Collect());
 	}
 }
