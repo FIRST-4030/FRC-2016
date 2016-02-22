@@ -13,7 +13,7 @@ public class DriverCamera extends Subsystem {
     CameraServer server = null;
     
     public void initDefaultCommand() {
-        setDefaultCommand(new DriverView());
+        //setDefaultCommand(new DriverView());
     }
     
     public void start() {
