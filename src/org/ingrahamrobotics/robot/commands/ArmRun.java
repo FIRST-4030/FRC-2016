@@ -6,9 +6,9 @@ import org.ingrahamrobotics.robot.output.Settings;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ArmManual extends Command {
+public class ArmRun extends Command {
 
-    public ArmManual() {
+    public ArmRun() {
         requires(Robot.arm);
     }
 

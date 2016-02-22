@@ -40,13 +40,14 @@ public class Arm extends PIDSubsystem {
 		ready = false;
 		double speed = Settings.Key.ARM_ZERO_SPEED.getDouble();
 		motor.set(speed);
-		Output.output(OutputLevel.PID, getName() + "-zero", true);
+		Output.output(OutputLevel.PID, getName() + "-ready", ready);
 	}
 
 	private void atZero() {
 		Sensors.Sensor.ARM_ENCODER.reset();
 		ready = true;
-		Output.output(OutputLevel.PID, getName() + "-zero", false);
+		Output.output(OutputLevel.PID, getName() + "-ready", ready);
+		this.set(Settings.Key.ARM_PRESET_COLLECT.getInt());
 	}
 	
 	public boolean checkZero() {

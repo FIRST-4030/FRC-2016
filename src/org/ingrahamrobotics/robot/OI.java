@@ -31,7 +31,7 @@ public class OI {
 
 		// Test button commands
 		testFire.whenPressed(new Shoot());
-		testArm.toggleWhenPressed(new ArmManual());
+		testArm.toggleWhenPressed(new ArmRun());
 		testArmZero.whenReleased(new ArmZero());
 		testShooter.toggleWhenPressed(new ShooterRun());
 		testCollect.toggleWhenPressed(new Collect());

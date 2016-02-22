@@ -18,14 +18,14 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
      * Possible keys for input settings
      */
     public static enum Key {
-        ARM_PID_P("Arm P", "1.0"),
-        ARM_PID_I("Arm I", "0.0"),
+        ARM_PID_P("Arm P", "0.005"),
+        ARM_PID_I("Arm I", "0.0005"),
         ARM_PID_D("Arm D", "0.0"),
 
         ARM_SETPOINT("Arm Setpoint", "0"),
-        ARM_ZERO_SPEED("Arm Homing Speed", "0.5"),
-        ARM_PRESET_COLLECT("Arm Preset: Collect", "-10"),
-        ARM_PRESET_UP("Arm Preset: Up", "1000"),
+        ARM_ZERO_SPEED("Arm Homing Speed", "-0.5"),
+        ARM_PRESET_COLLECT("Arm Preset: Collect", "-450"),
+        ARM_PRESET_UP("Arm Preset: Up", "4500"),
 
         SHOOTER_PID_P("Shooter P", "0.01"),
         SHOOTER_PID_I("Shooter I", "0.01"),
