@@ -32,9 +32,10 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         SHOOTER_PID_D("Shooter D", "0.00"),
 
         SHOOTER_SETPOINT("Shooter Setpoint", "0"),
+        COLLECT_SPEED("Collection Speed", "-0.4"),
         
-        KICKER_SPEED("Kicker Speed", "0.5"),
-        KICKER_TIME("Kicker Duration", "555"),
+        KICKER_SPEED("Kicker Speed", "0.75"),
+        KICKER_TIME("Kicker Duration", "500"),
 
         VISION_H_LOW("Vision Hue Low","200"),
         VISION_H_HIGH("Vision Hue High","260"),

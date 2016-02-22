@@ -17,8 +17,15 @@ public class ShooterWheels extends PIDSubsystem {
 	public ShooterWheels() {
 		super(1.0, 0.0, 0.0);
 		motor = new Talon(RobotMap.pwmShooter);
+		motor.setInverted(true);
 	}
-
+	
+	public void setSpeed(double speed) {
+		if (!isEnabled()) {
+			motor.set(speed);
+		}
+	}
+	
 	public void start() {
 		this.getPIDController().enable();
 		Output.output(OutputLevel.PID, getName() + "-enabled", this.isEnabled());

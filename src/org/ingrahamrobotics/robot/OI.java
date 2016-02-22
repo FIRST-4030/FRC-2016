@@ -25,6 +25,7 @@ public class OI {
 	public Button testArm = new JoystickButton(joyTest, 4); // Y
 	public Button testArmZero = new JoystickButton(joyTest, 1); // A
 	public Button testShooter = new JoystickButton(joyTest, 5); // LB
+	public Button testCollect = new JoystickButton(joyTest, 3); // X
 	
 	public OI() {
 
@@ -33,6 +34,7 @@ public class OI {
 		testArm.toggleWhenPressed(new ArmManual());
 		testArmZero.whenReleased(new ArmZero());
 		testShooter.toggleWhenPressed(new ShooterManual());
+		testCollect.toggleWhenPressed(new Collect());
 	}
 }
 

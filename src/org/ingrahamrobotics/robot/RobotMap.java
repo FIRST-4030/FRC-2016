@@ -21,6 +21,7 @@ public class RobotMap {
 	public static final int pwmArm = 2;
 	public static final int pwmShooter = 3;
 	public static final int pwmKicker = 4;
+	public static final int pwmCollector = 5;
 	
 	// DIO
 	public static final int dioArmSwitch = 0;

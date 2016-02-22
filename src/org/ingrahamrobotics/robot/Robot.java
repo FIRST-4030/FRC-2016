@@ -28,6 +28,7 @@ public class Robot extends IterativeRobot {
 	public static final DriverCamera camDriver = new DriverCamera();
 	public static final TargetCamera camTarget = new TargetCamera();
 	public static final Sensors sensors = new Sensors();
+	public static final Collector collector = new Collector();
 	
 	public static OI oi;
 
