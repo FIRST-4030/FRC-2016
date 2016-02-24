@@ -34,5 +34,4 @@ public class RobotMap {
 	public static final int dioDriveLeftB = 5;
 	public static final int dioDriveRightA = 6;
 	public static final int dioDriveRightB = 7;
-
 }
