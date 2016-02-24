@@ -15,4 +15,16 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>edu.wpi.first.wpilib.plugins.core.nature.FRCProjectNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src-robottables</name>
+			<type>2</type>
+			<location>/Users/profplump/NetBeansProjects/RobotTables/src</location>
+		</link>
+		<link>
+			<name>src-robottables-api</name>
+			<type>2</type>
+			<location>/Users/profplump/NetBeansProjects/RobotTables-API/src/main/java</location>
+		</link>
+	</linkedResources>
 </projectDescription>
