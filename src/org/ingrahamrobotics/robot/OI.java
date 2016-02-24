@@ -19,6 +19,23 @@ public class OI {
 	public Joystick joyTest = new Joystick(RobotMap.joyTest);
 	
 	// Command buttons
+	/*
+	 * Ball stick:
+	 * Collect - 2 (Hat Bottom)
+	 * Shoot - 1 (Trigger)
+	 * Preset @ 0
+	 * Shooting @ 4, 3, 5
+	 * Zero @ 6
+	 * Negative Arm @ 11
+	 * 
+	 * Drive sticks:
+	 * Drive stick has macros for crossing postures
+	 * Access to all 8 postures, shortcuts for the 4 installed barriers (configured at runtime)
+	 * 
+	 * Other control notes:
+	 * Arm-height drive speed limit
+	 * Return to collect after shoot
+	 */
 	
 	// Test buttons
 	public Button testFire = new JoystickButton(joyTest, 6); // RB
