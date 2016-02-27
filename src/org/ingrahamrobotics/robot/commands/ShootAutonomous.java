@@ -13,7 +13,7 @@ public class ShootAutonomous extends CommandGroup {
 	 */
 
 	public ShootAutonomous() {
-		addSequential(new LowBarArm());
+		addSequential(new ArmPreset_Home());
 		//...
 		
 		addSequential(new AutoShoot());

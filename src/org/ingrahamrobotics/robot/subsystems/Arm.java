@@ -47,7 +47,7 @@ public class Arm extends PIDSubsystem {
 		Sensors.Sensor.ARM_ENCODER.reset();
 		ready = true;
 		Output.output(OutputLevel.PID, getName() + "-ready", ready);
-		this.set(Settings.Key.ARM_PRESET_COLLECT.getInt());
+		this.set(Settings.Key.ARM_PRESET_HOME.getInt());
 	}
 	
 	public boolean checkZero() {
