@@ -1,7 +1,6 @@
 package org.ingrahamrobotics.robot.subsystems;
 
 import org.ingrahamrobotics.robot.RobotMap;
-import org.ingrahamrobotics.robot.commands.DriverView;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
 
@@ -13,15 +12,15 @@ public class DriverCamera extends Subsystem {
     CameraServer server = null;
     
     public void initDefaultCommand() {
-        setDefaultCommand(new DriverView());
+        //setDefaultCommand(new Command());
     }
     
     public void start() {
     	if (server == null) {
     		server = CameraServer.getInstance();
+            server.setQuality(50);
+            server.startAutomaticCapture(RobotMap.usbDriverCamera);
     	}
-        server.setQuality(50);
-        server.startAutomaticCapture(RobotMap.usbDriverCamera);
 		Output.output(OutputLevel.SENSORS, getName() + "-camera", RobotMap.usbDriverCamera);
 		Output.output(OutputLevel.SENSORS, getName() + "-streaming", true);
     }

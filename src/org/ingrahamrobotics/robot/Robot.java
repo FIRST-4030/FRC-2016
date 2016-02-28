@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,43 +28,48 @@ public class Robot extends IterativeRobot {
 	public static final TargetCamera camTarget = new TargetCamera();
 	public static final Sensors sensors = new Sensors();
 	public static final Collector collector = new Collector();
-	
+
 	public static ArmRun armRun = new ArmRun();
-	
+
 	public static OI oi;
 
-    Command autonomousCommand;
-    SendableChooser chooser;
-
-    public void robotInit() {
+	public void robotInit() {
 		oi = new OI();
-		
+
+		// Dashboard support
 		Output.initInstance();
-        new Settings(Output.getRobotTables()).subscribeAndPublishDefaults();
-    }
-	
-    public void disabledInit(){
-    }
-	
+		new Settings(Output.getRobotTables()).subscribeAndPublishDefaults();
+
+		// Start the driver camera at robot init
+		try {
+			camDriver.start();
+		} catch (Exception e) {
+			System.err.println("Unable to start camera");
+		}
+	}
+
+	public void disabledInit() {
+	}
+
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 	}
 
-    public void autonomousInit() {
-    }
+	public void autonomousInit() {
+	}
 
-    public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
-    }
+	public void autonomousPeriodic() {
+		Scheduler.getInstance().run();
+	}
 
-    public void teleopInit() {
-    }
+	public void teleopInit() {
+	}
 
-    public void teleopPeriodic() {
-        Scheduler.getInstance().run();
-    }
-    
-    public void testPeriodic() {
-        LiveWindow.run();
-    }
+	public void teleopPeriodic() {
+		Scheduler.getInstance().run();
+	}
+
+	public void testPeriodic() {
+		LiveWindow.run();
+	}
 }
