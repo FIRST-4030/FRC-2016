@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 import org.ingrahamrobotics.robot.RobotMap;
-import org.ingrahamrobotics.robot.commands.TankDrive;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
 import org.ingrahamrobotics.robot.output.Settings;
@@ -19,6 +18,9 @@ public class Arm extends PIDSubsystem {
 		ready = false;
 		motor = new Talon(RobotMap.pwmArm);
 		motor.setInverted(true);
+		
+		// Consider a 5% error on-target
+		this.setPercentTolerance(5);
 	}
 
 	public void start() {
