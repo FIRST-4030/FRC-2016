@@ -5,7 +5,6 @@ import org.ingrahamrobotics.robot.commands.TankDrive;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
@@ -15,8 +14,6 @@ public class DriveBase extends Subsystem {
 	
 	Talon motorLeft = new Talon(RobotMap.pwmDriveLeft);
 	Talon motorRight = new Talon(RobotMap.pwmDriveRight);
-    Encoder encoderLeft = new Encoder(RobotMap.dioDriveLeftA, RobotMap.dioDriveLeftB);
-    Encoder encoderRight = new Encoder(RobotMap.dioDriveRightA, RobotMap.dioDriveRightB);
 
     private RobotDrive drive = new RobotDrive(motorLeft, motorRight);
 	

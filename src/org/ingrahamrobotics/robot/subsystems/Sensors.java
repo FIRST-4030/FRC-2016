@@ -19,11 +19,8 @@ public class Sensors extends Subsystem {
 	private static final DigitalInput armSwitch = new DigitalInput(
 			RobotMap.dioArmSwitch);
 	private static final Counter shooterEncoder = new Counter(RobotMap.dioShooter);
-	/*private static final Encoder driveLeftEncoder = new Encoder(
-			RobotMap.dioDriveLeftA, RobotMap.dioDriveLeftB);
-	private static final Encoder driveRightEncoder = new Encoder(
-			RobotMap.dioDriveRightA, RobotMap.dioDriveRightB);
-	*/
+	private static final Encoder driveLeftEncoder = new Encoder(RobotMap.dioDriveLeftA, RobotMap.dioDriveLeftB);
+	private static final Encoder driveRightEncoder = new Encoder(RobotMap.dioDriveRightA, RobotMap.dioDriveRightB);
 
 	public enum Sensor {
 		ARM_SWITCH(
@@ -32,10 +29,10 @@ public class Sensors extends Subsystem {
 			"Arm Encoder", armEncoder, SensorType.ENCODER),
 		SHOOTER_ENCODER(
 			"Shooter Speed", shooterEncoder, SensorType.COUNTER_RATE),
-		/*DRIVE_ENCODER_LEFT(
+		DRIVE_ENCODER_LEFT(
 			"Drive Encoder Left", driveLeftEncoder, SensorType.ENCODER),
 		DRIVE_ENCODER_RIGHT(
-			"Drive Encoder Right", driveRightEncoder, SensorType.ENCODER),*/
+			"Drive Encoder Right", driveRightEncoder, SensorType.ENCODER),
 		;
 
 		public final String name;
