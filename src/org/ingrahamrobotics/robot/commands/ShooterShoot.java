@@ -4,9 +4,9 @@ import org.ingrahamrobotics.robot.output.Settings;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class Shoot extends CommandGroup {
+public class ShooterShoot extends CommandGroup {
 	
-	public Shoot() {
+	public ShooterShoot() {
 		int wait = Settings.Key.KICKER_SHOOT_TIME.getInt();
 
 		// Spin up the shooter
@@ -14,10 +14,10 @@ public class Shoot extends CommandGroup {
 		addSequential(new ShooterWait());
 		
 		// Fire
-		addSequential(new Kick());
+		addSequential(new KickerKick());
 		addSequential(new Wait(wait));
 		
 		// Return to capture mode (but do not run)
-		addSequential(new Capture());
+		addSequential(new KickerCapture());
 	}
 }

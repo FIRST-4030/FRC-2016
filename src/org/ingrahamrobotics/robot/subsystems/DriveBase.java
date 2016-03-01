@@ -1,7 +1,7 @@
 package org.ingrahamrobotics.robot.subsystems;
 
 import org.ingrahamrobotics.robot.RobotMap;
-import org.ingrahamrobotics.robot.commands.TankDrive;
+import org.ingrahamrobotics.robot.commands.DriveTank;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
 
@@ -16,7 +16,7 @@ public class DriveBase extends Subsystem {
     private RobotDrive drive = new RobotDrive(motorLeft, motorRight);
 	
     public void initDefaultCommand() {
-        setDefaultCommand(new TankDrive());
+        setDefaultCommand(new DriveTank());
     }
     
     public DriveBase() {

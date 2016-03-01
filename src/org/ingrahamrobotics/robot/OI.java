@@ -52,7 +52,7 @@ public class OI {
 	public OI() {
 
 		// Test button commands
-		testDrive.whenReleased(new TestDrive());
+		testDrive.whenReleased(new DriveTest());
 
 		testArmUp.whenReleased(new ArmPreset_Up());
 		testArmDown.whenReleased(new ArmPreset_Down());
@@ -62,8 +62,8 @@ public class OI {
 		testArm.toggleWhenPressed(new ArmRun());
 		testArmZero.whenReleased(new ArmZero());
 
-		testFire.whenPressed(new Shoot());
+		testFire.whenPressed(new ShooterShoot());
 		testShooter.toggleWhenPressed(new ShooterRun());
-		testCollect.toggleWhenPressed(new Collect());
+		testCollect.toggleWhenPressed(new ShooterCollect());
 	}
 }

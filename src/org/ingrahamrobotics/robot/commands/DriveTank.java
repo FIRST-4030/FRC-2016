@@ -6,12 +6,12 @@ import org.ingrahamrobotics.robot.Robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class TankDrive extends Command {
+public class DriveTank extends Command {
 	
 	private Joystick left;
 	private Joystick right;
 		
-    public TankDrive() {
+    public DriveTank() {
         requires(Robot.drive);
     }
 

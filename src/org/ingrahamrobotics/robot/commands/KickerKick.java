@@ -5,12 +5,12 @@ import org.ingrahamrobotics.robot.output.Settings;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class Capture extends Command {
+public class KickerKick extends Command {
+	
 	private long done = 0;
 
-	public Capture() {
+	public KickerKick() {
     	requires(Robot.kicker);
-    	requires(Robot.shooter);
 	}
 
 	protected void initialize() {
@@ -19,7 +19,7 @@ public class Capture extends Command {
 	}
 	
 	protected void execute() {
-		Robot.kicker.capture();
+		Robot.kicker.kick();
 	}
 
 	protected boolean isFinished() {

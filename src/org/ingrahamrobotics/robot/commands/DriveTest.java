@@ -6,11 +6,11 @@ import org.ingrahamrobotics.robot.Robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class TestDrive extends Command {
+public class DriveTest extends Command {
 
 	private Joystick stick;
 
-	public TestDrive() {
+	public DriveTest() {
 		requires(Robot.drive);
 	}
 

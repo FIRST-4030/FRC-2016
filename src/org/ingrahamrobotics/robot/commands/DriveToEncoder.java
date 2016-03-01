@@ -1,18 +1,15 @@
 package org.ingrahamrobotics.robot.commands;
 
-import org.ingrahamrobotics.robot.Robot;
-import org.ingrahamrobotics.robot.output.Settings;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class Collect extends Command {
+public class DriveToEncoder extends Command {
 
-    public Collect() {
-    	requires(Robot.collector);
-    	requires(Robot.shooter);
+    public DriveToEncoder() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
@@ -21,9 +18,6 @@ public class Collect extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double speed = Settings.Key.COLLECT_SPEED.getDouble();
-    	Robot.shooter.setSpeed(speed);
-    	Robot.collector.set(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -33,13 +27,10 @@ public class Collect extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.shooter.stop();
-    	Robot.collector.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	this.end();
     }
 }
