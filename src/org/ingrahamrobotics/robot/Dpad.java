@@ -1,20 +1,19 @@
 package org.ingrahamrobotics.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Trigger;
 
-public class Triggers extends Trigger {
+public class Dpad extends Trigger {
 	
 	private Joystick joy;
-	private Hand hand;
+	private int index;
 	
-	public Triggers(Joystick joy, Hand hand) {
+	public Dpad(Joystick joy, int index) {
 		this.joy = joy;
-		this.hand = hand;
+		this.index = index;
 	}
     
     public boolean get() {
-    	return joy.getTrigger(hand);
+        return (joy.getPOV() == index);
     }
 }

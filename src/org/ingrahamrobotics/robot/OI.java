@@ -51,8 +51,8 @@ public class OI {
 	public Button testArmZero = new JoystickButton(joyTest, 9); // L-Stick
 	public Button testArm = new JoystickButton(joyTest, 10); // R-Stick
 	
-	public Trigger testArmInit = new Triggers(Hand.kLeft);
-	public Trigger testEncoderDrive = new Triggers(Hand.kRight);
+	public Trigger testArmInit = new Triggers(joyTest, Hand.kLeft);
+	public Trigger testEncoderDrive = new Triggers(joyTest, Hand.kRight);
 	
 	public OI() {
 
