@@ -10,6 +10,9 @@ import org.ingrahamrobotics.robot.output.Settings;
 
 public class Arm extends PIDSubsystem {
 
+	// Not configurable because this is a programming feature not a runtime feature
+	public static final int kTOLERANCE = 25;
+	
 	private Talon motor;
 	private boolean ready = false;
 
@@ -18,9 +21,7 @@ public class Arm extends PIDSubsystem {
 		ready = false;
 		motor = new Talon(RobotMap.pwmArm);
 		motor.setInverted(true);
-		
-		// Consider a 5% error on-target
-		this.setPercentTolerance(5);
+		this.setAbsoluteTolerance(kTOLERANCE);
 	}
 
 	public void start() {
@@ -40,7 +41,7 @@ public class Arm extends PIDSubsystem {
 	public void zero() {
 		stop();
 		ready = false;
-		Output.output(OutputLevel.PID, getName() + "-ready", ready);
+		ready();
 		
 		Sensors.Sensor.ARM_ENCODER.reset();
 		double speed = Settings.Key.ARM_ZERO_SPEED.getDouble();
@@ -50,7 +51,9 @@ public class Arm extends PIDSubsystem {
 	private void setReady() {
 		Sensors.Sensor.ARM_ENCODER.reset();
 		ready = true;
-		Output.output(OutputLevel.PID, getName() + "-ready", ready);
+		ready();
+
+		// Default to "home"
 		this.set(Settings.Key.ARM_PRESET_HOME.getInt());
 	}
 	
