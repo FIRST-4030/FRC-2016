@@ -8,30 +8,22 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class TankDrive extends Command {
 	
-	private static final boolean testMode = true;
-
-	private Joystick left = Robot.oi.joyLeft;
-	private Joystick right = Robot.oi.joyRight;
+	private Joystick left;
+	private Joystick right;
 		
     public TankDrive() {
         requires(Robot.drive);
     }
 
     protected void initialize() {
-    	if (testMode) {
-    		left = Robot.oi.joyTest;
-    		right = Robot.oi.joyTest;
-    		right.setAxisChannel(Joystick.AxisType.kZ, 5);
-    	}
+    	left = Robot.oi.joyLeft;
+    	right = Robot.oi.joyRight;
     }
 
     protected void execute() {
     	double leftVal = left.getY();
     	double rightVal = right.getY();
-    	if (testMode) {
-    		rightVal = right.getZ();
-    	}
-    	Robot.drive.drive(leftVal, rightVal);
+    	Robot.drive.tankDrive(leftVal, rightVal);
     }
 
     protected boolean isFinished() {

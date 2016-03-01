@@ -39,12 +39,12 @@ public class OI {
 	
 	// Test buttons
 	public Button testArmDown = new JoystickButton(joyTest, 1); // A
-	public Button testArmUp = new JoystickButton(joyTest, 2); // B
-	public Button testArmHome = new JoystickButton(joyTest, 3); // X
-	public Button testArmShoot = new JoystickButton(joyTest, 4); // Y	
+	public Button testArmHome = new JoystickButton(joyTest, 2); // B
+	public Button testArmShoot = new JoystickButton(joyTest, 3); // X
+	public Button testArmUp = new JoystickButton(joyTest, 4); // Y	
 	public Button testShooter = new JoystickButton(joyTest, 5); // LB
 	public Button testFire = new JoystickButton(joyTest, 6); // RB
-	//public Button foo = new JoystickButton(joyTest, 7); // Back
+	public Button testDrive = new JoystickButton(joyTest, 7); // Back
 	public Button testCollect = new JoystickButton(joyTest, 8); // Start
 	public Button testArmZero = new JoystickButton(joyTest, 9); // L-Stick
 	public Button testArm = new JoystickButton(joyTest, 10); // R-Stick
@@ -52,7 +52,8 @@ public class OI {
 	public OI() {
 
 		// Test button commands
-		testFire.whenPressed(new Shoot());
+		testDrive.whenReleased(new TestDrive());
+
 		testArmUp.whenReleased(new ArmPreset_Up());
 		testArmDown.whenReleased(new ArmPreset_Down());
 		testArmHome.whenReleased(new ArmPreset_Home());
@@ -61,6 +62,7 @@ public class OI {
 		testArm.toggleWhenPressed(new ArmRun());
 		testArmZero.whenReleased(new ArmZero());
 
+		testFire.whenPressed(new Shoot());
 		testShooter.toggleWhenPressed(new ShooterRun());
 		testCollect.toggleWhenPressed(new Collect());
 	}

@@ -5,16 +5,14 @@ import org.ingrahamrobotics.robot.commands.TankDrive;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveBase extends Subsystem {
 	
-	Talon motorLeft = new Talon(RobotMap.pwmDriveLeft);
-	Talon motorRight = new Talon(RobotMap.pwmDriveRight);
-
+	private Talon motorLeft = new Talon(RobotMap.pwmDriveLeft);
+	private Talon motorRight = new Talon(RobotMap.pwmDriveRight);
     private RobotDrive drive = new RobotDrive(motorLeft, motorRight);
 	
     public void initDefaultCommand() {
@@ -24,12 +22,8 @@ public class DriveBase extends Subsystem {
     public DriveBase() {
     	motorLeft.setInverted(true);
     }
-    
-    public void drive(GenericHID stick) {
-    	drive.arcadeDrive(stick);
-    }
 
-    public void drive(double left, double right) {
+    public void tankDrive(double left, double right) {
 		Output.output(OutputLevel.MOTORS, getName() + "-left", left);
 		Output.output(OutputLevel.MOTORS, getName() + "-right", right);
     	drive.tankDrive(left, right);
