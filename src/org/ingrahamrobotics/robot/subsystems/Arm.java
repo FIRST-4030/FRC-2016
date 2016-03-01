@@ -45,6 +45,7 @@ public class Arm extends PIDSubsystem {
 		
 		Sensors.Sensor.ARM_ENCODER.reset();
 		double speed = Settings.Key.ARM_ZERO_SPEED.getDouble();
+		Output.output(OutputLevel.PID, getName() + "-speed", speed);
 		motor.set(speed);
 	}
 	
