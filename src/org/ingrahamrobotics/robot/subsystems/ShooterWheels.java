@@ -10,7 +10,9 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 public class ShooterWheels extends PIDSubsystem {
 
+	// Not configurable because these are safety features not runtime features
 	public static final double kMIN_SHOOTER_SPEED = 0.1;
+	public static final double kTOLERANCE = 10.0;
 
 	private Talon motor;
 	
@@ -18,6 +20,7 @@ public class ShooterWheels extends PIDSubsystem {
 		super(1.0, 0.0, 0.0);
 		motor = new Talon(RobotMap.pwmShooter);
 		motor.setInverted(true);
+		this.setPercentTolerance(kTOLERANCE);
 	}
 	
 	public void setSpeed(double speed) {
