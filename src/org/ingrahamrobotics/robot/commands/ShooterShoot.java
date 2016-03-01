@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ShooterShoot extends CommandGroup {
 	
 	public ShooterShoot() {
-		int wait = Settings.Key.KICKER_SHOOT_TIME.getInt();
+		int wait = Settings.Key.KICKER_SHOOT.getInt();
 
 		// Spin up the shooter
 		addParallel(new ShooterRun());
