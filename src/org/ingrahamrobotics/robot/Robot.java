@@ -58,7 +58,7 @@ public class Robot extends IterativeRobot {
 		armRun = new ArmRun();
 		
 		// Autonomous support
-		//autoCmd = new ArmInit();
+		autoCmd = new ArmInit();
 	}
 
 	public void disabledInit() {
