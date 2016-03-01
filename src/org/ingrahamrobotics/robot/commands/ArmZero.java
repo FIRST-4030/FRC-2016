@@ -1,34 +1,39 @@
 package org.ingrahamrobotics.robot.commands;
 
 import org.ingrahamrobotics.robot.Robot;
+import org.ingrahamrobotics.robot.subsystems.Sensors;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class ArmZero extends Command {
 
-    public ArmZero() {
-    	requires(Robot.arm);
-    }
+	// Not configurable because this is a safety feature not a runtime setting
+	public static final int MIN_TICKS = -1000;
 
-    protected void initialize() {
-    }
+	public ArmZero() {
+		requires(Robot.arm);
+	}
 
-    protected void execute() {
-    	Robot.arm.zero();
-    }
+	protected void initialize() {
+		Robot.arm.zero();
+	}
 
-    protected boolean isFinished() {
-    	return Robot.arm.checkZero();
-    }
+	protected void execute() {
+		// Give up if we run down too far
+		if (Sensors.Sensor.ARM_ENCODER.getInt() < MIN_TICKS) {
+			this.cancel();
+		}
+	}
 
-    protected void end() {
-    	Robot.arm.stop();
-    }
+	protected boolean isFinished() {
+		return Robot.arm.ready();
+	}
 
-    protected void interrupted() {
-    	this.end();
-    }
+	protected void end() {
+		Robot.arm.stop();
+	}
+
+	protected void interrupted() {
+		this.end();
+	}
 }

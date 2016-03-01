@@ -40,22 +40,25 @@ public class Arm extends PIDSubsystem {
 	public void zero() {
 		stop();
 		ready = false;
+		Output.output(OutputLevel.PID, getName() + "-ready", ready);
+		
+		Sensors.Sensor.ARM_ENCODER.reset();
 		double speed = Settings.Key.ARM_ZERO_SPEED.getDouble();
 		motor.set(speed);
-		Output.output(OutputLevel.PID, getName() + "-ready", ready);
 	}
-
-	private void atZero() {
+	
+	private void setReady() {
 		Sensors.Sensor.ARM_ENCODER.reset();
 		ready = true;
 		Output.output(OutputLevel.PID, getName() + "-ready", ready);
 		this.set(Settings.Key.ARM_PRESET_HOME.getInt());
 	}
 	
-	public boolean checkZero() {
+	public boolean checkReady() {
 		boolean atZero = Sensors.Sensor.ARM_SWITCH.getBoolean();
 		if (!ready && atZero) {
-			atZero();
+			stop();
+			setReady();
 		}
 		return atZero;
 	}
@@ -81,7 +84,6 @@ public class Arm extends PIDSubsystem {
 
 	@Override
 	protected double returnPIDInput() {
-		checkZero();
 		return Sensors.Sensor.ARM_ENCODER.getDouble();
 	}
 
