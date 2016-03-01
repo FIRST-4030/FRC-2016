@@ -10,10 +10,10 @@ public class DriveToEncoder extends Command {
 
 	private int left;
 	private int right;
-	private int speed;
+	private double speed;
 	private boolean done;
 
-	public DriveToEncoder(int left, int right, int speed) {
+	public DriveToEncoder(int left, int right, double speed) {
 		requires(Robot.drive);
 		done = false;
 
@@ -40,7 +40,7 @@ public class DriveToEncoder extends Command {
 	}
 
 	private double calcSpeed(int target, int current) {
-		int retval = 0;
+		double retval = 0;
 		int tolerance = Settings.Key.DRIVE_TOLERANCE.getInt();
 
 		int err = target - current;

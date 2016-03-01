@@ -4,8 +4,10 @@ import org.ingrahamrobotics.robot.RobotMap;
 import org.ingrahamrobotics.robot.commands.*;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.Trigger;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -49,6 +51,9 @@ public class OI {
 	public Button testArmZero = new JoystickButton(joyTest, 9); // L-Stick
 	public Button testArm = new JoystickButton(joyTest, 10); // R-Stick
 	
+	public Trigger testArmInit = new Triggers(Hand.kLeft);
+	public Trigger testEncoderDrive = new Triggers(Hand.kRight);
+	
 	public OI() {
 
 		// Test button commands
@@ -65,5 +70,8 @@ public class OI {
 		testFire.whenPressed(new ShooterShoot());
 		testShooter.toggleWhenPressed(new ShooterRun());
 		testCollect.toggleWhenPressed(new ShooterCollect());
+		
+		testArmInit.whenInactive(new ArmInit());
+		testEncoderDrive.whenInactive(new DriveEncoderTest());
 	}
 }
