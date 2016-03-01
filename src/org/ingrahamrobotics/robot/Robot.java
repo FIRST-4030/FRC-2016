@@ -29,11 +29,17 @@ public class Robot extends IterativeRobot {
 	public static final Sensors sensors = new Sensors();
 	public static final Collector collector = new Collector();
 
-	public static ArmRun armRun = new ArmRun();
+	// Global commands
+	public static ArmRun armRun;
+	
+	// Autonomous support
+	private static Command autoCmd;
 
 	public static OI oi;
 
 	public void robotInit() {
+		
+		// Driver control
 		oi = new OI();
 
 		// Dashboard support
@@ -41,11 +47,18 @@ public class Robot extends IterativeRobot {
 		new Settings(Output.getRobotTables()).subscribeAndPublishDefaults();
 
 		// Start the driver camera at robot init
+		// This is not controllable and therefore does not have a related command
 		try {
 			camDriver.start();
 		} catch (Exception e) {
 			System.err.println("Unable to start camera");
 		}
+		
+		// Global commands
+		armRun = new ArmRun();
+		
+		// Autonomous support
+		//autoCmd = new ArmInit();
 	}
 
 	public void disabledInit() {
@@ -56,6 +69,9 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
+		if (autoCmd != null) {
+			autoCmd.start();
+		}
 	}
 
 	public void autonomousPeriodic() {
