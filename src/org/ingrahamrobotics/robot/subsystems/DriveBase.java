@@ -29,7 +29,7 @@ public class DriveBase extends Subsystem {
     	drive.tankDrive(left, right);
     }
     
-    protected void set(double left, double right) {
+    public void set(double left, double right) {
 		Output.output(OutputLevel.MOTORS, getName() + "-left", left);
 		Output.output(OutputLevel.MOTORS, getName() + "-right", right);
     	this.motorLeft.set(left);

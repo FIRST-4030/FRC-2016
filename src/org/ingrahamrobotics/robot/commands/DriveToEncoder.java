@@ -1,36 +1,81 @@
 package org.ingrahamrobotics.robot.commands;
 
+import org.ingrahamrobotics.robot.Robot;
+import org.ingrahamrobotics.robot.output.Settings;
+import org.ingrahamrobotics.robot.subsystems.Sensors;
+
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class DriveToEncoder extends Command {
 
-    public DriveToEncoder() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    }
+	private int left;
+	private int right;
+	private int speed;
+	private boolean done;
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	public DriveToEncoder(int left, int right, int speed) {
+		requires(Robot.drive);
+		done = false;
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    }
+		this.left = left;
+		this.right = right;
+		this.speed = Math.abs(speed);
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
+	protected void initialize() {
+		Robot.drive.stop();
+		Sensors.Sensor.DRIVE_ENCODER_LEFT.reset();
+		Sensors.Sensor.DRIVE_ENCODER_RIGHT.reset();
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	protected void execute() {
+		double speedLeft = calcSpeed(left, Sensors.Sensor.DRIVE_ENCODER_LEFT.getInt());
+		double speedRight = calcSpeed(right, Sensors.Sensor.DRIVE_ENCODER_RIGHT.getInt());
+		Robot.drive.set(speedLeft, speedRight);
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+		// Set the done flag when we stop moving
+		if (speedLeft == 0 && speedRight == 0) {
+			done = true;
+		}
+	}
+
+	private double calcSpeed(int target, int current) {
+		int retval = 0;
+		int tolerance = Settings.Key.DRIVE_TOLERANCE.getInt();
+
+		int err = target - current;
+		int errAbs = Math.abs(err);
+
+		// If we are off-target
+		if (errAbs > tolerance) {
+
+			// Run
+			retval = speed;
+
+			// Run backwards if we're beyond the target
+			if (err < 0) {
+				retval *= -1;
+			}
+
+			// Run slower near the target
+			double scaledTolerance = tolerance * Settings.Key.DRIVE_TSCALE.getDouble();
+			if (errAbs < scaledTolerance) {
+				retval *= Settings.Key.DRIVE_SSCALE.getDouble();
+			}
+		}
+
+		return retval;
+	}
+
+	protected boolean isFinished() {
+		return done;
+	}
+
+	protected void end() {
+		Robot.drive.stop();
+	}
+
+	protected void interrupted() {
+		this.end();
+	}
 }
