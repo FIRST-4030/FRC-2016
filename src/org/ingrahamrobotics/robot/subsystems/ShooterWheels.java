@@ -26,27 +26,32 @@ public class ShooterWheels extends PIDSubsystem {
 	public void setSpeed(double speed) {
 		if (!isEnabled()) {
 			motor.set(speed);
+			Output.output(OutputLevel.PID, getName() + "-speed", speed);
 		}
 	}
 	
 	public void start() {
 		this.getPIDController().enable();
-		Output.output(OutputLevel.PID, getName() + "-enabled", this.isEnabled());
+		this.isEnabled();
 	}
 
 	public void stop() {
 		this.getPIDController().disable();
+		this.isEnabled();
+
 		motor.disable();
-		Output.output(OutputLevel.PID, getName() + "-enabled", this.isEnabled());
+		Output.output(OutputLevel.PID, getName() + "-speed", 0);		
 	}
 
 	public void set(double setpoint) {
-		Output.output(OutputLevel.PID, getName() + "-setpoint", setpoint);
 		this.setSetpoint(setpoint);
+		Output.output(OutputLevel.PID, getName() + "-setpoint", setpoint);
 	}
 
 	public boolean isEnabled() {
-		return this.getPIDController().isEnabled();
+		boolean enabled = this.getPIDController().isEnabled();
+		Output.output(OutputLevel.PID, getName() + "-enabled", enabled);
+		return enabled;
 	}
 
 	public void updatePID() {
@@ -67,10 +72,9 @@ public class ShooterWheels extends PIDSubsystem {
 		if (output < kMIN_SHOOTER_SPEED) {
 			output = kMIN_SHOOTER_SPEED;
 		}
-		Output.output(OutputLevel.PID, getName() + "-enabled", this.isEnabled());
-		Output.output(OutputLevel.PID, getName() + "-speed", output);		
 		if (this.isEnabled()) {
 			motor.set(output);
+			Output.output(OutputLevel.PID, getName() + "-speed", output);		
 		}
 	}
 
