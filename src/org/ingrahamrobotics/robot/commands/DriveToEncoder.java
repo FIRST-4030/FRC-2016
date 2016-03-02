@@ -23,6 +23,7 @@ public class DriveToEncoder extends Command {
 	}
 
 	protected void initialize() {
+		done = false;
 		Robot.drive.stop();
 		Sensors.Sensor.DRIVE_ENCODER_LEFT.reset();
 		Sensors.Sensor.DRIVE_ENCODER_RIGHT.reset();
