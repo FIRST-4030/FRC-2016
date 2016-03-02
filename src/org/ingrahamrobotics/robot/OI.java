@@ -2,6 +2,7 @@ package org.ingrahamrobotics.robot;
 
 import org.ingrahamrobotics.robot.RobotMap;
 import org.ingrahamrobotics.robot.commands.*;
+import org.ingrahamrobotics.robot.output.Settings;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -54,6 +55,11 @@ public class OI {
 	public Trigger testArmInit = new Triggers(joyTest, Hand.kLeft);
 	public Trigger testEncoderDrive = new Triggers(joyTest, Hand.kRight);
 	
+	public Trigger testShooterFast = new Dpad(joyArm, 0);
+	public Trigger testShooterMed = new Dpad(joyArm, 2);
+	public Trigger testShooterSlow = new Dpad(joyArm, 4);
+	public Trigger testShooterDashboard = new Dpad(joyArm, 6);
+	
 	public OI() {
 
 		// Test button commands
@@ -73,5 +79,10 @@ public class OI {
 		
 		testArmInit.whenInactive(new ArmInit());
 		testEncoderDrive.whenInactive(new DriveEncoderTest());
+		
+		testShooterFast.whenInactive(new ShooterPreset(150));
+		testShooterFast.whenInactive(new ShooterPreset(100));
+		testShooterSlow.whenInactive(new ShooterPreset(50));
+		testShooterDashboard.whenInactive(new ShooterPreset(Settings.Key.SHOOTER_SPEED));
 	}
 }
