@@ -23,11 +23,10 @@ public class ShooterWheels extends PIDSubsystem {
 		this.setPercentTolerance(kTOLERANCE);
 	}
 	
-	public void setSpeed(double speed) {
-		if (!isEnabled()) {
-			motor.set(speed);
-			Output.output(OutputLevel.PID, getName() + "-speed", speed);
-		}
+	public void setPower(double speed) {
+		stop();
+		motor.set(speed);
+		Output.output(OutputLevel.PID, getName() + "-speed", speed);
 	}
 	
 	public void start() {

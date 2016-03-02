@@ -22,7 +22,7 @@ public class ShooterCollect extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double speed = Settings.Key.SHOOTER_COLLECT.getDouble();
-    	Robot.shooter.setSpeed(speed);
+    	Robot.shooter.setPower(speed);
     	Robot.collector.set(speed);
     }
 
