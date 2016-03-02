@@ -7,7 +7,7 @@ import org.ingrahamrobotics.robot.output.OutputLevel;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class DriverCamera extends Subsystem {
+public class CameraDriver extends Subsystem {
 
     CameraServer server = null;
     

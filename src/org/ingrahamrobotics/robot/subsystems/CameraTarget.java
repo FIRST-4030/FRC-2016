@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.vision.USBCamera;
 /**
  *
  */
-public class TargetCamera extends Subsystem {
+public class CameraTarget extends Subsystem {
 
 	private USBCamera cam = null;
 

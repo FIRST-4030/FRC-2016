@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.image.NIVisionException;
 import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
 
-public class Camera extends Subsystem
+public class CameraVisionImport extends Subsystem
 {
 	private ColorImage img = null;
 	private BinaryImage thresholdHSLImage = null;
-	private TargetCamera camera = null;
+	private CameraTarget camera = null;
 	private int imagenumber = 0;
 	private Target target = null;
 
