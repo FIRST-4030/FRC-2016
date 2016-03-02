@@ -4,9 +4,6 @@ import org.ingrahamrobotics.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class ShooterWait extends Command {
 	
     public ShooterWait() {

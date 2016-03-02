@@ -31,6 +31,7 @@ public class Robot extends IterativeRobot {
 
 	// Global commands
 	public static ArmRun armRun;
+	public static ShooterRun shooterRun;
 	
 	// Autonomous support
 	private static Command autoCmd;

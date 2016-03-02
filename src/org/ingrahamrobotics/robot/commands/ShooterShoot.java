@@ -10,7 +10,7 @@ public class ShooterShoot extends CommandGroup {
 		int wait = Settings.Key.KICKER_SHOOT.getInt();
 
 		// Spin up the shooter
-		addParallel(new ShooterRun());
+		addParallel(new ShooterPreset(Settings.Key.SHOOTER_SPEED));
 		addSequential(new ShooterWait());
 		
 		// Fire

@@ -4,26 +4,23 @@ import org.ingrahamrobotics.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ShooterRun extends Command {
-		
-    public ShooterRun() {
-        requires(Robot.shooter);
+public class ArmWait extends Command {
+	
+    public ArmWait() {
     }
 
     protected void initialize() {
-    	Robot.shooter.start();
     }
 
     protected void execute() {
-    	Robot.shooter.updatePID();
     }
-    
+
+    // Done when we're on-target according to the PID subsystem
     protected boolean isFinished() {
-        return false;
+		return Robot.arm.onTarget();
     }
 
     protected void end() {
-    	Robot.shooter.stop();
     }
 
     protected void interrupted() {

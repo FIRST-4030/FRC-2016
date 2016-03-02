@@ -5,43 +5,43 @@ import org.ingrahamrobotics.robot.output.Settings.Key;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ArmPreset extends Command {
+public class ShooterPreset extends Command {
 
 	private Key key;
-	private int target;
+	private int speed;
 
-	public ArmPreset(Key key) {
-		this.target = 0;
+	public ShooterPreset(Key key) {
+		this.speed = 0;
 		this.key = key;
 	}
 
-	public ArmPreset(int target) {
+	public ShooterPreset(int speed) {
+		this.speed = speed;
 		this.key = null;
-		this.target = target;
 	}
 
-	// This code uses Robot.arm to modify the arm setpoint
-	// The Robot.armRun command should *also* be running to control of the arm
-	// position
+	// This code uses Robot.shooter to modify the shooter setpoint
+	// The Robot.shooterRun command should *also* be running to control of the
+	// shooter speed
 	@Override
 	protected void initialize() {
-		if (Robot.armRun != null && !Robot.armRun.isRunning()) {
-			Robot.armRun.start();
+		if (Robot.shooterRun != null && !Robot.shooterRun.isRunning()) {
+			Robot.shooterRun.start();
 		}
 	}
 
 	@Override
 	protected void execute() {
-		int setpoint = target;
+		int setpoint = speed;
 		if (key != null) {
 			setpoint = key.getInt();
 		}
-		Robot.arm.set(setpoint);
+		Robot.shooter.set(setpoint);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return Robot.arm.onTarget();
+		return Robot.shooter.onTarget();
 	}
 
 	@Override
