@@ -81,7 +81,7 @@ public class OI {
 		testEncoderDrive.whenInactive(new DriveEncoderTest());
 		
 		testShooterFast.whenInactive(new ShooterPreset(150));
-		testShooterFast.whenInactive(new ShooterPreset(100));
+		testShooterMed.whenInactive(new ShooterPreset(100));
 		testShooterSlow.whenInactive(new ShooterPreset(50));
 		testShooterDashboard.whenInactive(new ShooterPreset(Settings.Key.SHOOTER_SPEED));
 	}
