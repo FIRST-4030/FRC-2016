@@ -1,7 +1,5 @@
 package org.ingrahamrobotics.robot.commands;
 
-import org.ingrahamrobotics.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 public class Wait extends Command {
