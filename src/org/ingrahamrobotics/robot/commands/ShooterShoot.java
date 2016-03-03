@@ -17,7 +17,10 @@ public class ShooterShoot extends CommandGroup {
 		addSequential(new KickerKick());
 		addSequential(new Wait(wait));
 		
-		// Return to capture mode (but do not run)
+		// Return to the kicker capture position
 		addSequential(new KickerCapture());
+		
+		// Drop the arm -- we don't have a ball
+		addSequential(new ArmPreset_Home());
 	}
 }

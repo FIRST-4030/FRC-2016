@@ -9,17 +9,21 @@ public class ShooterPreset extends Command {
 
 	private Key key;
 	private int speed;
+	private boolean done;
+	
+	private void init(Key key, int speed) {
+		requires(Robot.shooterPreset);
+		done = false;
+		this.key = key;
+		this.speed = speed;
+	}
 
 	public ShooterPreset(Key key) {
-		this.speed = 0;
-		this.key = key;
-		requires(Robot.shooterPreset);
+		init(key, 0);
 	}
 
 	public ShooterPreset(int speed) {
-		this.speed = speed;
-		this.key = null;
-		requires(Robot.shooterPreset);
+		init(null, speed);
 	}
 
 	// This code uses Robot.shooter to modify the shooter setpoint
@@ -38,11 +42,14 @@ public class ShooterPreset extends Command {
 			setpoint = key.getInt();
 		}
 		Robot.shooter.set(setpoint);
+		
+		// Only run once
+		done = true;
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return Robot.shooter.onTarget();
+		return done;
 	}
 
 	@Override

@@ -9,26 +9,32 @@ public class ArmPreset extends Command {
 
 	private Key key;
 	private int target;
+	private boolean done;
+
+	private void init(Key key, int target) {
+		requires(Robot.armPreset);
+		done = false;
+		this.key = key;
+		this.target = target;
+	}
 
 	public ArmPreset(Key key) {
-		this.target = 0;
-		this.key = key;
-		requires(Robot.armPreset);
+		this.init(key, 0);
 	}
 
 	public ArmPreset(int target) {
-		this.key = null;
-		this.target = target;
-		requires(Robot.armPreset);
+		this.init(null, target);
 	}
 
 	// This code uses Robot.arm to modify the arm setpoint
 	// The Robot.armRun command should *also* be running
 	@Override
 	protected void initialize() {
+
 		// Bail if the arm is not ready
 		if (!Robot.arm.ready()) {
 			System.err.println("ArmPreset started while arm not ready");
+			done = true;
 			return;
 		}
 
@@ -40,24 +46,26 @@ public class ArmPreset extends Command {
 
 	@Override
 	protected void execute() {
-		
-		// Bail if the arm is not ready
-		if (!Robot.arm.ready()) {
-			System.err.println("ArmPreset running while arm not ready");
+
+		// Error bypass
+		if (done) {
 			return;
 		}
-		
+
 		// Use the integer or parameter setpoint
 		int setpoint = target;
 		if (key != null) {
 			setpoint = key.getInt();
 		}
 		Robot.arm.set(setpoint);
+
+		// Only run one
+		done = true;
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return Robot.arm.onTarget();
+		return done;
 	}
 
 	@Override
