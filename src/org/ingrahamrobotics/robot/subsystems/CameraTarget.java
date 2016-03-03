@@ -9,15 +9,12 @@ import com.ni.vision.NIVision;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.vision.USBCamera;
 
-/**
- *
- */
 public class CameraTarget extends Subsystem {
 
-	private USBCamera cam = null;
+	private USBCamera cam;
 
 	public void initDefaultCommand() {
-		// setDefaultCommand(new MySpecialCommand());
+		// No default command
 	}
 
 	public void start() {

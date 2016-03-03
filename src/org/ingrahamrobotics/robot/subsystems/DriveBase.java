@@ -10,36 +10,51 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveBase extends Subsystem {
-	
+
+	// Not configurable because these are safety feature not runtime features
+	public static final int kARM_TRAVEL_LIMIT = 3000;
+	public static final double kARM_TRAVEL_SCALE = 0.5;
+
 	private Talon motorLeft = new Talon(RobotMap.pwmDriveLeft);
 	private Talon motorRight = new Talon(RobotMap.pwmDriveRight);
-    private RobotDrive drive = new RobotDrive(motorLeft, motorRight);
-	
-    public void initDefaultCommand() {
-        setDefaultCommand(new DriveTank());
-    }
-    
-    public DriveBase() {
-    	motorLeft.setInverted(true);
-    }
+	private RobotDrive drive = new RobotDrive(motorLeft, motorRight);
 
-    public void tankDrive(double left, double right) {
+	public void initDefaultCommand() {
+		setDefaultCommand(new DriveTank());
+	}
+
+	public DriveBase() {
+		motorLeft.setInverted(true);
+	}
+
+	public void tankDrive(double left, double right) {
+
+		// Scale tank drive speeds to half when the arm is high
+		if (Sensors.Sensor.ARM_ENCODER.getInt() > kARM_TRAVEL_LIMIT) {
+			Output.output(OutputLevel.MOTORS, getName() + "-slow", true);
+			left *= kARM_TRAVEL_SCALE;
+			right *= kARM_TRAVEL_SCALE;
+		} else {
+			Output.output(OutputLevel.MOTORS, getName() + "-slow", false);
+		}
+
+		// Drive
 		Output.output(OutputLevel.MOTORS, getName() + "-left", left);
 		Output.output(OutputLevel.MOTORS, getName() + "-right", right);
-    	drive.tankDrive(left, right);
-    }
-    
-    public void set(double left, double right) {
+		drive.tankDrive(left, right);
+	}
+
+	public void set(double left, double right) {
 		Output.output(OutputLevel.MOTORS, getName() + "-left", left);
 		Output.output(OutputLevel.MOTORS, getName() + "-right", right);
-    	this.motorLeft.set(left);
-    	this.motorRight.set(right);
-    }
-    
-    public void stop() {
+		this.motorLeft.set(left);
+		this.motorRight.set(right);
+	}
+
+	public void stop() {
 		Output.output(OutputLevel.MOTORS, getName() + "-left", 0);
 		Output.output(OutputLevel.MOTORS, getName() + "-right", 0);
-    	motorLeft.disable();
-    	motorRight.disable();
-    }
+		motorLeft.disable();
+		motorRight.disable();
+	}
 }

@@ -22,7 +22,7 @@ public class Collector extends Subsystem {
 	}
 	
     public void initDefaultCommand() {
-        //setDefaultCommand(new MySpecialCommand());
+    	// No default command
     }
 }
 

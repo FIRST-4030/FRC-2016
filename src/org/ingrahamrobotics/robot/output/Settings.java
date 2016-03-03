@@ -25,7 +25,7 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
 
         ARM_PRESET_DOWN("Arm Preset: Down", "-1200"),
         ARM_PRESET_HOME("Arm Preset: Home", "-200"),
-        ARM_PRESET_SHOOT("Arm Preset: Shoot", "2000"),
+        ARM_PRESET_SHOOT("Arm Preset: Shoot", "2500"),
         ARM_PRESET_UP("Arm Preset: Up", "4500"),
 
         SHOOTER_PID_P("Shooter: P", "0.01"),
@@ -46,7 +46,7 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         VISION_H_LOW("Vision: H Min","200"),
         VISION_H_HIGH("Vision: H Max","260"),
         VISION_S_LOW("Vision: S Min","60"),
-        VISION_S_HIGH("Vision: S Mac","255"),
+        VISION_S_HIGH("Vision: S Max","255"),
         VISION_L_LOW("Vision: L Min","60"),
         VISION_L_HIGH("Vision: L Max", "255"),
         

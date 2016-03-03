@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class CameraDriver extends Subsystem {
 
-    CameraServer server = null;
+    CameraServer server;
     
     public void initDefaultCommand() {
-        //setDefaultCommand(new Command());
+    	// No default command
     }
     
     public void start() {
