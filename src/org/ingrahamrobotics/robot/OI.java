@@ -55,10 +55,10 @@ public class OI {
 	public Trigger testArmInit = new Triggers(joyTest, Hand.kLeft);
 	public Trigger testEncoderDrive = new Triggers(joyTest, Hand.kRight);
 	
-	public Trigger testShooterFast = new Dpad(joyArm, 0);
-	public Trigger testShooterMed = new Dpad(joyArm, 2);
-	public Trigger testShooterSlow = new Dpad(joyArm, 4);
-	public Trigger testShooterDashboard = new Dpad(joyArm, 6);
+	public Trigger testShooterFast = new Dpad(joyTest, 0);
+	public Trigger testShooterMed = new Dpad(joyTest, 2);
+	public Trigger testShooterSlow = new Dpad(joyTest, 4);
+	public Trigger testShooterDashboard = new Dpad(joyTest, 6);
 	
 	public OI() {
 
