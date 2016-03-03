@@ -10,7 +10,7 @@ import org.ingrahamrobotics.robot.output.Settings;
 
 public class Arm extends PIDSubsystem {
 
-	// Not configurable because this is a programming feature not a runtime feature
+	// Not configurable because these are programming features not runtime features
 	public static final int kTOLERANCE = 25;
 	
 	private Talon motor;
@@ -72,6 +72,7 @@ public class Arm extends PIDSubsystem {
 	}
 	
 	public void set(double setpoint) {
+		start();
 		this.setSetpoint(setpoint);
 		Output.output(OutputLevel.PID, getName() + "-setpoint", setpoint);
 	}
