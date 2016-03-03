@@ -8,22 +8,22 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ShooterPreset extends Command {
 
 	private Key key;
-	private int speed;
+	private int target;
 	private boolean done;
 	
-	private void init(Key key, int speed) {
+	private void init(Key key, int target) {
 		requires(Robot.shooterPreset);
 		done = false;
 		this.key = key;
-		this.speed = speed;
-	}
+		this.target = target;
+ 	}
 
 	public ShooterPreset(Key key) {
 		init(key, 0);
 	}
 
-	public ShooterPreset(int speed) {
-		init(null, speed);
+	public ShooterPreset(int target) {
+		init(null, target);
 	}
 
 	// This code uses Robot.shooter to modify the shooter setpoint
@@ -37,7 +37,7 @@ public class ShooterPreset extends Command {
 
 	@Override
 	protected void execute() {
-		int setpoint = speed;
+		int setpoint = target;
 		if (key != null) {
 			setpoint = key.getInt();
 		}

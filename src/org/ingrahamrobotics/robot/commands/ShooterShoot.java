@@ -15,10 +15,12 @@ public class ShooterShoot extends CommandGroup {
 		// Fire
 		addSequential(new KickerKick());
 		addSequential(new KickerWait());
-		
-		// Return to the kicker capture position
 		addSequential(new KickerCapture());
-		// Drop the arm -- we don't have a ball		
+		
+		// Spin down
+		addSequential(new ShooterStop());
+		
+		// Drop the arm	
 		addSequential(new ArmPreset_Home());
 	}
 }

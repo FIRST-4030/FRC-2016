@@ -42,21 +42,23 @@ public class Robot extends IterativeRobot {
 		// Dashboard support
 		Output.initInstance();
 		new Settings(Output.getRobotTables()).subscribeAndPublishDefaults();
-
-		// Start the driver camera at robot init
-		// This is not controllable and therefore does not have a related command
+		
+		// Global commands
+		armRun = new ArmRun();
+		shooterRun = new ShooterRun();
+				
+		// Immediate init (no motion)
+		new ShooterStop();
+		
+		// Autonomous init (first motion)
+		autoCmd = new ArmInit();
+		
+		// The camera is not controllable and therefore does not have a related command
 		try {
 			camDriver.start();
 		} catch (Exception e) {
 			System.err.println("Unable to start camera");
 		}
-		
-		// Global commands
-		armRun = new ArmRun();
-		shooterRun = new ShooterRun();
-		
-		// Autonomous support
-		autoCmd = new ArmInit();
 	}
 
 	public void disabledInit() {
