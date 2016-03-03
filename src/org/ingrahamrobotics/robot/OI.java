@@ -5,10 +5,8 @@ import org.ingrahamrobotics.robot.commands.*;
 import org.ingrahamrobotics.robot.output.Settings;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.buttons.Trigger;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -21,24 +19,16 @@ public class OI {
 	public Joystick joyArm = new Joystick(RobotMap.joyArm);
 	public Joystick joyTest = new Joystick(RobotMap.joyTest);
 	
-	// Command buttons
-	/*
-	 * Ball stick:
-	 * Collect - 2 (Hat Bottom)
-	 * Shoot - 1 (Trigger)
-	 * Preset @ 0
-	 * Shooting @ 4, 3, 5
-	 * Zero @ 6
-	 * Negative Arm @ 11
-	 * 
-	 * Drive sticks:
-	 * Drive stick has macros for crossing postures
-	 * Access to all 8 postures, shortcuts for the 4 installed barriers (configured at runtime)
-	 * 
-	 * Other control notes:
-	 * Arm-height drive speed limit
-	 * Return to collect after shoot
-	 */
+	// Arm/Shooter buttons
+	public Button shoot = new JoystickButton(joyArm, 1);
+	public Button collect = new JoystickButton(joyArm, 2);
+	public Button armShoot = new JoystickButton(joyArm, 4);
+	public Button armUp = new JoystickButton(joyArm, 5);
+	public Button armHome = new JoystickButton(joyArm, 6);
+	public Button armDown = new JoystickButton(joyArm, 11);
+	
+	// Drive buttons
+	/* Something about postures */
 	
 	// Test buttons
 	public Button testArmDown = new JoystickButton(joyTest, 1); // A
@@ -49,8 +39,8 @@ public class OI {
 	public Button testFire = new JoystickButton(joyTest, 6); // RB
 	public Button testDrive = new JoystickButton(joyTest, 7); // Back
 	public Button testCollect = new JoystickButton(joyTest, 8); // Start
-	public Button testArmZero = new JoystickButton(joyTest, 9); // L-Stick
-	public Button testArmInit = new JoystickButton(joyTest, 10); // R-Stick
+	public Button testArmInit = new JoystickButton(joyTest, 9); // L-Stick
+	public Button testArmRun = new JoystickButton(joyTest, 10); // R-Stick
 
 	/*
 	 * These were having some trouble; they triggered on ABXY
@@ -66,8 +56,18 @@ public class OI {
 	*/
 	
 	public OI() {
+		
+		// Arm/Shooter buttons
+		shoot.whenReleased(new ShooterShoot());
+		collect.whenReleased(new ShooterCollect());
+		armUp.whenReleased(new ArmPreset_Up());
+		armShoot.whenReleased(new ArmPreset_Shoot());
+		armHome.whenReleased(new ArmPreset_Home());
+		armDown.whenReleased(new ArmPreset_Down());
+		
+		// Drive buttons
 
-		// Test button commands
+		// Test buttons
 		testDrive.whenReleased(new DriveTest());
 
 		testArmUp.whenReleased(new ArmPreset_Up());
@@ -75,8 +75,8 @@ public class OI {
 		testArmHome.whenReleased(new ArmPreset_Home());
 		testArmShoot.whenReleased(new ArmPreset_Shoot());
 		
-		testArmInit.toggleWhenPressed(new ArmRun());
-		testArmZero.whenReleased(new ArmInit());
+		testArmRun.toggleWhenPressed(new ArmRun());
+		testArmInit.whenReleased(new ArmInit());
 
 		testFire.whenPressed(new ShooterShoot());
 		testShooter.whenReleased(new ShooterPreset(Settings.Key.SHOOTER_SPEED));
