@@ -13,11 +13,13 @@ public class ArmPreset extends Command {
 	public ArmPreset(Key key) {
 		this.target = 0;
 		this.key = key;
+		requires(Robot.armPreset);
 	}
 
 	public ArmPreset(int target) {
 		this.key = null;
 		this.target = target;
+		requires(Robot.armPreset);
 	}
 
 	// This code uses Robot.arm to modify the arm setpoint

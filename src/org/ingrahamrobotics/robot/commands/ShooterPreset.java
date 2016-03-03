@@ -13,11 +13,13 @@ public class ShooterPreset extends Command {
 	public ShooterPreset(Key key) {
 		this.speed = 0;
 		this.key = key;
+		requires(Robot.shooterPreset);
 	}
 
 	public ShooterPreset(int speed) {
 		this.speed = speed;
 		this.key = null;
+		requires(Robot.shooterPreset);
 	}
 
 	// This code uses Robot.shooter to modify the shooter setpoint

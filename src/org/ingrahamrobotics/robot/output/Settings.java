@@ -36,7 +36,7 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         DRIVE_TSCALE("Drive: TS", "2.5"),
         DRIVE_SSCALE("Drive: SS", "0.4"),
 
-        SHOOTER_SPEED("Shooter: Shoot Speed", "100"),
+        SHOOTER_SPEED("Shooter: Shoot Speed", "150"),
         SHOOTER_COLLECT("Shooter: Collect Speed", "-0.4"),
         
         KICKER_SPEED("Kicker: Speed", "0.75"),

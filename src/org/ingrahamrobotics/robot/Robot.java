@@ -21,9 +21,11 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class Robot extends IterativeRobot {
 
 	public static final Arm arm = new Arm();
+	public static final ArmPresetCtrl armPreset = new ArmPresetCtrl();
 	public static final DriveBase drive = new DriveBase();
 	public static final Kicker kicker = new Kicker();
 	public static final ShooterWheels shooter = new ShooterWheels();
+	public static final ShooterPresetCtrl shooterPreset = new ShooterPresetCtrl();
 	public static final CameraDriver camDriver = new CameraDriver();
 	public static final CameraTarget camTarget = new CameraTarget();
 	public static final Sensors sensors = new Sensors();
