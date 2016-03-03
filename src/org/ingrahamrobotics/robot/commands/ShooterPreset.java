@@ -23,13 +23,9 @@ public class ShooterPreset extends Command {
 	}
 
 	// This code uses Robot.shooter to modify the shooter setpoint
-	// The Robot.shooterRun command should *also* be running to control of the
-	// shooter speed
+	// The Robot.shooterRun command should *also* be running
 	@Override
 	protected void initialize() {
-		if (Robot.shooterRun == null) {
-			Robot.shooterRun = new ShooterRun();
-		}
 		if (!Robot.shooterRun.isRunning()) {
 			Robot.shooterRun.start();
 		}

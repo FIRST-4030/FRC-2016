@@ -14,6 +14,6 @@ public class Dpad extends Trigger {
 	}
     
     public boolean get() {
-        return (joy.getPOV() == index);
+        return (joy.getPOV(1) == index);
     }
 }

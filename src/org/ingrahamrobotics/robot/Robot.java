@@ -11,13 +11,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
- */
 public class Robot extends IterativeRobot {
 
 	public static final Arm arm = new Arm();
@@ -36,8 +29,9 @@ public class Robot extends IterativeRobot {
 	public static ShooterRun shooterRun;
 	
 	// Autonomous support
-	private static Command autoCmd;
+	private Command autoCmd;
 
+	// User input
 	public static OI oi;
 
 	public void robotInit() {
@@ -59,6 +53,7 @@ public class Robot extends IterativeRobot {
 		
 		// Global commands
 		armRun = new ArmRun();
+		shooterRun = new ShooterRun();
 		
 		// Autonomous support
 		autoCmd = new ArmInit();

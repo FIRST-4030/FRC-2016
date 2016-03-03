@@ -23,13 +23,16 @@ public class ArmPreset extends Command {
 	}
 
 	// This code uses Robot.arm to modify the arm setpoint
-	// The Robot.armRun command should *also* be running to control of the arm
-	// position
+	// The Robot.armRun command should *also* be running
 	@Override
 	protected void initialize() {
-		if (Robot.armRun == null) {
-			Robot.armRun = new ArmRun();
+		// Bail if the arm is not ready
+		if (!Robot.arm.ready()) {
+			System.err.println("ArmPreset started while arm not ready");
+			return;
 		}
+
+		// Start regulation as needed
 		if (!Robot.armRun.isRunning()) {
 			Robot.armRun.start();
 		}
@@ -37,6 +40,14 @@ public class ArmPreset extends Command {
 
 	@Override
 	protected void execute() {
+		
+		// Bail if the arm is not ready
+		if (!Robot.arm.ready()) {
+			System.err.println("ArmPreset running while arm not ready");
+			return;
+		}
+		
+		// Use the integer or parameter setpoint
 		int setpoint = target;
 		if (key != null) {
 			setpoint = key.getInt();

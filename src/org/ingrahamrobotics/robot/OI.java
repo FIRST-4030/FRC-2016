@@ -51,13 +51,19 @@ public class OI {
 	public Button testCollect = new JoystickButton(joyTest, 8); // Start
 	public Button testArmZero = new JoystickButton(joyTest, 9); // L-Stick
 	public Button testArmInit = new JoystickButton(joyTest, 10); // R-Stick
+
+	/*
+	 * These were having some trouble; they triggered on ABXY
+	 * We don't need them so just kill them for now
+	 * 
+	public Trigger foo = new Triggers(joyTest, Hand.kLeft);
+	public Trigger foo = new Triggers(joyTest, Hand.kRight);
 	
-	public Trigger testEncoderDrive = new Triggers(joyTest, Hand.kRight);
-	
-	public Trigger testShooterFast = new Dpad(joyTest, 0);
-	public Trigger testShooterMed = new Dpad(joyTest, 2);
-	public Trigger testShooterSlow = new Dpad(joyTest, 4);
-	public Trigger testShooterDashboard = new Dpad(joyTest, 6);
+	public Trigger foo = new Dpad(joyTest, 0);
+	public Trigger foo = new Dpad(joyTest, 2);
+	public Trigger foo = new Dpad(joyTest, 4);
+	public Trigger foo = new Dpad(joyTest, 6);
+	*/
 	
 	public OI() {
 
