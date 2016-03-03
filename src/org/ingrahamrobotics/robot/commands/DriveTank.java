@@ -35,6 +35,6 @@ public class DriveTank extends Command {
     }
 
 	protected void interrupted() {
-		this.end();
+		end();
 	}
 }

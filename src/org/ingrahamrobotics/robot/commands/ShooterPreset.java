@@ -58,6 +58,6 @@ public class ShooterPreset extends Command {
 
 	@Override
 	protected void interrupted() {
-		this.end();
+		end();
 	}
 }

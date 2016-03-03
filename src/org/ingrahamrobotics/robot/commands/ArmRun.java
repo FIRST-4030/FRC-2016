@@ -27,6 +27,6 @@ public class ArmRun extends Command {
     }
 
     protected void interrupted() {
-    	this.end();
+    	end();
     }
 }

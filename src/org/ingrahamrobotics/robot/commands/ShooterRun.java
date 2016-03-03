@@ -27,6 +27,6 @@ public class ShooterRun extends Command {
     }
 
     protected void interrupted() {
-    	this.end();
+    	end();
     }
 }

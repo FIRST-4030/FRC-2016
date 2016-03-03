@@ -24,6 +24,6 @@ public class ArmWait extends Command {
     }
 
     protected void interrupted() {
-    	this.end();
+    	end();
     }
 }

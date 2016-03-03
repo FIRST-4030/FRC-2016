@@ -47,8 +47,8 @@ public class DriveBase extends Subsystem {
 	public void set(double left, double right) {
 		Output.output(OutputLevel.MOTORS, getName() + "-left", left);
 		Output.output(OutputLevel.MOTORS, getName() + "-right", right);
-		this.motorLeft.set(left);
-		this.motorRight.set(right);
+		motorLeft.set(left);
+		motorRight.set(right);
 	}
 
 	public void stop() {

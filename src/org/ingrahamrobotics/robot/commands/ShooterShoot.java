@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ShooterShoot extends CommandGroup {
 	
 	public ShooterShoot() {
-		int wait = Settings.Key.KICKER_SHOOT.getInt();
 
 		// Spin up the shooter
 		addParallel(new ShooterPreset(Settings.Key.SHOOTER_SPEED));
@@ -15,12 +14,11 @@ public class ShooterShoot extends CommandGroup {
 		
 		// Fire
 		addSequential(new KickerKick());
-		addSequential(new Wait(wait));
+		addSequential(new KickerWait());
 		
 		// Return to the kicker capture position
 		addSequential(new KickerCapture());
-		
-		// Drop the arm -- we don't have a ball
+		// Drop the arm -- we don't have a ball		
 		addSequential(new ArmPreset_Home());
 	}
 }

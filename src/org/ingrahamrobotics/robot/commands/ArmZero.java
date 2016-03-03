@@ -7,14 +7,18 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ArmZero extends Command {
 
-	// Not configurable because this is a safety feature not a runtime feature
+	// Not configurable because these are safety features not a runtime features
 	public static final int kMIN_TICKS = -5000;
+	public static final int kTIMEOUT = 2000;
+	
+	private long timeout;
 
 	public ArmZero() {
 		requires(Robot.arm);
 	}
 
 	protected void initialize() {
+		timeout = System.currentTimeMillis() + kTIMEOUT;
 		Robot.arm.zero();
 	}
 
@@ -23,9 +27,18 @@ public class ArmZero extends Command {
 		
 		// Give up if we run down too far
 		if (Sensors.Sensor.ARM_ENCODER.getInt() < kMIN_TICKS) {
-			this.end();
-			this.cancel();
+			abort();
 		}
+		
+		// Give up if we run for too long
+		if (System.currentTimeMillis() > timeout) {
+			abort();
+		}
+	}
+	
+	private void abort() {
+		end();
+		this.cancel();
 	}
 
 	protected boolean isFinished() {
@@ -37,6 +50,6 @@ public class ArmZero extends Command {
 	}
 
 	protected void interrupted() {
-		this.end();
+		end();
 	}
 }

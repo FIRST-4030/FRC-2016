@@ -26,12 +26,12 @@ public class Arm extends PIDSubsystem {
 
 	public void start() {
 		this.getPIDController().enable();
-		this.isEnabled();
+		isEnabled();
 	}
 	
 	public void stop() {
 		this.getPIDController().disable();
-		this.isEnabled();
+		isEnabled();
 
 		motor.disable();
 		Output.output(OutputLevel.PID, getName() + "-speed", 0);
@@ -99,7 +99,7 @@ public class Arm extends PIDSubsystem {
 
 	@Override
 	protected void usePIDOutput(double output) {
-        if (this.isEnabled()) {
+        if (isEnabled()) {
             motor.set(output);
     		Output.output(OutputLevel.PID, getName() + "-speed", output);
         }
@@ -107,6 +107,6 @@ public class Arm extends PIDSubsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		//setDefaultCommand(new Command());
+		// No default command
 	}
 }

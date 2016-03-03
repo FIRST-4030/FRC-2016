@@ -19,11 +19,11 @@ public class ArmPreset extends Command {
 	}
 
 	public ArmPreset(Key key) {
-		this.init(key, 0);
+		init(key, 0);
 	}
 
 	public ArmPreset(int target) {
-		this.init(null, target);
+		init(null, target);
 	}
 
 	// This code uses Robot.arm to modify the arm setpoint
@@ -74,6 +74,6 @@ public class ArmPreset extends Command {
 
 	@Override
 	protected void interrupted() {
-		this.end();
+		end();
 	}
 }

@@ -31,12 +31,12 @@ public class ShooterWheels extends PIDSubsystem {
 	
 	public void start() {
 		this.getPIDController().enable();
-		this.isEnabled();
+		isEnabled();
 	}
 
 	public void stop() {
 		this.getPIDController().disable();
-		this.isEnabled();
+		isEnabled();
 
 		motor.disable();
 		Output.output(OutputLevel.PID, getName() + "-speed", 0);		
@@ -66,12 +66,14 @@ public class ShooterWheels extends PIDSubsystem {
 	}
 
 	@Override
-	protected void usePIDOutput(double output) {		
+	protected void usePIDOutput(double output) {
+
 		// Ensure we always spin "forward" when enabled, as the encoder does not regulate direction
 		if (output < kMIN_SHOOTER_SPEED) {
 			output = kMIN_SHOOTER_SPEED;
 		}
-		if (this.isEnabled()) {
+		
+		if (isEnabled()) {
 			motor.set(output);
 			Output.output(OutputLevel.PID, getName() + "-speed", output);		
 		}
@@ -79,6 +81,6 @@ public class ShooterWheels extends PIDSubsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
+		// No default command
 	}
 }

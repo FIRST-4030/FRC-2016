@@ -31,6 +31,6 @@ public class KickerKick extends Command {
 	}
 
 	protected void interrupted() {
-		this.end();
+		end();
 	}
 }

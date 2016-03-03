@@ -34,6 +34,6 @@ public class DriveTest extends Command {
 	}
 
 	protected void interrupted() {
-		this.end();
+		end();
 	}
 }
