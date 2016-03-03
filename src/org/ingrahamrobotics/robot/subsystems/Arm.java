@@ -68,7 +68,7 @@ public class Arm extends PIDSubsystem {
 			stop();
 			setReady();
 		}
-		return atZero;
+		return ready;
 	}
 	
 	public void set(double setpoint) {

@@ -50,9 +50,8 @@ public class OI {
 	public Button testDrive = new JoystickButton(joyTest, 7); // Back
 	public Button testCollect = new JoystickButton(joyTest, 8); // Start
 	public Button testArmZero = new JoystickButton(joyTest, 9); // L-Stick
-	public Button testArm = new JoystickButton(joyTest, 10); // R-Stick
+	public Button testArmInit = new JoystickButton(joyTest, 10); // R-Stick
 	
-	public Trigger testArmInit = new Triggers(joyTest, Hand.kLeft);
 	public Trigger testEncoderDrive = new Triggers(joyTest, Hand.kRight);
 	
 	public Trigger testShooterFast = new Dpad(joyTest, 0);
@@ -70,15 +69,12 @@ public class OI {
 		testArmHome.whenReleased(new ArmPreset_Home());
 		testArmShoot.whenReleased(new ArmPreset_Shoot());
 		
-		testArm.toggleWhenPressed(new ArmRun());
-		testArmZero.whenReleased(new ArmZero());
+		testArmInit.toggleWhenPressed(new ArmRun());
+		testArmZero.whenReleased(new ArmInit());
 
 		testFire.whenPressed(new ShooterShoot());
 		testShooter.toggleWhenPressed(new ShooterRun());
 		testCollect.toggleWhenPressed(new ShooterCollect());
-		
-		testArmInit.whenInactive(new ArmInit());
-		testEncoderDrive.whenInactive(new DriveEncoderTest());
 		
 		testShooterFast.whenInactive(new ShooterPreset(150));
 		testShooterMed.whenInactive(new ShooterPreset(100));

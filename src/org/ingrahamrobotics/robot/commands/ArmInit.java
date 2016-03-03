@@ -13,11 +13,11 @@ public class ArmInit extends CommandGroup {
 		addSequential(new ArmZero());
 	}
 	
-	// If zeroing worked the setpoint will be "home" and we can start regulation
+	// If zeroing worked we can start regulation
 	@Override
 	protected void end() {
 		if (Robot.arm.ready()) {
-			Robot.armRun.start();
+			new ArmPreset_Home();
 		}
 	}
 }

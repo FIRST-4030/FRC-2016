@@ -5,6 +5,6 @@ import org.ingrahamrobotics.robot.output.Settings;
 public class ArmPreset_Shoot extends ArmPreset {
 
 	public ArmPreset_Shoot() {
-		super(Settings.Key.ARM_PRESET_UP);
+		super(Settings.Key.ARM_PRESET_SHOOT);
 	}
 }

@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ArmZero extends Command {
 
 	// Not configurable because this is a safety feature not a runtime feature
-	public static final int kMIN_TICKS = -1000;
+	public static final int kMIN_TICKS = -5000;
 
 	public ArmZero() {
 		requires(Robot.arm);
@@ -19,6 +19,8 @@ public class ArmZero extends Command {
 	}
 
 	protected void execute() {
+		Robot.arm.checkReady();
+		
 		// Give up if we run down too far
 		if (Sensors.Sensor.ARM_ENCODER.getInt() < kMIN_TICKS) {
 			this.end();
