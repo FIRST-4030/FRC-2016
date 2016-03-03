@@ -27,7 +27,10 @@ public class ArmPreset extends Command {
 	// position
 	@Override
 	protected void initialize() {
-		if (Robot.armRun != null && !Robot.armRun.isRunning()) {
+		if (Robot.armRun == null) {
+			Robot.armRun = new ArmRun();
+		}
+		if (!Robot.armRun.isRunning()) {
 			Robot.armRun.start();
 		}
 	}

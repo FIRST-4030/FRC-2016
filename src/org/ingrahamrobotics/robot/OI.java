@@ -73,12 +73,7 @@ public class OI {
 		testArmZero.whenReleased(new ArmInit());
 
 		testFire.whenPressed(new ShooterShoot());
-		testShooter.toggleWhenPressed(new ShooterRun());
+		testShooter.whenReleased(new ShooterPreset(Settings.Key.SHOOTER_SPEED));
 		testCollect.toggleWhenPressed(new ShooterCollect());
-		
-		testShooterFast.whenInactive(new ShooterPreset(150));
-		testShooterMed.whenInactive(new ShooterPreset(100));
-		testShooterSlow.whenInactive(new ShooterPreset(50));
-		testShooterDashboard.whenInactive(new ShooterPreset(Settings.Key.SHOOTER_SPEED));
 	}
 }

@@ -27,7 +27,10 @@ public class ShooterPreset extends Command {
 	// shooter speed
 	@Override
 	protected void initialize() {
-		if (Robot.shooterRun != null && !Robot.shooterRun.isRunning()) {
+		if (Robot.shooterRun == null) {
+			Robot.shooterRun = new ShooterRun();
+		}
+		if (!Robot.shooterRun.isRunning()) {
 			Robot.shooterRun.start();
 		}
 	}
