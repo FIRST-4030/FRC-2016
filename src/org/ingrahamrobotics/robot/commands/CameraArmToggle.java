@@ -6,26 +6,26 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class CameraArmToggle extends Command {
 
-	public CameraArmToggle() {
-		requires(Robot.cameraArm);
-	}
+    public CameraArmToggle() {
+    	requires(Robot.cameraArm);
+    }
 
-	protected void initialize() {
-		Robot.cameraArm.toggle();
-	}
+    protected void initialize() {
+    	Robot.cameraArm.toggle();
+    }
 
-	protected void execute() {
-	}
+    protected void execute() {
+    }
 
-	protected boolean isFinished() {
-		return true;
-	}
+    protected boolean isFinished() {
+        return true;
+    }
 
-	protected void end() {
-		Robot.cameraArm.down();
-	}
+    protected void end() {
+    	Robot.cameraArm.down();
+    }
 
-	protected void interrupted() {
-		end();
-	}
+    protected void interrupted() {
+    	end();
+    }
 }
