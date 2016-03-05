@@ -4,16 +4,13 @@ import org.ingrahamrobotics.robot.RobotMap;
 import org.ingrahamrobotics.robot.commands.DriveTank;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
+import org.ingrahamrobotics.robot.output.Settings;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveBase extends Subsystem {
-
-	// Not configurable because these are safety feature not runtime features
-	public static final int kARM_TRAVEL_LIMIT = 3000;
-	public static final double kARM_TRAVEL_SCALE = 0.5;
 
 	private Talon motorLeft = new Talon(RobotMap.pwmDriveLeft);
 	private Talon motorRight = new Talon(RobotMap.pwmDriveRight);
@@ -30,10 +27,10 @@ public class DriveBase extends Subsystem {
 	public void tankDrive(double left, double right) {
 
 		// Scale tank drive speeds to half when the arm is high
-		if (Sensors.Sensor.ARM_ENCODER.getInt() > kARM_TRAVEL_LIMIT) {
+		if (Sensors.Sensor.ARM_ENCODER.getInt() > Settings.Key.ARM_SPEED_HEIGHT.getInt()) {
 			Output.output(OutputLevel.MOTORS, getName() + "-slow", true);
-			left *= kARM_TRAVEL_SCALE;
-			right *= kARM_TRAVEL_SCALE;
+			left *= Settings.Key.ARM_SPEED_FACTOR.getDouble();
+			right *= Settings.Key.ARM_SPEED_FACTOR.getDouble();
 		} else {
 			Output.output(OutputLevel.MOTORS, getName() + "-slow", false);
 		}

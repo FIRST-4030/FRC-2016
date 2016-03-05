@@ -27,6 +27,9 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         ARM_PRESET_HOME("Arm Preset: Home", "-200"),
         ARM_PRESET_SHOOT("Arm Preset: Shoot", "2500"),
         ARM_PRESET_UP("Arm Preset: Up", "4500"),
+        
+        ARM_SPEED_HEIGHT("Arm Speed: Height", "3000"),
+        ARM_SPEED_FACTOR("Arm Speed: Factor", "0.65"),
 
         SHOOTER_PID_P("Shooter: P", "0.01"),
         SHOOTER_PID_I("Shooter: I", "0.01"),
