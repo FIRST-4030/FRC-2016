@@ -9,9 +9,6 @@ import org.ingrahamrobotics.robot.output.OutputLevel;
 import org.ingrahamrobotics.robot.output.Settings;
 
 public class Arm extends PIDSubsystem {
-
-	// Not configurable because these are programming features not runtime features
-	public static final int kTOLERANCE = 25;
 	
 	private Talon motor;
 	private boolean ready = false;
@@ -21,7 +18,6 @@ public class Arm extends PIDSubsystem {
 		ready = false;
 		motor = new Talon(RobotMap.pwmArm);
 		motor.setInverted(true);
-		this.setAbsoluteTolerance(kTOLERANCE);
 	}
 
 	public void start() {

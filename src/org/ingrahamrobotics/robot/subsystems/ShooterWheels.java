@@ -12,7 +12,6 @@ public class ShooterWheels extends PIDSubsystem {
 
 	// Not configurable because these are safety features not runtime features
 	public static final double kMIN_SHOOTER_SPEED = 0.1;
-	public static final double kTOLERANCE = 10.0;
 	
 	// Not configurable because these are programming features not runtime features
 	public static final int kSTOP = 0;
@@ -23,7 +22,6 @@ public class ShooterWheels extends PIDSubsystem {
 		super(1.0, 0.0, 0.0);
 		motor = new Talon(RobotMap.pwmShooter);
 		motor.setInverted(true);
-		this.setPercentTolerance(kTOLERANCE);
 	}
 	
 	public void setPower(double speed) {

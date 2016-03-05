@@ -1,6 +1,8 @@
 package org.ingrahamrobotics.robot.commands;
 
 import org.ingrahamrobotics.robot.Robot;
+import org.ingrahamrobotics.robot.output.Output;
+import org.ingrahamrobotics.robot.output.OutputLevel;
 import org.ingrahamrobotics.robot.subsystems.Sensors;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -18,6 +20,7 @@ public class ShooterWait extends Command {
 	}
 
 	protected void execute() {
+    	Output.output(OutputLevel.PID, getName() + "-ready", ready);
 	}
 
 	// Done when we're at or above the PID setpoint for kREADY_MIN samples
@@ -46,6 +49,8 @@ public class ShooterWait extends Command {
 	}
 
 	protected void end() {
+    	ready = 0;
+    	Output.output(OutputLevel.PID, getName() + "-ready", ready);
 	}
 
 	protected void interrupted() {

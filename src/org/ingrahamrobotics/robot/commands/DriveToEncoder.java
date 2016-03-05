@@ -1,6 +1,8 @@
 package org.ingrahamrobotics.robot.commands;
 
 import org.ingrahamrobotics.robot.Robot;
+import org.ingrahamrobotics.robot.output.Output;
+import org.ingrahamrobotics.robot.output.OutputLevel;
 import org.ingrahamrobotics.robot.output.Settings;
 import org.ingrahamrobotics.robot.subsystems.Sensors;
 
@@ -30,22 +32,32 @@ public class DriveToEncoder extends Command {
 	}
 
 	protected void execute() {
-		double speedLeft = calcSpeed(left, Sensors.Sensor.DRIVE_ENCODER_LEFT.getInt());
-		double speedRight = calcSpeed(right, Sensors.Sensor.DRIVE_ENCODER_RIGHT.getInt());
+
+		// Bypass the broken left encoder
+		// double speedLeft = calcSpeed(left,
+		// Sensors.Sensor.DRIVE_ENCODER_LEFT.getInt(), "left");
+		double speedLeft = calcSpeed(left,
+				Sensors.Sensor.DRIVE_ENCODER_RIGHT.getInt(), "left");
+		double speedRight = calcSpeed(right,
+				Sensors.Sensor.DRIVE_ENCODER_RIGHT.getInt(), "right");
+		Output.output(OutputLevel.PID, getName() + "-left", speedLeft);
+		Output.output(OutputLevel.PID, getName() + "-right", speedRight);
 		Robot.drive.set(speedLeft, speedRight);
 
 		// Set the done flag when we stop moving
 		if (speedLeft == 0 && speedRight == 0) {
 			done = true;
 		}
+		Output.output(OutputLevel.PID, getName() + "-running", !done);
 	}
 
-	private double calcSpeed(int target, int current) {
+	private double calcSpeed(int target, int current, String name) {
 		double retval = 0;
 		int tolerance = Settings.Key.DRIVE_TOLERANCE.getInt();
 
 		int err = target - current;
 		int errAbs = Math.abs(err);
+		Output.output(OutputLevel.PID, getName() + name + "-err", err);
 
 		// If we are off-target
 		if (errAbs > tolerance) {
@@ -59,9 +71,16 @@ public class DriveToEncoder extends Command {
 			}
 
 			// Run slower near the target
-			double scaledTolerance = tolerance * Settings.Key.DRIVE_TSCALE.getDouble();
+			boolean scaled = false;
+			double scaledTolerance = tolerance
+					* Settings.Key.DRIVE_TSCALE.getDouble();
 			if (errAbs < scaledTolerance) {
+				scaled = true;
+			}
+			if (scaled) {
 				retval *= Settings.Key.DRIVE_SSCALE.getDouble();
+				Output.output(OutputLevel.PID, getName() + name + "-scaled",
+						scaled);
 			}
 		}
 
