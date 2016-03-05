@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ShooterPreset extends Command {
 
 	private Key key;
-	private int target;
+	private double target;
 	private boolean done;
 	
 	private void init(Key key, int target) {
@@ -37,9 +37,9 @@ public class ShooterPreset extends Command {
 			System.err.println("ShooterPreset called while shooterRun not running");
 		}
 
-		int setpoint = target;
+		double setpoint = target;
 		if (key != null) {
-			setpoint = key.getInt();
+			setpoint = key.getDouble();
 		}
 		Robot.shooter.set(setpoint);
 		done = true;

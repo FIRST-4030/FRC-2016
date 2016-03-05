@@ -28,9 +28,7 @@ public class ShooterWheels extends PIDSubsystem {
 	
 	public void setPower(double speed) {
 		stop();
-		if (speed == kSTOP) {
-			motor.disable();
-		} else {
+		if (speed != kSTOP) {
 			motor.set(speed);
 		}
 		Output.output(OutputLevel.PID, getName() + "-speed", speed);
@@ -50,8 +48,12 @@ public class ShooterWheels extends PIDSubsystem {
 	}
 
 	public void set(double setpoint) {
-		start();
-		this.setSetpoint(setpoint);
+		if (setpoint == kSTOP) {
+			stop();
+		} else {
+			start();
+			this.setSetpoint(setpoint);
+		}
 		Output.output(OutputLevel.PID, getName() + "-setpoint", setpoint);
 	}
 
