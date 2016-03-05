@@ -20,15 +20,19 @@ public class OI {
 	public Joystick joyTest = new Joystick(RobotMap.joyTest);
 	
 	// Arm/Shooter buttons
-	public Button shoot = new JoystickButton(joyArm, 1);
-	public Button collect = new JoystickButton(joyArm, 2);
-	public Button armShoot = new JoystickButton(joyArm, 4);
-	public Button armUp = new JoystickButton(joyArm, 5);
-	public Button armHome = new JoystickButton(joyArm, 6);
-	public Button armDown = new JoystickButton(joyArm, 11);
+	//Hank wants there to be 2 shoot buttons: one for shoot from the outerworks line 
+	//and one for shooting from next to the castle
+	public Button collect = new JoystickButton(joyArm, 1);
+	public Button shoot = new JoystickButton(joyArm, 2);
+	public Button armHome = new JoystickButton(joyArm, 5);
+	public Button armUp = new JoystickButton(joyArm, 6);
+	public Button armShoot = new JoystickButton(joyArm, 7);
+	public Button armDown = new JoystickButton(joyArm, 10);
 	
 	// Drive buttons
-	/* Something about postures */
+	public Button driverArmDownL = new JoystickButton(joyLeft, 1);
+	public Button driverArmDownR = new JoystickButton(joyRight, 1);
+	//The rest will be those ideally would be preset actions for the defenses
 	
 	// Test buttons
 	public Button testArmDown = new JoystickButton(joyTest, 1); // A
