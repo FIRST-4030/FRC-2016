@@ -1,7 +1,6 @@
 package org.ingrahamrobotics.robot.subsystems;
 
 import org.ingrahamrobotics.robot.RobotMap;
-import org.ingrahamrobotics.robot.commands.CameraArmRun;
 import org.ingrahamrobotics.robot.output.Settings;
 
 import edu.wpi.first.wpilibj.Talon;
@@ -43,7 +42,7 @@ public class CameraArm extends Subsystem {
 	}
 	
     public void initDefaultCommand() {
-        //setDefaultCommand(new CameraArmRun());
+        // No default command
     }
 }
 

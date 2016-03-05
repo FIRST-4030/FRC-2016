@@ -4,9 +4,9 @@ import org.ingrahamrobotics.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class CameraArmRun extends Command {
+public class CameraArmToggle extends Command {
 
-    public CameraArmRun() {
+    public CameraArmToggle() {
     	requires(Robot.cameraArm);
     }
 
