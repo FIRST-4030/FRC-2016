@@ -12,7 +12,7 @@ public class ShooterWheels extends PIDSubsystem {
 
 	// Not configurable because these are safety features not runtime features
 	public static final double kMIN_SHOOTER_SPEED = 0.1;
-	public static final double kTOLERANCE = 20.0;
+	public static final double kTOLERANCE = 10.0;
 	
 	// Not configurable because these are programming features not runtime features
 	public static final int kSTOP = 0;
