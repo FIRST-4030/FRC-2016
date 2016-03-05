@@ -2,7 +2,6 @@ package org.ingrahamrobotics.robot;
 
 import org.ingrahamrobotics.robot.RobotMap;
 import org.ingrahamrobotics.robot.commands.*;
-import org.ingrahamrobotics.robot.output.Settings;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -25,6 +24,7 @@ public class OI {
 	public Button armShoot = new JoystickButton(joyArm, 4);
 	public Button armUp = new JoystickButton(joyArm, 5);
 	public Button armHome = new JoystickButton(joyArm, 6);
+	public Button armInit = new JoystickButton(joyArm, 10);
 	public Button armDown = new JoystickButton(joyArm, 11);
 	
 	// Drive buttons
@@ -60,6 +60,8 @@ public class OI {
 		// Arm/Shooter buttons
 		shoot.whenReleased(new ShooterShoot());
 		collect.whenReleased(new ShooterCollect());
+		
+		armInit.whenReleased(new ArmInit());
 		armUp.whenReleased(new ArmPreset_Up());
 		armShoot.whenReleased(new ArmPreset_Shoot());
 		armHome.whenReleased(new ArmPreset_Home());
