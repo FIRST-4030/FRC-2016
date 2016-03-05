@@ -45,6 +45,9 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         KICKER_SPEED("Kicker: Speed", "0.75"),
         KICKER_TIME("Kicker: Kick Time", "300"),
         KICKER_SHOOT("Kicker: Shoot Time", "750"),
+        
+        CAMERA_ARM_UP("Camera Arm: Up", "0.25"),
+        CAMERA_ARM_DOWN("Camera Arm: Down", "0.75"),
 
         VISION_H_LOW("Vision: H Min","200"),
         VISION_H_HIGH("Vision: H Max","260"),
