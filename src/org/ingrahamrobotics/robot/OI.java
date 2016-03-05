@@ -44,6 +44,7 @@ public class OI {
 	public Button testDrive = new JoystickButton(joyTest, 7); // Back
 	public Button testCollect = new JoystickButton(joyTest, 8); // Start
 	public Button testArmInit = new JoystickButton(joyTest, 9); // L-Stick
+	public Button bTestArmInit = new JoystickButton(joyArm, 4);
 	public Button testEncoderDrive = new JoystickButton(joyTest, 10); // R-Stick
 
 	/*
@@ -63,7 +64,7 @@ public class OI {
 		
 		// Arm/Shooter buttons
 		shoot.whenReleased(new ShooterShoot());
-		collect.whenReleased(new ShooterCollect());
+		collect.toggleWhenPressed(new ShooterCollect());
 		armUp.whenReleased(new ArmPreset_Up());
 		armShoot.whenReleased(new ArmPreset_Shoot());
 		armHome.whenReleased(new ArmPreset_Home());
@@ -81,6 +82,7 @@ public class OI {
 		
 		testEncoderDrive.toggleWhenPressed(new DriveEncoderTest());
 		testArmInit.whenReleased(new ArmInit());
+		bTestArmInit.whenReleased(new ArmInit());
 
 		testFire.whenPressed(new ShooterShoot());
 		testShooter.whenReleased(new ShooterPreset(Settings.Key.SHOOTER_SPEED));
