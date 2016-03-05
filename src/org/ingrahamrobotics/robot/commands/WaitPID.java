@@ -28,7 +28,7 @@ public class WaitPID extends Command {
 		this.tolerance = tolerance;
 		this.minCount = minCount;
 		this.mode = mode;
-		
+
 		this.name = getName();
 		if (name != null) {
 			this.name += name;
