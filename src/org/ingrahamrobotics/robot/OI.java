@@ -2,7 +2,6 @@ package org.ingrahamrobotics.robot;
 
 import org.ingrahamrobotics.robot.RobotMap;
 import org.ingrahamrobotics.robot.commands.*;
-import org.ingrahamrobotics.robot.output.Settings;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
