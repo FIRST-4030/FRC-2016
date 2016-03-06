@@ -34,6 +34,9 @@ public class Robot extends IterativeRobot {
 
 	// User input
 	public static OI oi;
+	
+	// Global state
+	public static final boolean disableShooterPID = true;
 
 	public void robotInit() {
 

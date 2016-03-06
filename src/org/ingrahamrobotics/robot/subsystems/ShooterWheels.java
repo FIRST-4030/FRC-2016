@@ -1,5 +1,6 @@
 package org.ingrahamrobotics.robot.subsystems;
 
+import org.ingrahamrobotics.robot.Robot;
 import org.ingrahamrobotics.robot.RobotMap;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
@@ -80,6 +81,11 @@ public class ShooterWheels extends PIDSubsystem {
 		// regulate direction
 		if (output < kMIN_SHOOTER_SPEED) {
 			output = kMIN_SHOOTER_SPEED;
+		}
+
+		// Always run at 100% if PID is disabled
+		if (Robot.disableShooterPID) {
+			output = 1.0;
 		}
 
 		if (isEnabled()) {
