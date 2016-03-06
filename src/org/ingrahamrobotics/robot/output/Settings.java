@@ -41,6 +41,7 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
 
         SHOOTER_SPEED("Shooter: Shoot Speed", "150"),
         SHOOTER_COLLECT("Shooter: Collect Speed", "-0.4"),
+        SHOOTER_WAIT("Shooter: Wait Time", "750"),
         
         KICKER_SPEED("Kicker: Speed", "0.75"),
         KICKER_TIME("Kicker: Kick Time", "300"),

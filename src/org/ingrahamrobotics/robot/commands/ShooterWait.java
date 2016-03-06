@@ -3,6 +3,7 @@ package org.ingrahamrobotics.robot.commands;
 import org.ingrahamrobotics.robot.Robot;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
+import org.ingrahamrobotics.robot.output.Settings;
 import org.ingrahamrobotics.robot.subsystems.Sensors;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -11,12 +12,18 @@ public class ShooterWait extends Command {
 
 	public static final int kREADY_MIN = 3;
 	private int ready = 0;
+	private long doneTS;
 
 	public ShooterWait() {
 	}
 
 	protected void initialize() {
 		ready = 0;
+		
+		// Allow PID to be disabled
+		if (Robot.disableShooterPID) {
+			doneTS = System.currentTimeMillis() + Settings.Key.SHOOTER_WAIT.getInt();
+		}
 	}
 
 	protected void execute() {
@@ -25,6 +32,15 @@ public class ShooterWait extends Command {
 
 	// Done when we're at or above the PID setpoint for kREADY_MIN samples
 	protected boolean isFinished() {
+		
+		// Allow PID to be disabled
+		if (Robot.disableShooterPID) {
+			if (System.currentTimeMillis() > doneTS) {
+				return true;
+			}
+			return false;
+		}
+		
 		double actual = Sensors.Sensor.SHOOTER_ENCODER.getDouble();
 		double setpoint = Robot.shooter.getSetpoint();
 

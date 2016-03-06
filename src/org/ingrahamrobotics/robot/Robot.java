@@ -24,6 +24,9 @@ public class Robot extends IterativeRobot {
 	public static final Sensors sensors = new Sensors();
 	public static final Collector collector = new Collector();
 	public static final CameraArm cameraArm = new CameraArm();
+	
+	// Program config
+	public static final boolean disableShooterPID = true;
 
 	// Global commands
 	public static ArmRun armRun;
@@ -34,6 +37,9 @@ public class Robot extends IterativeRobot {
 
 	// User input
 	public static OI oi;
+	
+	// Global state
+	public static boolean cameraArmUp;
 
 	public void robotInit() {
 		
