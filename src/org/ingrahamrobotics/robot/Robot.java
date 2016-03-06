@@ -60,6 +60,9 @@ public class Robot extends IterativeRobot {
 		} catch (Exception e) {
 			System.err.println("Unable to start camera");
 		}
+		
+		// Start camera down
+		cameraArm.down();
 	}
 
 	public void disabledInit() {

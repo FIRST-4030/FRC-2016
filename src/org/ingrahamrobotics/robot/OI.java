@@ -2,7 +2,6 @@ package org.ingrahamrobotics.robot;
 
 import org.ingrahamrobotics.robot.RobotMap;
 import org.ingrahamrobotics.robot.commands.*;
-import org.ingrahamrobotics.robot.output.Settings;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -39,7 +38,7 @@ public class OI {
 	public Button testArmHome = new JoystickButton(joyTest, 2); // B
 	public Button testArmShoot = new JoystickButton(joyTest, 3); // X
 	public Button testArmUp = new JoystickButton(joyTest, 4); // Y	
-	public Button testShooter = new JoystickButton(joyTest, 5); // LB
+	public Button testCameraArm = new JoystickButton(joyTest, 5); // LB
 	public Button testFire = new JoystickButton(joyTest, 6); // RB
 	public Button testDrive = new JoystickButton(joyTest, 7); // Back
 	public Button testCollect = new JoystickButton(joyTest, 8); // Start
@@ -85,7 +84,7 @@ public class OI {
 		bTestArmInit.whenReleased(new ArmInit());
 
 		testFire.whenPressed(new ShooterShoot());
-		testShooter.whenReleased(new ShooterPreset(Settings.Key.SHOOTER_SPEED));
+		testCameraArm.whenReleased(new CameraArmToggle());
 		testCollect.toggleWhenPressed(new ShooterCollect());
 	}
 }
