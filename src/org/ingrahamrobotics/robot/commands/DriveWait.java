@@ -10,8 +10,7 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 public class DriveWait extends Command {
 
-	// Not configurable because these are programming features not runtime
-	// features
+	// Not configurable because these are programming features
 	public static final int kTOLERANCE = 50;
 	public static final int kMIN_SUCCESS = 2;
 
@@ -34,7 +33,7 @@ public class DriveWait extends Command {
 		for (DriveHalf drive : drives) {
 			waits[i++] = new DriveWaitHalf(drive, drive.fullName());
 		}
-		
+
 		Output.output(OutputLevel.PID, getName() + "-ready", false);
 	}
 
@@ -52,7 +51,7 @@ public class DriveWait extends Command {
 				break;
 			}
 		}
-		
+
 		Output.output(OutputLevel.PID, getName() + "-ready", done);
 		return done;
 	}

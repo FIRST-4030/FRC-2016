@@ -5,10 +5,10 @@ import org.ingrahamrobotics.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveStop extends Command {
-	
+
 	public DriveStop() {
 	}
-	
+
 	@Override
 	protected void initialize() {
 		Robot.drive.stop();
@@ -17,7 +17,7 @@ public class DriveStop extends Command {
 	@Override
 	protected void execute() {
 	}
-	
+
 	@Override
 	protected boolean isFinished() {
 		return true;

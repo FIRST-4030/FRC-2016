@@ -6,7 +6,7 @@ import org.ingrahamrobotics.robot.subsystems.DriveFull.HalfTarget;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveToTarget extends Command {
-	
+
 	HalfTarget targets[];
 
 	public DriveToTarget(HalfTarget targets[]) {
@@ -21,7 +21,7 @@ public class DriveToTarget extends Command {
 	protected void execute() {
 		Robot.drive.updatePID();
 	}
-	
+
 	protected boolean isFinished() {
 		return false;
 	}
