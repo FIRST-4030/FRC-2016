@@ -1,27 +1,28 @@
 package org.ingrahamrobotics.robot.commands;
 
 import org.ingrahamrobotics.robot.Robot;
-import org.ingrahamrobotics.robot.subsystems.DriveFull.HalfTarget;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveToTarget extends Command {
-	
-	HalfTarget targets[];
 
-	public DriveToTarget(HalfTarget targets[]) {
+	private double left;
+	private double right;
+
+	public DriveToTarget(double left, double right) {
 		requires(Robot.drive);
-		this.targets = targets;
+		this.left = left;
+		this.right = right;
 	}
 
 	protected void initialize() {
-		Robot.drive.set(targets);
+		Robot.drive.set(left, right);
 	}
 
 	protected void execute() {
 		Robot.drive.updatePID();
 	}
-	
+
 	protected boolean isFinished() {
 		return false;
 	}
