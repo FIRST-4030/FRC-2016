@@ -23,7 +23,6 @@ public class Robot extends IterativeRobot {
 	public static final CameraTarget camTarget = new CameraTarget();
 	public static final Sensors sensors = new Sensors();
 	public static final Collector collector = new Collector();
-	public static final CameraArm cameraArm = new CameraArm();
 	
 	// Program config
 	public static final boolean disableShooterPID = true;
@@ -66,9 +65,6 @@ public class Robot extends IterativeRobot {
 		} catch (Exception e) {
 			System.err.println("Unable to start camera");
 		}
-		
-		// Start camera down
-		cameraArm.down();
 	}
 
 	public void disabledInit() {
