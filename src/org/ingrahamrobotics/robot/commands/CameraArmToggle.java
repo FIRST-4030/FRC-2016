@@ -22,7 +22,6 @@ public class CameraArmToggle extends Command {
 	}
 
 	protected void end() {
-		Robot.cameraArm.down();
 	}
 
 	protected void interrupted() {

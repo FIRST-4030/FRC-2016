@@ -1,6 +1,9 @@
 package org.ingrahamrobotics.robot.subsystems;
 
+import org.ingrahamrobotics.robot.Robot;
 import org.ingrahamrobotics.robot.RobotMap;
+import org.ingrahamrobotics.robot.output.Output;
+import org.ingrahamrobotics.robot.output.OutputLevel;
 import org.ingrahamrobotics.robot.output.Settings;
 
 import edu.wpi.first.wpilibj.Talon;
@@ -9,10 +12,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class CameraArm extends Subsystem {
 
 	private Talon servo = new Talon(RobotMap.pwmCameraArm);
-	private boolean up = false;
 
 	public void toggle() {
-		if (up) {
+		Output.output(OutputLevel.MOTORS, getName() + "-wasUp", isUp());
+		if (isUp()) {
 			down();
 		} else {
 			up();
@@ -20,21 +23,23 @@ public class CameraArm extends Subsystem {
 	}
 
 	public boolean isUp() {
-		return up;
+		return Robot.cameraArmUp;
 	}
 
 	public void up() {
-		up = true;
+		Robot.cameraArmUp = true;
 		set(Settings.Key.CAMERA_ARM_UP.getDouble());
 	}
 
 	public void down() {
-		up = false;
+		Robot.cameraArmUp = false;
 		set(Settings.Key.CAMERA_ARM_DOWN.getDouble());
 	}
 
 	private void set(double setpoint) {
 		servo.set(setpoint);
+		Output.output(OutputLevel.MOTORS, getName() + "-setpoint", setpoint);
+		Output.output(OutputLevel.MOTORS, getName() + "-isUp", isUp());
 	}
 
 	public void stop() {
