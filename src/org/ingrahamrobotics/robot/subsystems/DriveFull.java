@@ -38,13 +38,14 @@ public class DriveFull extends PIDSubsystem {
 		drives = new DriveHalf[Side.values().length];
 
 		// Left-right tank drive
+		// Temporarily use the right encoder for both sides
 		drives[Side.kLEFT.i] = new DriveHalf(Side.kLEFT.name, RobotMap.pwmDriveLeft, true,
-				Sensors.Sensor.DRIVE_ENCODER_LEFT);
+				Sensors.Sensor.DRIVE_ENCODER_RIGHT);
 		drives[Side.kRIGHT.i] = new DriveHalf(Side.kRIGHT.name, RobotMap.pwmDriveRight, true,
 				Sensors.Sensor.DRIVE_ENCODER_RIGHT);
 		tank = new RobotDrive(drives[Side.kLEFT.i].getMotor(), drives[Side.kRIGHT.i].getMotor());
 	}
-	
+
 	public DriveHalf[] getDrives() {
 		return drives;
 	}
@@ -53,7 +54,7 @@ public class DriveFull extends PIDSubsystem {
 		tankEnable = true;
 		return new DriveTank();
 	}
-	
+
 	public void tankDrive(double left, double right) {
 
 		// Do not allow tank drive when we are in PID mode
