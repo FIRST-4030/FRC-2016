@@ -15,7 +15,7 @@ public class Robot extends IterativeRobot {
 
 	public static final Arm arm = new Arm();
 	public static final ArmPresetCtrl armPreset = new ArmPresetCtrl();
-	public static final DriveFull drive = new DriveFull();
+	public static final Drive2016 drive = new Drive2016();
 	public static final Kicker kicker = new Kicker();
 	public static final ShooterWheels shooter = new ShooterWheels();
 	public static final ShooterPresetCtrl shooterPreset = new ShooterPresetCtrl();
