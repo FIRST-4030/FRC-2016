@@ -13,20 +13,26 @@ public class WaitPID extends Command {
 	private int minCount;
 	private Mode mode;
 	private int count;
+	private String name;
 
 	public enum Mode {
 		kREL_MIN(), kREL_MAX(), kREL_RANGE(), kABS_MIN(), kABS_MAX, kABS_RANGE();
 	}
 
-	public WaitPID(PIDSubsystem pid, double tolerance, Mode mode) {
-		this(pid, tolerance, mode, 1);
+	public WaitPID(PIDSubsystem pid, double tolerance, Mode mode, int minCount) {
+		this(pid, tolerance, mode, minCount, null);
 	}
 
-	public WaitPID(PIDSubsystem pid, double tolerance, Mode mode, int minCount) {
+	public WaitPID(PIDSubsystem pid, double tolerance, Mode mode, int minCount, String name) {
 		this.pid = pid;
 		this.tolerance = tolerance;
 		this.minCount = minCount;
 		this.mode = mode;
+		
+		this.name = getName();
+		if (name != null) {
+			this.name += name;
+		}
 	}
 
 	protected void initialize() {
@@ -40,7 +46,7 @@ public class WaitPID extends Command {
 		// Ignore 0 setpoints (for some reason)
 		if (setpoint == 0) {
 			// Does this actually happen?
-			Output.output(OutputLevel.PID, getName() + "-wasZero", true);
+			Output.output(OutputLevel.PID, name + "-wasZero", true);
 			return;
 		}
 
@@ -96,7 +102,7 @@ public class WaitPID extends Command {
 	private double min(double setpoint) {
 		return range(setpoint, false);
 	}
-	
+
 	private double max(double setpoint) {
 		return range(setpoint, true);
 	}
@@ -107,7 +113,7 @@ public class WaitPID extends Command {
 			ready = true;
 		}
 
-		Output.output(OutputLevel.PID, getName() + "-ready", isReady());
+		Output.output(OutputLevel.PID, name + "-ready", isReady());
 		return ready;
 	}
 

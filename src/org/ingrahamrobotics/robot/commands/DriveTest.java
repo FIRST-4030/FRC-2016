@@ -4,36 +4,21 @@ package org.ingrahamrobotics.robot.commands;
 import org.ingrahamrobotics.robot.Robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveTest extends Command {
-
+public class DriveTest extends DriveTank {
+	
 	private Joystick stick;
-
-	public DriveTest() {
-		requires(Robot.drive);
-	}
-
+	
+	@Override
 	protected void initialize() {
 		stick =  Robot.oi.joyTest;
 		stick.setAxisChannel(Joystick.AxisType.kZ, 5);
 	}
 
+	@Override
 	protected void execute() {
 		double leftVal = stick.getY();
 		double rightVal = stick.getZ();
 		Robot.drive.tankDrive(leftVal, rightVal);
-	}
-
-	protected boolean isFinished() {
-		return false;
-	}
-
-	protected void end() {
-		Robot.drive.stop();
-	}
-
-	protected void interrupted() {
-		end();
 	}
 }
