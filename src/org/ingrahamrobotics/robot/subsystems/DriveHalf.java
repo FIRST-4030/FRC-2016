@@ -8,10 +8,10 @@ import org.ingrahamrobotics.robot.output.OutputLevel;
 import org.ingrahamrobotics.robot.subsystems.Sensors.Sensor;
 
 public class DriveHalf extends PIDSubsystem {
-	
-	// Not configurable because these are programming features not runtime features
+
+	// Not configurable because these are programming features
 	public static final int kSTOP = 0;
-	
+
 	private Talon motor;
 	private String name;
 	private Sensor sensor;
@@ -22,11 +22,11 @@ public class DriveHalf extends PIDSubsystem {
 		motor.setInverted(invert);
 		this.sensor = sensor;
 	}
-	
+
 	public Talon getMotor() {
 		return motor;
 	}
-	
+
 	public String fullName() {
 		return getName() + name;
 	}
@@ -35,7 +35,7 @@ public class DriveHalf extends PIDSubsystem {
 		this.getPIDController().enable();
 		isEnabled();
 	}
-	
+
 	public void stop() {
 		this.getPIDController().disable();
 		isEnabled();
@@ -43,7 +43,7 @@ public class DriveHalf extends PIDSubsystem {
 		motor.disable();
 		Output.output(OutputLevel.PID, fullName() + "-speed", 0);
 	}
-		
+
 	public void set(double setpoint) {
 		if (setpoint == kSTOP) {
 			stop();
@@ -54,13 +54,13 @@ public class DriveHalf extends PIDSubsystem {
 		}
 		Output.output(OutputLevel.PID, fullName() + "-setpoint", setpoint);
 	}
-	
+
 	public boolean isEnabled() {
 		boolean enabled = this.getPIDController().isEnabled();
 		Output.output(OutputLevel.PID, fullName() + "-enabled", enabled);
 		return enabled;
 	}
-	
+
 	public void setPower(double speed) {
 		stop();
 		if (speed != kSTOP) {
@@ -76,10 +76,10 @@ public class DriveHalf extends PIDSubsystem {
 
 	@Override
 	protected void usePIDOutput(double output) {
-        if (isEnabled()) {
-            motor.set(output);
-    		Output.output(OutputLevel.PID, fullName() + "-speed", output);
-        }
+		if (isEnabled()) {
+			motor.set(output);
+			Output.output(OutputLevel.PID, fullName() + "-speed", output);
+		}
 	}
 
 	@Override
