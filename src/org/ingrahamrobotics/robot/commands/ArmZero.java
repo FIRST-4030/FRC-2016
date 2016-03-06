@@ -10,7 +10,7 @@ public class ArmZero extends Command {
 	// Not configurable because these are safety features not a runtime features
 	public static final int kMIN_TICKS = -5000;
 	public static final int kTIMEOUT = 2000;
-	
+
 	private long timeout;
 
 	public ArmZero() {
@@ -24,18 +24,18 @@ public class ArmZero extends Command {
 
 	protected void execute() {
 		Robot.arm.checkReady();
-		
+
 		// Give up if we run down too far
 		if (Sensors.Sensor.ARM_ENCODER.getInt() < kMIN_TICKS) {
 			abort();
 		}
-		
+
 		// Give up if we run for too long
 		if (System.currentTimeMillis() > timeout) {
 			abort();
 		}
 	}
-	
+
 	private void abort() {
 		end();
 		this.cancel();

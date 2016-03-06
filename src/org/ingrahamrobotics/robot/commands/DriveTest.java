@@ -6,12 +6,12 @@ import org.ingrahamrobotics.robot.Robot;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class DriveTest extends DriveTank {
-	
+
 	private Joystick stick;
-	
+
 	@Override
 	protected void initialize() {
-		stick =  Robot.oi.joyTest;
+		stick = Robot.oi.joyTest;
 		stick.setAxisChannel(Joystick.AxisType.kZ, 5);
 	}
 

@@ -4,7 +4,7 @@ import org.ingrahamrobotics.robot.Robot;
 
 public class ShooterWait extends WaitPID {
 
-	// Not configurable because these are programming features not runtime features
+	// Not configurable because these are programming features
 	public static final double kTOLERANCE = 0;
 	public static final int kMIN_SUCCESS = 3;
 

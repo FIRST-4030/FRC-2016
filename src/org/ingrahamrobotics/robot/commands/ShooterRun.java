@@ -5,28 +5,28 @@ import org.ingrahamrobotics.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ShooterRun extends Command {
-		
-    public ShooterRun() {
-        requires(Robot.shooter);
-    }
 
-    protected void initialize() {
-    	Robot.shooter.start();
-    }
+	public ShooterRun() {
+		requires(Robot.shooter);
+	}
 
-    protected void execute() {
-    	Robot.shooter.updatePID();
-    }
-    
-    protected boolean isFinished() {
-        return false;
-    }
+	protected void initialize() {
+		Robot.shooter.start();
+	}
 
-    protected void end() {
-    	Robot.shooter.stop();
-    }
+	protected void execute() {
+		Robot.shooter.updatePID();
+	}
 
-    protected void interrupted() {
-    	end();
-    }
+	protected boolean isFinished() {
+		return false;
+	}
+
+	protected void end() {
+		Robot.shooter.stop();
+	}
+
+	protected void interrupted() {
+		end();
+	}
 }
