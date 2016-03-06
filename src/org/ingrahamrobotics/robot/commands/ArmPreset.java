@@ -9,7 +9,6 @@ public class ArmPreset extends Command {
 
 	private Key key;
 	private int target;
-	private boolean done;
 
 	private void init(Key key, int target) {
 		
@@ -17,7 +16,6 @@ public class ArmPreset extends Command {
 		// The Robot.armRun command should *also* be running
 		requires(Robot.armPreset);
 
-		done = false;
 		this.key = key;
 		this.target = target;
 	}
@@ -51,7 +49,6 @@ public class ArmPreset extends Command {
 			setpoint = key.getInt();
 		}
 		Robot.arm.set(setpoint);
-		done = true;
 	}
 
 	@Override
@@ -60,7 +57,7 @@ public class ArmPreset extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return done;
+		return true;
 	}
 
 	@Override
