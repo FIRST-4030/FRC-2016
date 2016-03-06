@@ -7,6 +7,7 @@ import org.ingrahamrobotics.robot.output.OutputLevel;
 import org.ingrahamrobotics.robot.output.Settings;
 
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 public class DriveFull extends PIDSubsystem {
@@ -43,11 +44,16 @@ public class DriveFull extends PIDSubsystem {
 				Sensors.Sensor.DRIVE_ENCODER_RIGHT);
 		tank = new RobotDrive(drives[Side.kLEFT.i].getMotor(), drives[Side.kRIGHT.i].getMotor());
 	}
-
+	
 	public DriveHalf[] getDrives() {
 		return drives;
 	}
 
+	private Command enableTankDrive() {
+		tankEnable = true;
+		return new DriveTank();
+	}
+	
 	public void tankDrive(double left, double right) {
 
 		// Do not allow tank drive when we are in PID mode
@@ -85,8 +91,7 @@ public class DriveFull extends PIDSubsystem {
 			drive.stop();
 		}
 
-		tankEnable = true;
-		new DriveTank();
+		enableTankDrive();
 	}
 
 	public void updatePID() {
@@ -126,6 +131,6 @@ public class DriveFull extends PIDSubsystem {
 	}
 
 	public void initDefaultCommand() {
-		this.setDefaultCommand(new DriveTank());
+		this.setDefaultCommand(enableTankDrive());
 	}
 }
