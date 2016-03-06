@@ -1,20 +1,15 @@
 package org.ingrahamrobotics.robot.subsystems;
 
-import org.ingrahamrobotics.robot.RobotMap;
-import org.ingrahamrobotics.robot.commands.DriveTank;
-import org.ingrahamrobotics.robot.output.Output;
-import org.ingrahamrobotics.robot.output.OutputLevel;
 import org.ingrahamrobotics.robot.output.Settings;
 
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 public class DriveFull extends PIDSubsystem {
 
-	private DriveHalf[] drives;
-	private RobotDrive tank;
-	private boolean tankEnable;
+	protected DriveHalf[] drives;
+	private boolean manualEnable;
+	private Class<? extends Command> manualCtrl;
 
 	public enum Side {
 		kLEFT(0, "Left"), kRIGHT(1, "Right");
@@ -32,48 +27,36 @@ public class DriveFull extends PIDSubsystem {
 		public double setpoint;
 	}
 
-	public DriveFull() {
+	public DriveFull(Class<? extends Command> manualCtrl) {
 		super(1.0, 0.0, 0.0);
-		tankEnable = true;
+		manualEnable = true;
 		drives = new DriveHalf[Side.values().length];
-
-		// Left-right tank drive
-		drives[Side.kLEFT.i] = new DriveHalf(Side.kLEFT.name, RobotMap.pwmDriveLeft, true,
-				Sensors.Sensor.DRIVE_ENCODER_LEFT);
-		drives[Side.kRIGHT.i] = new DriveHalf(Side.kRIGHT.name, RobotMap.pwmDriveRight, true,
-				Sensors.Sensor.DRIVE_ENCODER_RIGHT);
-		tank = new RobotDrive(drives[Side.kLEFT.i].getMotor(), drives[Side.kRIGHT.i].getMotor());
+		this.manualCtrl = manualCtrl;
 	}
-	
+
 	public DriveHalf[] getDrives() {
 		return drives;
 	}
 
-	private Command enableTankDrive() {
-		tankEnable = true;
-		return new DriveTank();
+	public boolean manualCtrlEnabled() {
+		return manualEnable;
 	}
-	
-	public void tankDrive(double left, double right) {
 
-		// Do not allow tank drive when we are in PID mode
-		if (!tankEnable) {
-			return;
+	private Command enableManualCtrl() {
+		manualEnable = true;
+		Command cmd = null;
+		if (manualCtrl != null) {
+			try {
+				cmd = manualCtrl.newInstance();
+			} catch (InstantiationException | IllegalAccessException e) {
+				e.printStackTrace();
+			}
 		}
+		return cmd;
+	}
 
-		// Scale tank drive speeds to half when the arm is high
-		if (Sensors.Sensor.ARM_ENCODER.getInt() > Settings.Key.ARM_SPEED_HEIGHT.getInt()) {
-			Output.output(OutputLevel.MOTORS, getName() + "-slow", true);
-			left *= Settings.Key.ARM_SPEED_FACTOR.getDouble();
-			right *= Settings.Key.ARM_SPEED_FACTOR.getDouble();
-		} else {
-			Output.output(OutputLevel.MOTORS, getName() + "-slow", false);
-		}
-
-		// Drive
-		Output.output(OutputLevel.MOTORS, getName() + "-left", left);
-		Output.output(OutputLevel.MOTORS, getName() + "-right", right);
-		tank.tankDrive(left, right);
+	private void disableManualCtrl() {
+		manualEnable = false;
 	}
 
 	public void start() {
@@ -82,7 +65,7 @@ public class DriveFull extends PIDSubsystem {
 			drive.start();
 		}
 
-		tankEnable = false;
+		disableManualCtrl();
 	}
 
 	public void stop() {
@@ -91,7 +74,7 @@ public class DriveFull extends PIDSubsystem {
 			drive.stop();
 		}
 
-		enableTankDrive();
+		enableManualCtrl();
 	}
 
 	public void updatePID() {
@@ -131,6 +114,6 @@ public class DriveFull extends PIDSubsystem {
 	}
 
 	public void initDefaultCommand() {
-		this.setDefaultCommand(enableTankDrive());
+		this.setDefaultCommand(enableManualCtrl());
 	}
 }
