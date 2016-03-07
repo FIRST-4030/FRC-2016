@@ -7,6 +7,7 @@ public enum OutputLevel {
     SHOOTER_PID(2, "Shooter PID", true),
     MOTORS(3, "Motors", true),
     SENSORS(4, "Sensors", true),
+    VISION(5, "Vision", true),
     AUTO(5, "Autonomous", true),
     HIGH(6, "Important", true);
 
