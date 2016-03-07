@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class DriveEncoderTest extends CommandGroup {
 
-	private static final int ticks = 2000;
+	private static final int ticks = 4000;
 
 	public DriveEncoderTest() {
 

@@ -33,6 +33,7 @@ public class OI {
 	// Drive buttons
 	public Button driverArmDownL = new JoystickButton(joyLeft, 1);
 	public Button driverArmDownR = new JoystickButton(joyRight, 1);
+	public Button drive = new JoystickButton(joyLeft, 2);
 	// The rest will be those ideally would be preset actions for the defenses
 
 	// Test buttons
@@ -63,6 +64,7 @@ public class OI {
 	public OI() {
 
 		// Arm/Shooter buttons
+		drive.whenReleased(new DriveTank());
 		shoot.whenReleased(new ShooterShoot());
 		collect.toggleWhenPressed(new ShooterCollect());
 		armUp.whenReleased(new ArmPreset_Up());

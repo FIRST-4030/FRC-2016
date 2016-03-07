@@ -48,6 +48,7 @@ public class DriveFull extends PIDSubsystem {
 		if (manualCtrl != null) {
 			try {
 				cmd = manualCtrl.newInstance();
+				cmd.start();
 			} catch (InstantiationException | IllegalAccessException e) {
 				e.printStackTrace();
 			}

@@ -84,6 +84,12 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopInit() {
+		try {
+			Command drive = driveCmd.newInstance();
+			drive.start();
+		} catch (InstantiationException | IllegalAccessException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void teleopPeriodic() {
