@@ -18,10 +18,10 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
 	 * Possible keys for input settings
 	 */
 	public static enum Key {
-        ARM_PID_P("Arm: P", "0.005"),
-        ARM_PID_I("Arm: I", "0.0005"),
+        ARM_PID_P("Arm: P", "0.008"),
+        ARM_PID_I("Arm: I", "0.0015"),
         ARM_PID_D("Arm: D", "0.0"),
-        ARM_ZERO_SPEED("Arm: Homing Speed", "-0.5"),
+        ARM_ZERO_SPEED("Arm: Homing Speed", "-0.65"),
 
         ARM_PRESET_DOWN("Arm Preset: Down", "-1200"),
         ARM_PRESET_HOME("Arm Preset: Home", "-200"),
@@ -35,21 +35,18 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         SHOOTER_PID_I("Shooter: I", "0.01"),
         SHOOTER_PID_D("Shooter: D", "0.00"),
         
-        DRIVE_TOLERANCE("Drive: T", "1000"),
-        DRIVE_TSCALE("Drive: TS", "2.5"),
-        DRIVE_SSCALE("Drive: SS", "0.4"),
+        DRIVE_PID_P("Drive: P", "0.0008"),
+        DRIVE_PID_I("Drive: I", "0.00"),
+        DRIVE_PID_D("Drive: D", "0.00"),
 
-        SHOOTER_SPEED("Shooter: Shoot Speed", "150"),
-        SHOOTER_COLLECT("Shooter: Collect Speed", "-0.4"),
-        SHOOTER_WAIT("Shooter: Wait Time", "750"),
+        SHOOTER_SPEED("Shooter: Shoot", "150"),
+        SHOOTER_COLLECT("Shooter: Collect", "-0.4"),
+        SHOOTER_WAIT("Shooter: Wait", "1000"),
         
         KICKER_SPEED("Kicker: Speed", "0.75"),
         KICKER_TIME("Kicker: Kick Time", "300"),
         KICKER_SHOOT("Kicker: Shoot Time", "750"),
         
-        CAMERA_ARM_UP("Camera Arm: Up", "0.25"),
-        CAMERA_ARM_DOWN("Camera Arm: Down", "0.75"),
-
         VISION_H_LOW("Vision: H Min","200"),
         VISION_H_HIGH("Vision: H Max","260"),
         VISION_S_LOW("Vision: S Min","60"),

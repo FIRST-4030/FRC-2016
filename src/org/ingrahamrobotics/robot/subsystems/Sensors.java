@@ -11,16 +11,16 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Sensors extends Subsystem {
-	
+
 	public static final int kRATE_PERIOD = 10;
-	
-	private static final Encoder armEncoder = new Encoder(RobotMap.dioArmA,
-			RobotMap.dioArmB);
-	private static final DigitalInput armSwitch = new DigitalInput(
-			RobotMap.dioArmSwitch);
+
+	private static final Encoder armEncoder = new Encoder(RobotMap.dioArmA, RobotMap.dioArmB);
+	private static final DigitalInput armSwitch = new DigitalInput(RobotMap.dioArmSwitch);
 	private static final Counter shooterEncoder = new Counter(RobotMap.dioShooter);
-	private static final Encoder driveLeftEncoder = new Encoder(RobotMap.dioDriveLeftA, RobotMap.dioDriveLeftB);
-	private static final Encoder driveRightEncoder = new Encoder(RobotMap.dioDriveRightA, RobotMap.dioDriveRightB);
+	private static final Encoder driveLeftEncoder = new Encoder(RobotMap.dioDriveLeftA,
+			RobotMap.dioDriveLeftB);
+	private static final Encoder driveRightEncoder = new Encoder(RobotMap.dioDriveRightA,
+			RobotMap.dioDriveRightB);
 
 	public enum Sensor {
 		ARM_SWITCH(
@@ -79,8 +79,7 @@ public class Sensors extends Subsystem {
 			try {
 				return Integer.parseInt(value);
 			} catch (NumberFormatException ex) {
-				System.err.println("Warning: Value '" + value + "' of '" + name
-						+ "' is not valid.");
+				System.err.println("Warning: Value '" + value + "' of '" + name + "' is not valid.");
 				return 0;
 			}
 		}
@@ -89,8 +88,7 @@ public class Sensors extends Subsystem {
 			try {
 				return Double.parseDouble(value);
 			} catch (NumberFormatException ex) {
-				System.err.println("Warning: Value '" + value + "' of '" + name
-						+ "' is not valid.");
+				System.err.println("Warning: Value '" + value + "' of '" + name + "' is not valid.");
 				return 0.0;
 			}
 		}
@@ -99,8 +97,7 @@ public class Sensors extends Subsystem {
 			try {
 				return Boolean.parseBoolean(value);
 			} catch (NumberFormatException ex) {
-				System.err.println("Warning: Value '" + value + "' of '" + name
-						+ "' is not valid.");
+				System.err.println("Warning: Value '" + value + "' of '" + name + "' is not valid.");
 				return false;
 			}
 		}
@@ -126,7 +123,7 @@ public class Sensors extends Subsystem {
 
 	public void update() {
 		long now = System.currentTimeMillis();
-		
+
 		for (Sensor sensor : Sensor.values()) {
 			boolean b;
 			int i;
@@ -165,10 +162,10 @@ public class Sensors extends Subsystem {
 			}
 		}
 	}
-	
+
 	private double calculateRate(Sensor sensor, long value, long now) {
 		double diffT = (now - sensor.lastTime);
-		
+
 		// Only update the rate every kRATE_PERIOD milliseconds
 		if (diffT < kRATE_PERIOD) {
 			return sensor.getDouble();

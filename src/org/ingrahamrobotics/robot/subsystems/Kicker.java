@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Kicker extends Subsystem {
-	
+
 	Talon motor = new Talon(RobotMap.pwmKicker);
 
 	@Override
@@ -26,8 +26,8 @@ public class Kicker extends Subsystem {
 		double speed = Settings.Key.KICKER_SPEED.getDouble();
 		set(-speed);
 	}
-	
-	private void set (double speed) {
+
+	private void set(double speed) {
 		Output.output(OutputLevel.MOTORS, getName() + "-speed", speed);
 		motor.set(speed);
 	}

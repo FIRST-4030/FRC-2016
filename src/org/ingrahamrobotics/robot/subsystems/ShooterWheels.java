@@ -11,20 +11,20 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 public class ShooterWheels extends PIDSubsystem {
 
-	// Not configurable because these are safety features not runtime features
+	// Not configurable because these are safety features
 	public static final double kMIN_SHOOTER_SPEED = 0.1;
-	
-	// Not configurable because these are programming features not runtime features
+
+	// Not configurable because these are programming features
 	public static final int kSTOP = 0;
 
 	private Talon motor;
-	
+
 	public ShooterWheels() {
 		super(1.0, 0.0, 0.0);
 		motor = new Talon(RobotMap.pwmShooter);
 		motor.setInverted(true);
 	}
-	
+
 	public void setPower(double speed) {
 		stop();
 		if (speed != kSTOP) {
@@ -32,7 +32,7 @@ public class ShooterWheels extends PIDSubsystem {
 		}
 		Output.output(OutputLevel.PID, getName() + "-speed", speed);
 	}
-	
+
 	public void start() {
 		this.getPIDController().enable();
 		isEnabled();
@@ -43,7 +43,7 @@ public class ShooterWheels extends PIDSubsystem {
 		isEnabled();
 
 		motor.disable();
-		Output.output(OutputLevel.PID, getName() + "-speed", 0);		
+		Output.output(OutputLevel.PID, getName() + "-speed", 0);
 	}
 
 	public void set(double setpoint) {
@@ -77,19 +77,20 @@ public class ShooterWheels extends PIDSubsystem {
 	@Override
 	protected void usePIDOutput(double output) {
 
-		// Ensure we always spin "forward" when enabled, as the encoder does not regulate direction
+		// Ensure we always spin "forward" when enabled, as the encoder does not
+		// regulate direction
 		if (output < kMIN_SHOOTER_SPEED) {
 			output = kMIN_SHOOTER_SPEED;
 		}
-		
-		// If our encoder is busted always run at 1.0
+
+		// Always run at 100% if PID is disabled
 		if (Robot.disableShooterPID) {
 			output = 1.0;
 		}
-		
+
 		if (isEnabled()) {
 			motor.set(output);
-			Output.output(OutputLevel.PID, getName() + "-speed", output);		
+			Output.output(OutputLevel.PID, getName() + "-speed", output);
 		}
 	}
 

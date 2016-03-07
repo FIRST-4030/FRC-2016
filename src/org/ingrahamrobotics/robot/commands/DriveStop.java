@@ -4,28 +4,30 @@ import org.ingrahamrobotics.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ShooterRun extends Command {
+public class DriveStop extends Command {
 
-	public ShooterRun() {
-		requires(Robot.shooter);
+	public DriveStop() {
 	}
 
+	@Override
 	protected void initialize() {
-		Robot.shooter.start();
+		Robot.drive.stop();
 	}
 
+	@Override
 	protected void execute() {
-		Robot.shooter.updatePID();
 	}
 
+	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
+	@Override
 	protected void end() {
-		Robot.shooter.stop();
 	}
 
+	@Override
 	protected void interrupted() {
 		end();
 	}
