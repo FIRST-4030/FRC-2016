@@ -8,6 +8,11 @@ public class DriveEncoderTest extends CommandGroup {
 
 	public DriveEncoderTest() {
 
+		// Arm down
+		addSequential(new ArmPreset_Home());
+		addSequential(new ArmWait());
+
+		// Drive forward
 		addSequential(new DriveToTarget(ticks, ticks));
 		addSequential(new DriveWait());
 

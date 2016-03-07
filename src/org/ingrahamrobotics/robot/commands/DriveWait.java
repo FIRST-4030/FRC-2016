@@ -12,7 +12,7 @@ public class DriveWait extends Command {
 
 	// Not configurable because these are programming features
 	public static final int kTOLERANCE = 50;
-	public static final int kMIN_SUCCESS = 2;
+	public static final int kMIN_SUCCESS = 3;
 
 	private DriveHalf[] drives;
 	private DriveWaitHalf[] waits;
