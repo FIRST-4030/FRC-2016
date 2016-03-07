@@ -21,7 +21,7 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         ARM_PID_P("Arm: P", "0.005"),
         ARM_PID_I("Arm: I", "0.0005"),
         ARM_PID_D("Arm: D", "0.0"),
-        ARM_ZERO_SPEED("Arm: Homing Speed", "-0.5"),
+        ARM_ZERO_SPEED("Arm: Homing Speed", "-0.65"),
 
         ARM_PRESET_DOWN("Arm Preset: Down", "-1200"),
         ARM_PRESET_HOME("Arm Preset: Home", "-200"),
@@ -45,11 +45,8 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         
         KICKER_SPEED("Kicker: Speed", "0.75"),
         KICKER_TIME("Kicker: Kick Time", "300"),
-        KICKER_SHOOT("Kicker: Shoot Time", "750"),
+        KICKER_SHOOT("Kicker: Shoot Time", "1000"),
         
-        CAMERA_ARM_UP("Camera Arm: Up", "0.5"),
-        CAMERA_ARM_DOWN("Camera Arm: Down", "-0.5"),
-
         VISION_H_LOW("Vision: H Min","200"),
         VISION_H_HIGH("Vision: H Max","260"),
         VISION_S_LOW("Vision: S Min","60"),

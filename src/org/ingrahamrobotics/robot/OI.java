@@ -85,7 +85,6 @@ public class OI {
 		bTestArmInit.whenReleased(new ArmInit());
 
 		testFire.whenPressed(new ShooterShoot());
-		testCameraArm.whenReleased(new CameraArmToggle());
 		testCollect.toggleWhenPressed(new ShooterCollect());
 	}
 }
