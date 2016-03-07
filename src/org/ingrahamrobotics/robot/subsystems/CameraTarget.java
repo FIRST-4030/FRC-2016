@@ -19,19 +19,22 @@ public class CameraTarget extends Subsystem {
 
 	// Debug
 	private static final boolean kDEBUG = true;
+	private static final boolean kDEBUG_FILES = kDEBUG & true;
 
 	// Analysis constants (not tunable)
-	public static final int kBINARY_COLOR = 1;
+	public static final int kBINARY_COLOR = 255;
 	public static final int kMIN_BLOB_AREA = 5000;
 	public static final int kNOMINAL_BLOB_AREA = kMIN_BLOB_AREA ^ 2;
 
 	// Structures
 	public class TargetData {
+		boolean valid = false;
 		public Confidence confidence = Confidence.kNONE;
 		public int distance = 0;
 		public double azimuth = 0;
 		public double altitude = 0;
-		public long timestamp = 0;
+		public long start = 0;
+		public long end = 0;
 	}
 
 	public enum Confidence {
@@ -41,6 +44,11 @@ public class CameraTarget extends Subsystem {
 	// Members
 	private USBCamera cam;
 	private TargetData data;
+
+	public CameraTarget() {
+		super();
+		data = new TargetData();
+	}
 
 	public void initDefaultCommand() {
 		// No default command
@@ -52,6 +60,7 @@ public class CameraTarget extends Subsystem {
 		}
 		cam = new USBCamera(RobotMap.usbCameraTarget);
 		cam.openCamera();
+		cam.startCapture();
 		Output.output(OutputLevel.VISION, getName() + "-camera", RobotMap.usbCameraTarget);
 		Output.output(OutputLevel.VISION, getName() + "-open", true);
 	}
@@ -97,14 +106,17 @@ public class CameraTarget extends Subsystem {
 
 	public void analyze() {
 		TargetData data = new TargetData();
+		data.start = System.currentTimeMillis();
 		if (kDEBUG) {
-			Output.output(OutputLevel.VISION, getName() + "-tsStart", System.currentTimeMillis());
+			Output.output(OutputLevel.VISION, getName() + "-tsStart", data.start);
 		}
 
 		// Capture
 		Image image = capture();
 		if (kDEBUG) {
-			save(image, "raw.jpg");
+			if (kDEBUG_FILES) {
+				save(image, "/home/lvuser/raw.jpg");
+			}
 			Output.output(OutputLevel.VISION, getName() + "-tsCapture", System.currentTimeMillis());
 		}
 
@@ -113,7 +125,9 @@ public class CameraTarget extends Subsystem {
 				Settings.Key.VISION_S_LOW.getInt(), Settings.Key.VISION_S_HIGH.getInt(),
 				Settings.Key.VISION_L_LOW.getInt(), Settings.Key.VISION_L_HIGH.getInt());
 		if (kDEBUG) {
-			save(binary, "binary.jpg");
+			if (kDEBUG_FILES) {
+				save(binary, "/home/lvuser/binary.jpg");
+			}
 			Output.output(OutputLevel.VISION, getName() + "-tsThreshold", System.currentTimeMillis());
 		}
 
@@ -185,11 +199,11 @@ public class CameraTarget extends Subsystem {
 		}
 
 		// Publish
-		data.timestamp = System.currentTimeMillis();
+		data.end = System.currentTimeMillis();
+		data.valid = true;
 		this.data = data;
-		if (kDEBUG) {
-			Output.output(OutputLevel.VISION, getName() + "-tsDone", System.currentTimeMillis());
-		}
+		Output.output(OutputLevel.VISION, getName() + "-lastTS", data.end);
+		Output.output(OutputLevel.VISION, getName() + "-duration", data.end - data.start);
 	}
 
 	public TargetData lastResults() {

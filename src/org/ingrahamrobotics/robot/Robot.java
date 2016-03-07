@@ -39,6 +39,7 @@ public class Robot extends IterativeRobot {
 	public static final Class<? extends Command> driveCmd = DriveTank.class;
 	public static final boolean disableCamTarget = false;
 
+	@SuppressWarnings("unused")
 	public void robotInit() {
 
 		// Driver control
