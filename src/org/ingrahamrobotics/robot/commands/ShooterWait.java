@@ -18,7 +18,7 @@ public class ShooterWait extends WaitPID {
 	@Override
 	public void initialize() {
 		if (Robot.disableShooterPID) {
-			doneTS = System.currentTimeMillis() + Settings.Key.SHOOTER_WAIT.getInt();
+			doneTS = System.currentTimeMillis() + Settings.Key.KICKER_SHOOT.getInt();
 		} else {
 			super.initialize();
 		}

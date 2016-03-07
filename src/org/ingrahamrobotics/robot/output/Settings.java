@@ -35,13 +35,12 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         SHOOTER_PID_I("Shooter: I", "0.01"),
         SHOOTER_PID_D("Shooter: D", "0.00"),
         
-        DRIVE_PID_P("Drive: P", "0.01"),
-        DRIVE_PID_I("Drive: I", "0.01"),
+        DRIVE_PID_P("Drive: P", "0.0005"),
+        DRIVE_PID_I("Drive: I", "0.00"),
         DRIVE_PID_D("Drive: D", "0.00"),
 
-        SHOOTER_SPEED("Shooter: Shoot Speed", "150"),
-        SHOOTER_COLLECT("Shooter: Collect Speed", "-0.4"),
-        SHOOTER_WAIT("Shooter: Wait", "750"),
+        SHOOTER_SPEED("Shooter: Shoot", "150"),
+        SHOOTER_COLLECT("Shooter: Collect", "-0.4"),
         
         KICKER_SPEED("Kicker: Speed", "0.75"),
         KICKER_TIME("Kicker: Kick Time", "300"),

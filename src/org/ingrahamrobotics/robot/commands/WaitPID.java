@@ -29,9 +29,9 @@ public class WaitPID extends Command {
 		this.minCount = minCount;
 		this.mode = mode;
 
-		this.name = getName();
-		if (name != null) {
-			this.name += name;
+		this.name = name;
+		if (name == null) {
+			this.name = getName();
 		}
 	}
 
@@ -50,6 +50,8 @@ public class WaitPID extends Command {
 			return;
 		}
 
+		Output.output(OutputLevel.PID, name + "-err", actual - setpoint);
+		
 		switch (mode) {
 		case kREL_MAX:
 		case kABS_MAX:
@@ -113,7 +115,7 @@ public class WaitPID extends Command {
 			ready = true;
 		}
 
-		Output.output(OutputLevel.PID, name + "-ready", isReady());
+		Output.output(OutputLevel.PID, name + "-ready", ready);
 		return ready;
 	}
 
