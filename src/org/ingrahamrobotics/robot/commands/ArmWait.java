@@ -9,6 +9,6 @@ public class ArmWait extends WaitPID {
 	public static final int kMIN_SUCCESS = 2;
 
 	public ArmWait() {
-		super(Robot.arm, 0, Mode.kABS_RANGE, kMIN_SUCCESS);
+		super(Robot.arm, kTOLERANCE, Mode.kABS_RANGE, kMIN_SUCCESS);
 	}
 }

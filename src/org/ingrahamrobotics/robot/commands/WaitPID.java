@@ -43,10 +43,8 @@ public class WaitPID extends Command {
 		double actual = pid.getPosition();
 		double setpoint = pid.getSetpoint();
 
-		// Ignore 0 setpoints (for some reason)
+		// Sometimes we get called before the setpoint is valid
 		if (setpoint == 0) {
-			// Does this actually happen?
-			Output.output(OutputLevel.PID, name + "-wasZero", true);
 			return;
 		}
 		
