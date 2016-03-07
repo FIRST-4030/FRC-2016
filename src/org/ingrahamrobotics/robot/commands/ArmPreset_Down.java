@@ -4,6 +4,6 @@ import org.ingrahamrobotics.robot.output.Settings;
 
 public class ArmPreset_Down extends ArmPreset {
 	public ArmPreset_Down() {
-		super(Settings.Key.ARM_PRESET_UP);
+		super(Settings.Key.ARM_PRESET_DOWN);
 	}
 }

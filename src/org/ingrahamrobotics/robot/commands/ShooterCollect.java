@@ -13,6 +13,8 @@ public class ShooterCollect extends Command {
 	}
 
 	protected void initialize() {
+		Command cmd = new ArmPreset_Down();
+		cmd.start();
 	}
 
 	protected void execute() {
@@ -26,6 +28,9 @@ public class ShooterCollect extends Command {
 	}
 
 	protected void end() {
+		Command cmd = new ArmPreset_Home();
+		cmd.start();
+
 		Robot.shooter.stop();
 		Robot.collector.stop();
 	}
