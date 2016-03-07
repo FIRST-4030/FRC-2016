@@ -1,6 +1,7 @@
 package org.ingrahamrobotics.robot.subsystems;
 
 import org.ingrahamrobotics.robot.RobotMap;
+import org.ingrahamrobotics.robot.commands.CameraAnalyze;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
 import org.ingrahamrobotics.robot.output.Settings;
@@ -51,7 +52,7 @@ public class CameraTarget extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		// No default command
+		setDefaultCommand(new CameraAnalyze());
 	}
 
 	public void start() {
@@ -206,7 +207,7 @@ public class CameraTarget extends Subsystem {
 		Output.output(OutputLevel.VISION, getName() + "-duration", data.end - data.start);
 	}
 
-	public TargetData lastResults() {
+	public TargetData lastResult() {
 		return data;
 	}
 }
