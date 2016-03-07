@@ -16,6 +16,7 @@ public class DriveToTarget extends Command {
 	}
 
 	protected void initialize() {
+		Robot.drive.updatePID();
 		Robot.drive.set(left, right);
 	}
 
@@ -24,11 +25,10 @@ public class DriveToTarget extends Command {
 	}
 
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 	protected void end() {
-		Robot.drive.stop();
 	}
 
 	protected void interrupted() {

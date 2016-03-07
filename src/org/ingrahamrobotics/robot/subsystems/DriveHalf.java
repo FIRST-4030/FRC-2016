@@ -15,10 +15,13 @@ public class DriveHalf extends PIDSubsystem {
 	private Talon motor;
 	private String name;
 	private Sensor sensor;
+	private boolean invert;
 
 	public DriveHalf(String name, int motorIndex, boolean invert, Sensor sensor) {
 		super(1.0, 0.0, 0.0);
+		this.name = name;
 		motor = new Talon(motorIndex);
+		this.invert = invert;
 		motor.setInverted(invert);
 		this.sensor = sensor;
 	}
@@ -77,6 +80,10 @@ public class DriveHalf extends PIDSubsystem {
 	@Override
 	protected void usePIDOutput(double output) {
 		if (isEnabled()) {
+			if (invert) {
+				output *= -1.0;
+			}
+			output *= 0.4;
 			motor.set(output);
 			Output.output(OutputLevel.PID, fullName() + "-speed", output);
 		}

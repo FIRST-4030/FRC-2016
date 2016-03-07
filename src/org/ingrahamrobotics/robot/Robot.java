@@ -36,6 +36,7 @@ public class Robot extends IterativeRobot {
 	
 	// Global state
 	public static final boolean disableShooterPID = true;
+	public static final Class<? extends Command> driveCmd = DriveTest.class;
 
 	public void robotInit() {
 

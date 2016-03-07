@@ -49,8 +49,6 @@ public class WaitPID extends Command {
 			Output.output(OutputLevel.PID, name + "-wasZero", true);
 			return;
 		}
-
-		Output.output(OutputLevel.PID, name + "-err", actual - setpoint);
 		
 		switch (mode) {
 		case kREL_MAX:

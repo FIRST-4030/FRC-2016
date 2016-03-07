@@ -11,7 +11,6 @@ public class DriveEncoderTest extends CommandGroup {
 		addSequential(new DriveToTarget(ticks, ticks));
 		addSequential(new DriveWait());
 
-		/*
 		// Arm up
 		addSequential(new ArmPreset_Shoot());
 		addSequential(new ArmWait());
@@ -22,7 +21,6 @@ public class DriveEncoderTest extends CommandGroup {
 		// Drive backward
 		addSequential(new DriveToTarget(-ticks, -ticks));
 		addSequential(new DriveWait());
-		*/
 		
 		// Return to manual control
 		addSequential(new DriveStop());

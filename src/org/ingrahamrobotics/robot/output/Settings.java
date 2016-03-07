@@ -35,7 +35,7 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         SHOOTER_PID_I("Shooter: I", "0.01"),
         SHOOTER_PID_D("Shooter: D", "0.00"),
         
-        DRIVE_PID_P("Drive: P", "0.0005"),
+        DRIVE_PID_P("Drive: P", "0.003"),
         DRIVE_PID_I("Drive: I", "0.00"),
         DRIVE_PID_D("Drive: D", "0.00"),
 
