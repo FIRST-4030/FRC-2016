@@ -38,7 +38,7 @@ public class DriveWait extends Command {
 			i++;
 		}
 
-		Output.output(OutputLevel.PID, getName() + "-ready", false);
+		Output.output(OutputLevel.DRIVE_PID, getName() + "-ready", false);
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class DriveWait extends Command {
 	@Override
 	protected boolean isFinished() {
 		boolean done = (count > kMIN_SUCCESS);
-		Output.output(OutputLevel.PID, getName() + "-ready", done);
+		Output.output(OutputLevel.DRIVE_PID, getName() + "-ready", done);
 		return done;	
 	}
 

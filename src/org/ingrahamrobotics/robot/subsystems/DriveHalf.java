@@ -42,7 +42,7 @@ public class DriveHalf extends PIDSubsystem {
 		isEnabled();
 
 		motor.disable();
-		Output.output(OutputLevel.PID, fullName() + "-speed", 0);
+		Output.output(OutputLevel.MOTORS, fullName() + "-speed", 0);
 	}
 
 	public void set(double setpoint) {
@@ -53,12 +53,12 @@ public class DriveHalf extends PIDSubsystem {
 			start();
 			this.setSetpoint(setpoint);
 		}
-		Output.output(OutputLevel.PID, fullName() + "-setpoint", setpoint);
+		Output.output(OutputLevel.DRIVE_PID, fullName() + "-setpoint", setpoint);
 	}
 
 	public boolean isEnabled() {
 		boolean enabled = this.getPIDController().isEnabled();
-		Output.output(OutputLevel.PID, fullName() + "-enabled", enabled);
+		Output.output(OutputLevel.DRIVE_PID, fullName() + "-enabled", enabled);
 		return enabled;
 	}
 
@@ -67,7 +67,7 @@ public class DriveHalf extends PIDSubsystem {
 		if (speed != kSTOP) {
 			motor.set(speed);
 		}
-		Output.output(OutputLevel.PID, fullName() + "-speed", speed);
+		Output.output(OutputLevel.MOTORS, fullName() + "-speed", speed);
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class DriveHalf extends PIDSubsystem {
 				output *= -1.0;
 			}
 			motor.set(output);
-			Output.output(OutputLevel.PID, fullName() + "-speed", output);
+			Output.output(OutputLevel.MOTORS, fullName() + "-speed", output);
 		}
 	}
 

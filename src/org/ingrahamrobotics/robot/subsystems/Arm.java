@@ -30,11 +30,11 @@ public class Arm extends PIDSubsystem {
 		isEnabled();
 
 		motor.disable();
-		Output.output(OutputLevel.PID, getName() + "-speed", 0);
+		Output.output(OutputLevel.MOTORS, getName() + "-speed", 0);
 	}
 
 	public boolean ready() {
-		Output.output(OutputLevel.PID, getName() + "-ready", ready);
+		Output.output(OutputLevel.ARM_PID, getName() + "-ready", ready);
 		return ready;
 	}
 
@@ -46,7 +46,7 @@ public class Arm extends PIDSubsystem {
 		Sensors.Sensor.ARM_ENCODER.reset();
 		double speed = Settings.Key.ARM_ZERO_SPEED.getDouble();
 		motor.set(speed);
-		Output.output(OutputLevel.PID, getName() + "-speed", speed);
+		Output.output(OutputLevel.MOTORS, getName() + "-speed", speed);
 	}
 
 	private void setReady() {
@@ -70,12 +70,12 @@ public class Arm extends PIDSubsystem {
 	public void set(double setpoint) {
 		start();
 		this.setSetpoint(setpoint);
-		Output.output(OutputLevel.PID, getName() + "-setpoint", setpoint);
+		Output.output(OutputLevel.ARM_PID, getName() + "-setpoint", setpoint);
 	}
 
 	public boolean isEnabled() {
 		boolean enabled = this.getPIDController().isEnabled();
-		Output.output(OutputLevel.PID, getName() + "-enabled", enabled);
+		Output.output(OutputLevel.ARM_PID, getName() + "-enabled", enabled);
 		return enabled;
 	}
 
@@ -98,7 +98,7 @@ public class Arm extends PIDSubsystem {
 	protected void usePIDOutput(double output) {
 		if (isEnabled()) {
 			motor.set(output);
-			Output.output(OutputLevel.PID, getName() + "-speed", output);
+			Output.output(OutputLevel.MOTORS, getName() + "-speed", output);
 		}
 	}
 

@@ -30,7 +30,7 @@ public class ShooterWheels extends PIDSubsystem {
 		if (speed != kSTOP) {
 			motor.set(speed);
 		}
-		Output.output(OutputLevel.PID, getName() + "-speed", speed);
+		Output.output(OutputLevel.MOTORS, getName() + "-speed", speed);
 	}
 
 	public void start() {
@@ -43,7 +43,7 @@ public class ShooterWheels extends PIDSubsystem {
 		isEnabled();
 
 		motor.disable();
-		Output.output(OutputLevel.PID, getName() + "-speed", 0);
+		Output.output(OutputLevel.MOTORS, getName() + "-speed", 0);
 	}
 
 	public void set(double setpoint) {
@@ -53,12 +53,12 @@ public class ShooterWheels extends PIDSubsystem {
 			start();
 			this.setSetpoint(setpoint);
 		}
-		Output.output(OutputLevel.PID, getName() + "-setpoint", setpoint);
+		Output.output(OutputLevel.SHOOTER_PID, getName() + "-setpoint", setpoint);
 	}
 
 	public boolean isEnabled() {
 		boolean enabled = this.getPIDController().isEnabled();
-		Output.output(OutputLevel.PID, getName() + "-enabled", enabled);
+		Output.output(OutputLevel.SHOOTER_PID, getName() + "-enabled", enabled);
 		return enabled;
 	}
 
@@ -90,7 +90,7 @@ public class ShooterWheels extends PIDSubsystem {
 
 		if (isEnabled()) {
 			motor.set(output);
-			Output.output(OutputLevel.PID, getName() + "-speed", output);
+			Output.output(OutputLevel.MOTORS, getName() + "-speed", output);
 		}
 	}
 

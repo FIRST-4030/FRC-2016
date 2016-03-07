@@ -111,7 +111,7 @@ public class WaitPID extends Command {
 			ready = true;
 		}
 
-		Output.output(OutputLevel.PID, name + "-ready", ready);
+		Output.output(OutputLevel.DEBUG, name + "-ready", ready);
 		return ready;
 	}
 
