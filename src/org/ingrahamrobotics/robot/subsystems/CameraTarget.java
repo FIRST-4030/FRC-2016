@@ -50,9 +50,9 @@ public class CameraTarget extends Subsystem {
 		if (isRunning()) {
 			return;
 		}
-		cam = new USBCamera(RobotMap.usbTargetCamera);
+		cam = new USBCamera(RobotMap.usbCameraTarget);
 		cam.openCamera();
-		Output.output(OutputLevel.VISION, getName() + "-camera", RobotMap.usbTargetCamera);
+		Output.output(OutputLevel.VISION, getName() + "-camera", RobotMap.usbCameraTarget);
 		Output.output(OutputLevel.VISION, getName() + "-open", true);
 	}
 

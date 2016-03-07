@@ -19,9 +19,9 @@ public class CameraDriver extends Subsystem {
 		if (server == null) {
 			server = CameraServer.getInstance();
 			server.setQuality(50);
-			server.startAutomaticCapture(RobotMap.usbDriverCamera);
+			server.startAutomaticCapture(RobotMap.usbCameraDriver);
 		}
-		Output.output(OutputLevel.SENSORS, getName() + "-camera", RobotMap.usbDriverCamera);
+		Output.output(OutputLevel.SENSORS, getName() + "-camera", RobotMap.usbCameraDriver);
 		Output.output(OutputLevel.SENSORS, getName() + "-streaming", true);
 	}
 

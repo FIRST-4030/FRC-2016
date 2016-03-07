@@ -33,10 +33,11 @@ public class Robot extends IterativeRobot {
 
 	// User input
 	public static OI oi;
-	
+
 	// Global state
 	public static final boolean disableShooterPID = true;
 	public static final Class<? extends Command> driveCmd = DriveTank.class;
+	public static final boolean disableCamTarget = false;
 
 	public void robotInit() {
 
@@ -57,12 +58,15 @@ public class Robot extends IterativeRobot {
 		// Autonomous init (first motion)
 		autoCmd = new ArmInit();
 
-		// The camera is not controllable and therefore does not have a related
-		// command
-		try {
+		// The driver camera is not controllable and does not have a command
+		// Start it at init unless it would intefere with the target camera
+		if (disableCamTarget || (RobotMap.usbCameraDriver != RobotMap.usbCameraTarget)) {
 			camDriver.start();
-		} catch (Exception e) {
-			System.err.println("Unable to start camera");
+		}
+
+		// Try the target camera, if enabled
+		if (!disableCamTarget) {
+			camTarget.analyze();
 		}
 	}
 
