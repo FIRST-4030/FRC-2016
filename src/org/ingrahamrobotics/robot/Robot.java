@@ -61,7 +61,7 @@ public class Robot extends IterativeRobot {
 		}
 
 		// Autonomous command
-		autoCmd = null;
+		autoCmd = new Auto();
 
 		// The driver camera is not controllable and does not have a command
 		// Start it at init unless it would interfere with the target camera
@@ -101,10 +101,6 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousInit() {
 		modeInit();
-
-		// Init the arm
-		Command cmd = new ArmInit();
-		cmd.start();
 
 		// Start the auto program, if available
 		if (autoCmd != null) {
