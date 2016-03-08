@@ -27,7 +27,7 @@ public class CameraTarget extends Subsystem {
 	// Camera settings (some of these may need to be exposed on the dashboard)
 	public static final int width = 640;
 	public static final int height = 480;
-	public static final int fps = 10;
+	public static final int fps = 4;
 	public static int brightness = -1; // 0 - 100, -1 is "do not set"
 	public static int exposure = -1; // 0 - 100, -1 is "auto"
 	public static int whitebalance = 4700; // Color temperature in K, -1 is auto

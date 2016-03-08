@@ -40,6 +40,7 @@ public class Robot extends IterativeRobot {
 	public static final boolean disableShooterPID = true;
 	public static final Class<? extends Command> driveCmd = DriveTank.class;
 	public static final boolean disableCamTarget = false;
+	public static final boolean kDEBUG_CAMERA = (!disableCamTarget) & true;
 
 	@SuppressWarnings("unused")
 	public void robotInit() {
@@ -54,12 +55,13 @@ public class Robot extends IterativeRobot {
 		// Global commands
 		armRun = new ArmRun();
 		shooterRun = new ShooterRun();
+		camAnalyze = null;
+		if (!disableCamTarget) {
+			camAnalyze = new CameraAnalyze();
+		}
 
-		// Immediate init (no motion)
-		new ShooterStop();
-
-		// Autonomous init (first motion)
-		autoCmd = new ArmInit();
+		// Autonomous command
+		autoCmd = null;
 
 		// The driver camera is not controllable and does not have a command
 		// Start it at init unless it would interfere with the target camera
@@ -67,13 +69,30 @@ public class Robot extends IterativeRobot {
 			camDriver.start();
 		}
 
-		// Init the target camera, if enabled
-		if (!disableCamTarget) {
-			camAnalyze = new CameraAnalyze();
+		// Analyze at boot so we can test without a driver station
+		// Run more than once so we get valid timing data
+		if (kDEBUG_CAMERA) {
+			camTarget.analyze();
+			camTarget.analyze();
+			camTarget.analyze();
+		}
+	}
+
+	// Code to run at init of each DS-controlled mode
+	public void modeInit() {
+
+		// Init the shooter
+		Command cmd = new ShooterStop();
+		cmd.start();
+
+		// Start the target camera, if available
+		if (camAnalyze != null) {
+			camAnalyze.start();
 		}
 	}
 
 	public void disabledInit() {
+		modeInit();
 	}
 
 	public void disabledPeriodic() {
@@ -81,11 +100,11 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
+		modeInit();
 
-		// Start the target camera, if enabled
-		if (!disableCamTarget) {
-			camAnalyze.start();
-		}
+		// Init the arm
+		Command cmd = new ArmInit();
+		cmd.start();
 
 		// Start the auto program, if available
 		if (autoCmd != null) {
@@ -98,11 +117,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopInit() {
-
-		// Start the target camera, if enabled
-		if (!disableCamTarget) {
-			camAnalyze.start();
-		}
+		modeInit();
 
 		// Start manual drive control
 		try {
