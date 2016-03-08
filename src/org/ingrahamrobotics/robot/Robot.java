@@ -28,6 +28,7 @@ public class Robot extends IterativeRobot {
 	// Global commands
 	public static ArmRun armRun;
 	public static ShooterRun shooterRun;
+	public static CameraAnalyze camAnalyze;
 
 	// Autonomous support
 	private Command autoCmd;
@@ -61,14 +62,16 @@ public class Robot extends IterativeRobot {
 		autoCmd = new ArmInit();
 
 		// The driver camera is not controllable and does not have a command
-		// Start it at init unless it would intefere with the target camera
+		// Start it at init unless it would interfere with the target camera
 		if (disableCamTarget || (RobotMap.usbCameraDriver != RobotMap.usbCameraTarget)) {
 			camDriver.start();
 		}
 
-		// Try the target camera, if enabled
+		// Start the target camera, if enabled
+		// This has a command and can be stopped but typically will just run
 		if (!disableCamTarget) {
-			camTarget.analyze();
+			camAnalyze = new CameraAnalyze();
+			camAnalyze.start();
 		}
 	}
 

@@ -21,11 +21,21 @@ public class CameraTarget extends Subsystem {
 	// Debug
 	private static final boolean kDEBUG = true;
 	private static final boolean kDEBUG_FILES = kDEBUG & true;
+	private static final String kRAW_FILE = "/home/lvuser/raw.jpg";
+	private static final String kTHRESHOLD_FILE = "/home/lvuser/thresh.jpg";
 
-	// Analysis constants (not tunable)
+	// Camera settings (some of these may need to be exposed on the dashboard)
+	public static final int width = 640;
+	public static final int height = 480;
+	public static final int fps = 10;
+	public static int brightness = -1; // 0 - 100, -1 is "do not set"
+	public static int exposure = -1; // 0 - 100, -1 is "auto"
+	public static int whitebalance = 4700; // Color temperature in K, -1 is auto
+
+	// Analysis constants (not tunable without algorithm adjustments)
 	public static final int kBINARY_COLOR = 255;
-	public static final int kMIN_BLOB_AREA = 5000;
-	public static final int kNOMINAL_BLOB_AREA = kMIN_BLOB_AREA ^ 2;
+	public static final int kMIN_BLOB_AREA = 2500;
+	public static final int kNOMINAL_BLOB_AREA = kMIN_BLOB_AREA * 4;
 
 	// Structures
 	public class TargetData {
@@ -61,9 +71,9 @@ public class CameraTarget extends Subsystem {
 		}
 		cam = new USBCamera(RobotMap.usbCameraTarget);
 		cam.openCamera();
+		updateSettings();
 		cam.startCapture();
 		Output.output(OutputLevel.VISION, getName() + "-camera", RobotMap.usbCameraTarget);
-		Output.output(OutputLevel.VISION, getName() + "-open", true);
 	}
 
 	public void stop() {
@@ -72,11 +82,33 @@ public class CameraTarget extends Subsystem {
 		}
 		cam = null;
 		Output.output(OutputLevel.VISION, getName() + "-camera", "<Disabled>");
-		Output.output(OutputLevel.VISION, getName() + "-open", false);
+	}
+	
+	public void updateSettings() {
+		if (!isRunning()) {
+			return;
+		}
+		
+		cam.setSize(width, height);
+		cam.setFPS(fps);
+		if (exposure >= 0) {
+			cam.setExposureManual(exposure);
+		} else {
+			cam.setExposureAuto();
+		}
+		if (whitebalance >= 0) {
+			cam.setWhiteBalanceManual(whitebalance);			
+		} else {
+			cam.setWhiteBalanceAuto();
+		}
+		if (brightness >= 0) {
+			cam.setBrightness(brightness);
+		}
+		cam.updateSettings();
 	}
 
 	public boolean isRunning() {
-		return !(cam == null);
+		return (cam != null);
 	}
 
 	public void save(Image image, String path) {
@@ -86,22 +118,29 @@ public class CameraTarget extends Subsystem {
 	}
 
 	public Image capture() {
-		this.start();
+		start();
 		Image image = NIVision.imaqCreateImage(ImageType.IMAGE_RGB, 0);
 		cam.getImage(image);
+
+		if (kDEBUG_FILES) {
+			save(image, kRAW_FILE);
+		}
 		return image;
 	}
 
-	public NIVision.Image thresholdHSL(NIVision.Image image, int hLow, int hHigh, int sLow, int sHigh, int lLow,
-			int lHigh) {
+	public NIVision.Image thresholdHSL(NIVision.Image image) {
 		Image binary = NIVision.imaqCreateImage(ImageType.IMAGE_U8, 0);
-		Range range1 = new Range(hLow, hHigh);
-		Range range2 = new Range(sLow, sHigh);
-		Range range3 = new Range(lLow, lHigh);
+		Range range1 = new Range(Settings.Key.VISION_H_LOW.getInt(), Settings.Key.VISION_H_HIGH.getInt());
+		Range range2 = new Range(Settings.Key.VISION_S_LOW.getInt(), Settings.Key.VISION_S_HIGH.getInt());
+		Range range3 = new Range(Settings.Key.VISION_L_LOW.getInt(), Settings.Key.VISION_L_HIGH.getInt());
 		NIVision.imaqColorThreshold(binary, image, kBINARY_COLOR, NIVision.ColorMode.HSL, range1, range2, range3);
 		range1.free();
 		range2.free();
 		range3.free();
+
+		if (kDEBUG_FILES) {
+			save(binary, kTHRESHOLD_FILE);
+		}
 		return binary;
 	}
 
@@ -115,20 +154,12 @@ public class CameraTarget extends Subsystem {
 		// Capture
 		Image image = capture();
 		if (kDEBUG) {
-			if (kDEBUG_FILES) {
-				save(image, "/home/lvuser/raw.jpg");
-			}
 			Output.output(OutputLevel.VISION, getName() + "-tsCapture", System.currentTimeMillis());
 		}
 
 		// Reduce to HSL
-		Image binary = thresholdHSL(image, Settings.Key.VISION_H_LOW.getInt(), Settings.Key.VISION_H_HIGH.getInt(),
-				Settings.Key.VISION_S_LOW.getInt(), Settings.Key.VISION_S_HIGH.getInt(),
-				Settings.Key.VISION_L_LOW.getInt(), Settings.Key.VISION_L_HIGH.getInt());
+		Image binary = thresholdHSL(image);
 		if (kDEBUG) {
-			if (kDEBUG_FILES) {
-				save(binary, "/home/lvuser/binary.jpg");
-			}
 			Output.output(OutputLevel.VISION, getName() + "-tsThreshold", System.currentTimeMillis());
 		}
 

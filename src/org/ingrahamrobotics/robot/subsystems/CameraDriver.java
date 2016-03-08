@@ -22,13 +22,11 @@ public class CameraDriver extends Subsystem {
 			server.startAutomaticCapture(RobotMap.usbCameraDriver);
 		}
 		Output.output(OutputLevel.SENSORS, getName() + "-camera", RobotMap.usbCameraDriver);
-		Output.output(OutputLevel.SENSORS, getName() + "-streaming", true);
 	}
 
 	public void stop() {
 		server = null;
 		Output.output(OutputLevel.SENSORS, getName() + "-camera", "<Disabled>");
-		Output.output(OutputLevel.SENSORS, getName() + "-streaming", false);
 	}
 
 	public boolean isRunning() {
