@@ -47,6 +47,9 @@ public class Power extends Subsystem {
 	private double rioCurrentMax;
 	private int rioFaults;
 
+	private MBeanServer mbs;
+	private ObjectName oName;
+	private String[] mbsAttrs;
 	private double loadJVM;
 	private double loadSys;
 
@@ -72,6 +75,14 @@ public class Power extends Subsystem {
 
 		loadJVM = Double.NaN;
 		loadSys = Double.NaN;
+
+		mbs = ManagementFactory.getPlatformMBeanServer();
+		try {
+			oName = ObjectName.getInstance("java.lang:type=OperatingSystem");
+		} catch (MalformedObjectNameException | NullPointerException e) {
+			e.printStackTrace();
+		}
+		mbsAttrs = new String[] { "ProcessCpuLoad", "SystemCpuLoad" };
 	}
 
 	public void initDefaultCommand() {
@@ -80,15 +91,12 @@ public class Power extends Subsystem {
 
 	public void getLoad() {
 
-		MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
-		ObjectName name = null;
+		// Ask MBS for system data
 		AttributeList list = null;
 		try {
-			name = ObjectName.getInstance("java.lang:type=OperatingSystem");
-			list = mbs.getAttributes(name, new String[] { "ProcessCpuLoad", "SystemCpuLoad" });
-		} catch (MalformedObjectNameException | NullPointerException | InstanceNotFoundException
-				| ReflectionException e) {
-			e.printStackTrace();
+			list = mbs.getAttributes(oName, mbsAttrs);
+		} catch (InstanceNotFoundException | ReflectionException e) {
+			return;
 		}
 		if (list == null || list.isEmpty() || list.size() < 2) {
 			return;
@@ -110,11 +118,11 @@ public class Power extends Subsystem {
 			Output.output(OutputLevel.POWER, "System Load", loadSys);
 		}
 	}
-	
+
 	public double getLoadJVM() {
 		return loadJVM;
 	}
-	
+
 	public double getLoadSystem() {
 		return loadSys;
 	}
@@ -205,7 +213,7 @@ public class Power extends Subsystem {
 		rioFaults = ControllerPower.getFaultCount3V3() + ControllerPower.getFaultCount5V()
 				+ ControllerPower.getFaultCount6V();
 		Output.output(OutputLevel.POWER, "Rio Faults", rioFaults);
-		
+
 		getLoad();
 	}
 }
