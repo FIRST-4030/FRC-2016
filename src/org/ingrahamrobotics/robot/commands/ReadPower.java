@@ -1,0 +1,30 @@
+package org.ingrahamrobotics.robot.commands;
+
+import org.ingrahamrobotics.robot.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
+
+public class ReadPower extends Command {
+
+	public ReadPower() {
+		requires(Robot.power);
+	}
+
+	protected void initialize() {
+	}
+
+	protected void execute() {
+		Robot.power.update();
+	}
+
+	protected boolean isFinished() {
+		return false;
+	}
+
+	protected void end() {
+	}
+
+	protected void interrupted() {
+		end();
+	}
+}
