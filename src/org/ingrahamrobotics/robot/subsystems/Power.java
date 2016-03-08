@@ -1,15 +1,5 @@
 package org.ingrahamrobotics.robot.subsystems;
 
-import java.lang.management.ManagementFactory;
-
-import javax.management.Attribute;
-import javax.management.AttributeList;
-import javax.management.InstanceNotFoundException;
-import javax.management.MBeanServer;
-import javax.management.MalformedObjectNameException;
-import javax.management.ObjectName;
-import javax.management.ReflectionException;
-
 import org.ingrahamrobotics.robot.commands.ReadPower;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
@@ -22,9 +12,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * This does not process all data available from ControllerPower.
  * That data is already exposed in the default driver station
  * and is available via static calls
- * 
- * There's also some system load processing in here.
- * That's slightly cross-function but I'm gonna live with it for now.
  */
 
 public class Power extends Subsystem {
@@ -47,12 +34,6 @@ public class Power extends Subsystem {
 	private double rioCurrentMax;
 	private int rioFaults;
 
-	private MBeanServer mbs;
-	private ObjectName oName;
-	private String[] mbsAttrs;
-	private double loadJVM;
-	private double loadSys;
-
 	public Power() {
 		pdp = new PowerDistributionPanel();
 		pdp.clearStickyFaults();
@@ -72,59 +53,10 @@ public class Power extends Subsystem {
 		rioCurrent = Double.NaN;
 		rioCurrentMax = Double.NaN;
 		rioFaults = 0;
-
-		loadJVM = Double.NaN;
-		loadSys = Double.NaN;
-
-		mbs = ManagementFactory.getPlatformMBeanServer();
-		try {
-			oName = ObjectName.getInstance("java.lang:type=OperatingSystem");
-		} catch (MalformedObjectNameException | NullPointerException e) {
-			e.printStackTrace();
-		}
-		mbsAttrs = new String[] { "ProcessCpuLoad", "SystemCpuLoad" };
 	}
 
 	public void initDefaultCommand() {
 		setDefaultCommand(new ReadPower());
-	}
-
-	public void getLoad() {
-
-		// Ask MBS for system data
-		AttributeList list = null;
-		try {
-			list = mbs.getAttributes(oName, mbsAttrs);
-		} catch (InstanceNotFoundException | ReflectionException e) {
-			return;
-		}
-		if (list == null || list.isEmpty() || list.size() < 2) {
-			return;
-		}
-
-		// Process load
-		Attribute att = (Attribute) list.get(0);
-		double value = (Double) att.getValue();
-		if (value > 0) {
-			loadJVM = ((int) (value * 1000) / 10.0);
-			Output.output(OutputLevel.POWER, "Process Load", loadJVM);
-		}
-
-		// System load
-		att = (Attribute) list.get(1);
-		value = (Double) att.getValue();
-		if (value > 0) {
-			loadSys = ((int) (value * 1000) / 10.0);
-			Output.output(OutputLevel.POWER, "System Load", loadSys);
-		}
-	}
-
-	public double getLoadJVM() {
-		return loadJVM;
-	}
-
-	public double getLoadSystem() {
-		return loadSys;
 	}
 
 	public double getUsage() {
@@ -213,7 +145,5 @@ public class Power extends Subsystem {
 		rioFaults = ControllerPower.getFaultCount3V3() + ControllerPower.getFaultCount5V()
 				+ ControllerPower.getFaultCount6V();
 		Output.output(OutputLevel.POWER, "Rio Faults", rioFaults);
-
-		getLoad();
 	}
 }
