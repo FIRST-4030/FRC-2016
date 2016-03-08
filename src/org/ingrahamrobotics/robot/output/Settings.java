@@ -47,7 +47,7 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         KICKER_TIME("Kicker: Kick Time", "300"),
         KICKER_SHOOT("Kicker: Shoot Time", "750"),
         
-        VISION_INTERVAL("Vision: Interval", "500"),
+        VISION_INTERVAL("Vision: Interval", "750"),
         VISION_H_LOW("Vision: H Min","100"),
         VISION_H_HIGH("Vision: H Max","150"),
         VISION_S_LOW("Vision: S Min","40"),

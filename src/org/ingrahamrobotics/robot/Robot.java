@@ -37,8 +37,8 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
 	// Global state
-	public static final boolean disableShooterPID = true;
 	public static final Class<? extends Command> driveCmd = DriveTank.class;
+	public static final boolean disableShooterPID = true;
 	public static final boolean disableCamTarget = false;
 	public static final boolean kDEBUG_CAMERA = (!disableCamTarget) & true;
 

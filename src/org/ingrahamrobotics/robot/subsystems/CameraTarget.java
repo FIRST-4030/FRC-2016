@@ -38,6 +38,10 @@ public class CameraTarget extends Subsystem {
 	public static final int kNOMINAL_BLOB_AREA = kMIN_BLOB_AREA * 4;
 
 	// Structures
+	public enum Confidence {
+		kNONE(), kMINIMAL(), kNOMINAL();
+	}
+
 	public class TargetData {
 		boolean valid = false;
 		public Confidence confidence = Confidence.kNONE;
@@ -48,14 +52,11 @@ public class CameraTarget extends Subsystem {
 		public long end = 0;
 	}
 
-	public enum Confidence {
-		kNONE(), kMINIMAL(), kNOMINAL();
-	}
-
 	// Members
 	private USBCamera cam;
 	private TargetData data;
 
+	// Subsystem control
 	public CameraTarget() {
 		super();
 		data = new TargetData();
@@ -65,6 +66,10 @@ public class CameraTarget extends Subsystem {
 		setDefaultCommand(new CameraAnalyze());
 	}
 
+	public boolean isRunning() {
+		return (cam != null);
+	}
+	
 	public void start() {
 		if (isRunning()) {
 			return;
@@ -83,12 +88,12 @@ public class CameraTarget extends Subsystem {
 		cam = null;
 		Output.output(OutputLevel.VISION, getName() + "-camera", "<Disabled>");
 	}
-	
+
 	public void updateSettings() {
 		if (!isRunning()) {
 			return;
 		}
-		
+
 		cam.setSize(width, height);
 		cam.setFPS(fps);
 		if (exposure >= 0) {
@@ -97,7 +102,7 @@ public class CameraTarget extends Subsystem {
 			cam.setExposureAuto();
 		}
 		if (whitebalance >= 0) {
-			cam.setWhiteBalanceManual(whitebalance);			
+			cam.setWhiteBalanceManual(whitebalance);
 		} else {
 			cam.setWhiteBalanceAuto();
 		}
@@ -106,17 +111,13 @@ public class CameraTarget extends Subsystem {
 		}
 		cam.updateSettings();
 	}
-
-	public boolean isRunning() {
-		return (cam != null);
+	
+	// External data interface -- always provide the last completed analysis
+	public TargetData lastResult() {
+		return data;
 	}
 
-	public void save(Image image, String path) {
-		RGBValue value = new NIVision.RGBValue();
-		NIVision.imaqWriteFile(image, path, value);
-		value.free();
-	}
-
+	// Utilities
 	public Image capture() {
 		start();
 		Image image = NIVision.imaqCreateImage(ImageType.IMAGE_RGB, 0);
@@ -128,7 +129,13 @@ public class CameraTarget extends Subsystem {
 		return image;
 	}
 
-	public NIVision.Image thresholdHSL(NIVision.Image image) {
+	public void save(Image image, String path) {
+		RGBValue value = new NIVision.RGBValue();
+		NIVision.imaqWriteFile(image, path, value);
+		value.free();
+	}
+
+	public Image thresholdHSL(Image image) {
 		Image binary = NIVision.imaqCreateImage(ImageType.IMAGE_U8, 0);
 		Range range1 = new Range(Settings.Key.VISION_H_LOW.getInt(), Settings.Key.VISION_H_HIGH.getInt());
 		Range range2 = new Range(Settings.Key.VISION_S_LOW.getInt(), Settings.Key.VISION_S_HIGH.getInt());
@@ -144,6 +151,7 @@ public class CameraTarget extends Subsystem {
 		return binary;
 	}
 
+	// Analysis
 	public void analyze() {
 		TargetData data = new TargetData();
 		data.start = System.currentTimeMillis();
@@ -157,7 +165,7 @@ public class CameraTarget extends Subsystem {
 			Output.output(OutputLevel.VISION, getName() + "-tsCapture", System.currentTimeMillis());
 		}
 
-		// Reduce to HSL
+		// Reduce to binary colors with HSL threshold processing
 		Image binary = thresholdHSL(image);
 		if (kDEBUG) {
 			Output.output(OutputLevel.VISION, getName() + "-tsThreshold", System.currentTimeMillis());
@@ -236,9 +244,5 @@ public class CameraTarget extends Subsystem {
 		this.data = data;
 		Output.output(OutputLevel.VISION, getName() + "-lastTS", data.end);
 		Output.output(OutputLevel.VISION, getName() + "-duration", data.end - data.start);
-	}
-
-	public TargetData lastResult() {
-		return data;
 	}
 }

@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class CameraAnalyze extends Command {
 
-	public static final int kMIN_DELAY = 20;
+	public static final int kMIN_DELAY = 50;
 
 	public static class CameraRunner implements Runnable {
 
@@ -60,13 +60,16 @@ public class CameraAnalyze extends Command {
 				}
 
 				// Schedule the next run
-				long nextRun = System.currentTimeMillis() + Settings.Key.VISION_INTERVAL.getInt() + kMIN_DELAY;
+				long nextRun = System.currentTimeMillis() + Settings.Key.VISION_INTERVAL.getInt();
 
 				// Analyze
 				Robot.camTarget.analyze();
 
 				// Wait for the next run
 				int nextDelay = (int) (nextRun - System.currentTimeMillis());
+				if (nextDelay < kMIN_DELAY) {
+					nextDelay = kMIN_DELAY;
+				}
 				if (nextDelay > 0) {
 					try {
 						Thread.sleep(nextDelay);
