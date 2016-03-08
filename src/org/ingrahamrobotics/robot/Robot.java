@@ -67,11 +67,9 @@ public class Robot extends IterativeRobot {
 			camDriver.start();
 		}
 
-		// Start the target camera, if enabled
-		// This has a command and can be stopped but typically will just run
+		// Init the target camera, if enabled
 		if (!disableCamTarget) {
 			camAnalyze = new CameraAnalyze();
-			camAnalyze.start();
 		}
 	}
 
@@ -83,6 +81,13 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
+
+		// Start the target camera, if enabled
+		if (!disableCamTarget) {
+			camAnalyze.start();
+		}
+
+		// Start the auto program, if available
 		if (autoCmd != null) {
 			autoCmd.start();
 		}
@@ -93,6 +98,13 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopInit() {
+
+		// Start the target camera, if enabled
+		if (!disableCamTarget) {
+			camAnalyze.start();
+		}
+
+		// Start manual drive control
 		try {
 			Command drive = driveCmd.newInstance();
 			drive.start();

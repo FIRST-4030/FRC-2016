@@ -9,11 +9,17 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class CameraAnalyze extends Command {
 
+	public static final int kMIN_DELAY = 20;
+
 	public static class CameraRunner implements Runnable {
 
-		public static int kMIN_DELAY = 20;
+		private static Thread thread;
+		private static boolean done;
 
-		private static boolean done = true;
+		public CameraRunner() {
+			done = true;
+			thread = null;
+		}
 
 		public static boolean isFinished() {
 			Output.output(OutputLevel.VISION, Robot.camTarget.getCurrentCommand() + "-running", !done);
@@ -22,22 +28,41 @@ public class CameraAnalyze extends Command {
 
 		public static void stop() {
 			done = true;
+			if (thread != null) {
+				try {
+					thread.interrupt();
+					thread.join();
+				} catch (InterruptedException e) {
+				}
+			}
+			thread = null;
 			isFinished();
 		}
 
 		public static void start() {
 			done = false;
-			(new Thread(new CameraRunner())).start();
+			if (thread != null) {
+				thread = new Thread(new CameraRunner());
+			}
+			thread.setDaemon(true);
+			if (!thread.isAlive()) {
+				thread.start();
+			}
 			isFinished();
 		}
 
 		public void run() {
 			while (!done) {
 
+				// Allow cancellation
+				if (Thread.interrupted()) {
+					return;
+				}
+
 				// Schedule the next run
 				long nextRun = System.currentTimeMillis() + Settings.Key.VISION_INTERVAL.getInt() + kMIN_DELAY;
 
-				// Analyize
+				// Analyze
 				Robot.camTarget.analyze();
 
 				// Wait for the next run
@@ -46,6 +71,7 @@ public class CameraAnalyze extends Command {
 					try {
 						Thread.sleep(nextDelay);
 					} catch (InterruptedException e) {
+						return;
 					}
 				}
 			}
