@@ -30,7 +30,7 @@ public class CameraTarget extends Subsystem {
 	private static final boolean kDEBUG = true;
 
 	// Image log
-	public static boolean kENABLE_VISION_LOG = kDEBUG | true;
+	public static boolean kENABLE_VISION_LOG = true;
 	public static final int kNUM_VISION_LOGS = 3;
 	public static final String kDEFAULT_HOME = "/home/lvuser";
 	public static final String kVISION_DIR_NAME = "vision";
@@ -68,15 +68,13 @@ public class CameraTarget extends Subsystem {
 		}
 
 		public void save(Path file) {
-			PrintWriter out;
 			try {
-				out = new PrintWriter(file.toFile());
+				PrintWriter out = new PrintWriter(file.toFile());
+				out.println(toString());
+				out.close();
 			} catch (FileNotFoundException e) {
 				System.err.println("Unable to save analysis file");
-				return;
 			}
-			out.println(toString());
-			out.close();
 		}
 	}
 
@@ -94,6 +92,10 @@ public class CameraTarget extends Subsystem {
 		dirVision = Paths.get(dirHome, kVISION_DIR_NAME);
 
 		cleanVision();
+	}
+
+	public Path getVisionDir() {
+		return dirVision;
 	}
 
 	public void cleanVision() {
@@ -251,27 +253,17 @@ public class CameraTarget extends Subsystem {
 	public void analyze() {
 		TargetData data = new TargetData();
 		data.start = System.currentTimeMillis();
-		if (kDEBUG) {
-			Output.output(OutputLevel.VISION, getName() + "-tsStart", data.start);
-		}
+		Output.output(OutputLevel.VISION, getName() + "-tsStart", data.start);
 
 		// Capture
 		Image image = capture();
-		if (kDEBUG) {
-			Output.output(OutputLevel.VISION, getName() + "-tsCapture", System.currentTimeMillis() - data.start);
-		}
-
 		// Reduce to binary colors with HSL threshold processing
 		Image binary = thresholdHSL(image);
-		if (kDEBUG) {
-			Output.output(OutputLevel.VISION, getName() + "-tsThreshold", System.currentTimeMillis() - data.start);
-		}
 
 		// Find contiguous blobs
 		int blobs = NIVision.imaqCountParticles(binary, 1);
 		if (kDEBUG) {
 			Output.output(OutputLevel.VISION, getName() + "-blobCout", blobs);
-			Output.output(OutputLevel.VISION, getName() + "-tsParticles", System.currentTimeMillis() - data.start);
 		}
 
 		// Find the biggest blob
@@ -287,7 +279,6 @@ public class CameraTarget extends Subsystem {
 		if (kDEBUG) {
 			Output.output(OutputLevel.VISION, getName() + "-biggestBlob", biggest);
 			Output.output(OutputLevel.VISION, getName() + "-biggestBlobArea", maxArea);
-			Output.output(OutputLevel.VISION, getName() + "-tsBiggest", System.currentTimeMillis() - data.start);
 		}
 
 		// Confidence
@@ -296,18 +287,7 @@ public class CameraTarget extends Subsystem {
 		} else if (maxArea > kNOMINAL_BLOB_AREA) {
 			data.confidence = Confidence.kNOMINAL;
 		}
-		if (kDEBUG) {
-			Output.output(OutputLevel.VISION, getName() + "-confidence", data.confidence);
-			Output.output(OutputLevel.VISION, getName() + "-tsConfidence", System.currentTimeMillis() - data.start);
-		}
-
-		// Vision log
-		if (kENABLE_VISION_LOG && data.confidence != Confidence.kNONE) {
-			Path file = Paths.get(dirVision.toString(), data.start + "-raw.jpg");
-			save(image, file.toString());
-			file = Paths.get(dirVision.toString(), data.start + "-threshold.jpg");
-			save(binary, file.toString());
-		}
+		Output.output(OutputLevel.VISION, getName() + "-confidence", data.confidence);
 
 		// Position extraction
 		if (data.confidence != Confidence.kNONE) {
@@ -316,41 +296,37 @@ public class CameraTarget extends Subsystem {
 			if (kDEBUG) {
 				Output.output(OutputLevel.VISION, getName() + "-x", x);
 				Output.output(OutputLevel.VISION, getName() + "-y", y);
-				Output.output(OutputLevel.VISION, getName() + "-tsXY", System.currentTimeMillis() - data.start);
 			}
+		}
+
+		// Azimuth calculation
+		Output.output(OutputLevel.VISION, getName() + "-azimuth", data.azimuth);
+
+		// Altitude calculation
+		Output.output(OutputLevel.VISION, getName() + "-altitude", data.altitude);
+
+		// Distance calculation
+		Output.output(OutputLevel.VISION, getName() + "-distance", data.distance);
+
+		// Finalize
+		data.end = System.currentTimeMillis();
+		data.valid = true;
+
+		// Vision log
+		if ((kENABLE_VISION_LOG && data.confidence != Confidence.kNONE) || kDEBUG) {
+			Path file = Paths.get(dirVision.toString(), data.start + "-capture.jpg");
+			save(image, file.toString());
+			file = Paths.get(dirVision.toString(), data.start + "-threshold.jpg");
+			save(binary, file.toString());
+			data.save(Paths.get(dirVision.toString(), data.start + "-analysis.txt"));
 		}
 
 		// Buffer cleanup
 		image.free();
 		binary.free();
 
-		// Azimuth calculation
-		if (kDEBUG) {
-			Output.output(OutputLevel.VISION, getName() + "-azimuth", data.azimuth);
-			Output.output(OutputLevel.VISION, getName() + "-tsAzimuth", System.currentTimeMillis() - data.start);
-		}
-
-		// Altitude calculation
-		if (kDEBUG) {
-			Output.output(OutputLevel.VISION, getName() + "-altitude", data.altitude);
-			Output.output(OutputLevel.VISION, getName() + "-tsAltitude", System.currentTimeMillis() - data.start);
-		}
-
-		// Distance calculation
-		if (kDEBUG) {
-			Output.output(OutputLevel.VISION, getName() + "-distance", data.distance);
-			Output.output(OutputLevel.VISION, getName() + "-tsDistance", System.currentTimeMillis() - data.start);
-		}
-
-		// Finalize
-		data.end = System.currentTimeMillis();
-		data.valid = true;
-		if (kENABLE_VISION_LOG && data.confidence != Confidence.kNONE) {
-			data.save(Paths.get(dirVision.toString(), data.start + "-analysis.txt"));
-		}
-		Output.output(OutputLevel.VISION, getName() + "-duration", data.end - data.start);
-
 		// Publish
 		this.data = data;
+		Output.output(OutputLevel.VISION, getName() + "-duration", data.end - data.start);
 	}
 }
