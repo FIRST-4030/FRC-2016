@@ -18,7 +18,7 @@ public class ReadPower extends Command {
 	}
 
 	protected boolean isFinished() {
-		return false;
+		return Robot.disableReadPower;
 	}
 
 	protected void end() {

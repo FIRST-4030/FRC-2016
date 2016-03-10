@@ -1,5 +1,6 @@
 package org.ingrahamrobotics.robot.subsystems;
 
+import org.ingrahamrobotics.robot.Robot;
 import org.ingrahamrobotics.robot.commands.ReadPower;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
@@ -56,7 +57,9 @@ public class Power extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		setDefaultCommand(new ReadPower());
+		if (!Robot.disableReadPower) {
+			setDefaultCommand(new ReadPower());
+		}
 	}
 
 	public double getUsage() {
