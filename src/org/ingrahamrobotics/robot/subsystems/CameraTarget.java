@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.ingrahamrobotics.robot.Robot;
 import org.ingrahamrobotics.robot.RobotMap;
 import org.ingrahamrobotics.robot.commands.CameraAnalyze;
 import org.ingrahamrobotics.robot.output.Output;
@@ -27,7 +28,7 @@ import edu.wpi.first.wpilibj.vision.USBCamera;
 public class CameraTarget extends Subsystem {
 
 	// Debug
-	private static final boolean kDEBUG = true;
+	private static final boolean kDEBUG = Robot.kDEBUG_CAMERA;
 
 	// Image log
 	public static boolean kENABLE_VISION_LOG = true;
