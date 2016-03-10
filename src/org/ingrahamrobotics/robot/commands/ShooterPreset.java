@@ -9,6 +9,7 @@ public class ShooterPreset extends Command {
 
 	private Key key;
 	private double target;
+	private boolean done;
 
 	private void init(Key key, int target) {
 
@@ -16,6 +17,7 @@ public class ShooterPreset extends Command {
 		// The Robot.shooterRun command should *also* be running
 		requires(Robot.shooterPreset);
 
+		done = false;
 		this.key = key;
 		this.target = target;
 	}
@@ -30,9 +32,14 @@ public class ShooterPreset extends Command {
 
 	@Override
 	protected void initialize() {
+	}
+
+	@Override
+	protected void execute() {
 		if (!Robot.shooterRun.isRunning()) {
 			Robot.shooterRun.start();
 			System.err.println("ShooterPreset called while shooterRun not running");
+			return;
 		}
 
 		double setpoint = target;
@@ -40,15 +47,12 @@ public class ShooterPreset extends Command {
 			setpoint = key.getDouble();
 		}
 		Robot.shooter.set(setpoint);
-	}
-
-	@Override
-	protected void execute() {
+		done = true;
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return true;
+		return done;
 	}
 
 	@Override
