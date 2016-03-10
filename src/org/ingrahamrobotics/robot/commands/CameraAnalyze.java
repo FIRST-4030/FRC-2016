@@ -22,11 +22,11 @@ public class CameraAnalyze extends Command {
 		}
 
 		public static boolean isFinished() {
-			Output.output(OutputLevel.VISION, Robot.camTarget.getCurrentCommand() + "-running", !done);
-			return done;
+			Output.output(OutputLevel.VISION, "running", !done);
+			return false;
 		}
 
-		public static void stop() {
+		protected static void stop() {
 			done = true;
 			if (thread != null) {
 				try {
@@ -39,15 +39,17 @@ public class CameraAnalyze extends Command {
 			isFinished();
 		}
 
-		public static void start() {
-			done = false;
+		protected static void start() {
 			if (thread != null) {
-				thread = new Thread(new CameraRunner());
+				System.err.println("CameraRunner started while still active");
+				stop();
 			}
+
+			thread = new Thread(new CameraRunner());
 			thread.setDaemon(true);
-			if (!thread.isAlive()) {
-				thread.start();
-			}
+			thread.start();
+
+			done = false;
 			isFinished();
 		}
 
@@ -78,10 +80,6 @@ public class CameraAnalyze extends Command {
 					}
 				}
 			}
-		}
-
-		public static void main(String args[]) {
-			start();
 		}
 	}
 
