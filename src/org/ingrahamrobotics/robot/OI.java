@@ -61,32 +61,47 @@ public class OI {
 	 * Trigger foo = new Dpad(joyTest, 6);
 	 */
 
+	@SuppressWarnings("unused")
 	public OI() {
 
-		// Arm/Shooter buttons
-		drive.whenReleased(new DriveTank());
-		shoot.whenReleased(new ShooterShoot());
-		collect.toggleWhenPressed(new ShooterCollect());
-		armUp.whenReleased(new ArmPreset_Up());
-		armShoot.whenReleased(new ArmPreset_Shoot());
-		armHome.whenReleased(new ArmPreset_Home());
-		armDown.whenReleased(new ArmPreset_Down());
+		// Sanity check
+		if (Robot.disableProdControls && Robot.disableTestControls) {
+			System.err.println("All controls disabled.");
+			System.err.println("I hope you aren't trying to drive a robot today.");
+		}
 
-		// Drive buttons
+		// Arm/Shooter buttons
+		if (Robot.disableProdControls) {
+			System.err.println("Production controls disabled");
+		} else {
+			drive.whenReleased(new DriveTank());
+			shoot.whenReleased(new ShooterShoot());
+			collect.toggleWhenPressed(new ShooterCollect());
+			armUp.whenReleased(new ArmPreset_Up());
+			armShoot.whenReleased(new ArmPreset_Shoot());
+			armHome.whenReleased(new ArmPreset_Home());
+			armDown.whenReleased(new ArmPreset_Down());
+
+			// Drive buttons
+		}
 
 		// Test buttons
-		testDrive.whenReleased(new DriveTest());
+		if (Robot.disableTestControls) {
+			System.err.println("Test controls disabled");
+		} else {
+			testDrive.whenReleased(new DriveTest());
 
-		testArmUp.whenReleased(new ArmPreset_Up());
-		testArmDown.whenReleased(new ArmPreset_Down());
-		testArmHome.whenReleased(new ArmPreset_Home());
-		testArmShoot.whenReleased(new ArmPreset_Shoot());
+			testArmUp.whenReleased(new ArmPreset_Up());
+			testArmDown.whenReleased(new ArmPreset_Down());
+			testArmHome.whenReleased(new ArmPreset_Home());
+			testArmShoot.whenReleased(new ArmPreset_Shoot());
 
-		testEncoderDrive.toggleWhenPressed(new DriveEncoderTest());
-		testArmInit.whenReleased(new ArmInit());
-		bTestArmInit.whenReleased(new ArmInit());
+			testEncoderDrive.toggleWhenPressed(new DriveEncoderTest());
+			testArmInit.whenReleased(new ArmInit());
+			bTestArmInit.whenReleased(new ArmInit());
 
-		testFire.whenPressed(new ShooterShoot());
-		testCollect.toggleWhenPressed(new ShooterCollect());
+			testFire.whenPressed(new ShooterShoot());
+			testCollect.toggleWhenPressed(new ShooterCollect());
+		}
 	}
 }

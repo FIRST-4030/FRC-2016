@@ -42,6 +42,8 @@ public class Robot extends IterativeRobot {
 	public static final boolean disableCamTarget = false;
 	public static final boolean kDEBUG_CAMERA = (!disableCamTarget) & true;
 	public static final boolean disableReadPower = true | kDEBUG_CAMERA;
+	public static final boolean disableProdControls = true;
+	public static final boolean disableTestControls = true | (!disableProdControls);
 
 	@SuppressWarnings("unused")
 	public void robotInit() {
@@ -71,7 +73,8 @@ public class Robot extends IterativeRobot {
 		}
 
 		// Analyze at boot so we can test without a driver station
-		// Run more than once so we get valid timing data and better whitebalance
+		// Run more than once so we get valid timing data and better
+		// whitebalance
 		if (kDEBUG_CAMERA) {
 			camTarget.analyze();
 			camTarget.analyze();
