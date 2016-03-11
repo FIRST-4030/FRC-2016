@@ -94,7 +94,7 @@ public class CameraTarget extends Subsystem {
 
 	// Public interface to test using file input
 	public void test() {
-		Path file = Paths.get(Log.getPath().toString(), "input.jpg");
+		Path file = Paths.get("/home/lvuser/input.jpg");
 		if (Files.exists(file)) {
 			analyze(file);
 		}
