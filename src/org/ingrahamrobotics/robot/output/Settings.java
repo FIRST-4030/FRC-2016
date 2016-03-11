@@ -51,12 +51,12 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         VISION_EXPOSURE("Vision: Exposure", "0"),
         VISION_BRIGHTNESS("Vision: Brightness", "-1"),
         VISION_WHITETEMP("Vision: White Temp", "5000"),
-        VISION_H_LOW("Vision: H Min","250"),
-        VISION_H_HIGH("Vision: H Max","110"),
-        VISION_S_LOW("Vision: S Min","75"),
-        VISION_S_HIGH("Vision: S Max","255"),
-        VISION_L_LOW("Vision: L Min","75"),
-        VISION_L_HIGH("Vision: L Max", "255"),
+        VISION_H_LOW("Vision: H Low","100"),
+        VISION_H_HIGH("Vision: H High","200"),
+        VISION_S_LOW("Vision: S Low","75"),
+        VISION_S_HIGH("Vision: S High","255"),
+        VISION_L_LOW("Vision: L Low", "50"),
+        VISION_L_HIGH("Vision: L High", "255"),
         
 		// Comment to let ; be on new line
 		;

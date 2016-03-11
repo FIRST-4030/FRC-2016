@@ -7,10 +7,6 @@ public class Data {
 
 	public boolean valid = false;
 	public Confidence confidence = Confidence.kNONE;
-	public double distance = 0;
-	public double plane = 0;
-	public double azimuth = 0;
-	public double altitude = 0;
 	public int exposure = 0;
 	public int brightness = 0;
 	public int whitebalance = 0;
@@ -20,23 +16,30 @@ public class Data {
 	public int s_max = 0;
 	public int l_min = 0;
 	public int l_max = 0;
+	public double distance = 0;
+	public double plane = 0;
+	public double azimuth = 0;
+	public double altitude = 0;
+	public double area = 0;
 	public double x = 0;
 	public double y = 0;
-	public double left = 0;
-	public double right = 0;
-	public double top = 0;
-	public double bottom = 0;
+	public double height = 0;
+	public double width = 0;
+	public double rotation = 0;
 	public long start = 0;
 	public long end = 0;
-
+	
 	@Override
 	public String toString() {
 		String str = new String();
 		str += "V:" + valid + ";C:" + confidence + "\n";
-		str += "D:" + distance + ";Z:" + azimuth + ";L:" + altitude + ";P:" + plane + "\n";
-		str += "X:" + x + ";Y:" + y + ";L:" + left + ";R:" + right + ";T:" + top + ";B:" + bottom + "\n";
 		str += "B" + brightness + ";E" + exposure + ";W" + whitebalance + "\n";
-		str += "HL" + h_min + ";HH" + h_max + ";SL" + s_min + ";SH" + s_max + ";LL" + l_min + ";LH" + l_max + "\n";
+		str += "HL:" + h_min + ";HH:" + h_max + ";SL:" + s_min + ";SH:" + s_max + ";LL:" + l_min + ";LH:" + l_max + "\n";
+		str += "D:" + String.format("%.1f", distance) + ";Z:" + String.format("%.1f", azimuth) + ";L:"
+				+ String.format("%.1f", altitude) + ";P:" + String.format("%.1f", plane) + "\n";
+		str += "A:" + String.format("%.1f", area) + ";X:" + String.format("%.1f", x) + ";Y:" + String.format("%.1f", y) + ";H:"
+				+ String.format("%.1f", height) + ";W:" + String.format("%.1f", width) + ";R:"
+				+ String.format("%.1f", rotation) + "\n";
 		return str;
 	}
 }

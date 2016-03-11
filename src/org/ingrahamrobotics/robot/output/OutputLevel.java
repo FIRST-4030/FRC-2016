@@ -2,10 +2,10 @@ package org.ingrahamrobotics.robot.output;
 
 public enum OutputLevel {
     DEBUG(0, "Debug", false),
-    POWER(0, "Power", true),
+    POWER(0, "Power", false),
     DRIVE_PID(1, "Drive PID", true),
     ARM_PID(2, "Arm PID", true),
-    SHOOTER_PID(2, "Shooter PID", true),
+    SHOOTER_PID(2, "Shooter PID", false),
     MOTORS(3, "Motors", true),
     SENSORS(4, "Sensors", true),
     VISION(5, "Vision", true),
