@@ -79,6 +79,7 @@ public class Robot extends IterativeRobot {
 		// Get the target camera warmed up
 		if (!disableCamTarget) {
 			camTarget.warmup();
+			camTarget.test();
 		}
 	}
 

@@ -23,10 +23,9 @@ public class Camera {
 	public static final int fps = 4;
 
 	// Camera settings - Dynamic
-	private static int whitebalance = 4700; // Color temperature in K, -1 is
-											// auto
-	private static int brightness = -1; // 0 - 100, -1 is "do not set"
-	private static int exposure = 0; // 0 - 100, -1 is "auto"
+	private static int whitebalance = 4700; // Color temp in K, -1 = auto
+	private static int brightness = -1; // 0-100, -1 = "do not set"
+	private static int exposure = 0; // 0-100, -1 = auto
 
 	public Camera(String name) {
 		this.name = name;
