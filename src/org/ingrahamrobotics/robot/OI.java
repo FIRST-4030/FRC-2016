@@ -68,6 +68,9 @@ public class OI {
 		if (Robot.disableProdControls && Robot.disableTestControls) {
 			System.err.println("All controls disabled.");
 			System.err.println("I hope you aren't trying to drive a robot today.");
+			
+			// Disable all drive commands (which otherwise poll joysticks)
+			Robot.driveCmd = null;
 		}
 
 		// Arm/Shooter buttons
@@ -83,6 +86,9 @@ public class OI {
 			armDown.whenReleased(new ArmPreset_Down());
 
 			// Drive buttons
+			
+			// Ensure the production drive joysticks are active
+			Robot.driveCmd = DriveTank.class;
 		}
 
 		// Test buttons

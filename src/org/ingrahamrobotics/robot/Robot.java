@@ -37,11 +37,10 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
 	// Global state
-	public static final Class<? extends Command> driveCmd = DriveTank.class;
+	public static Class<? extends Command> driveCmd = DriveTank.class;
 	public static final boolean disableShooterPID = true;
+	public static final boolean disableReadPower = true;
 	public static final boolean disableCamTarget = false;
-	public static final boolean kDEBUG_CAMERA = (!disableCamTarget) & true;
-	public static final boolean disableReadPower = true | kDEBUG_CAMERA;
 	public static final boolean disableProdControls = true;
 	public static final boolean disableTestControls = true | (!disableProdControls);
 
@@ -75,8 +74,7 @@ public class Robot extends IterativeRobot {
 		// Analyze at boot so we can test without a driver station
 		// Run more than once so we get valid timing data and better
 		// whitebalance
-		if (kDEBUG_CAMERA) {
-			camTarget.analyze();
+		if (!disableCamTarget) {
 			camTarget.analyze();
 			camTarget.analyze();
 		}

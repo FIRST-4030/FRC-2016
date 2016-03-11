@@ -35,10 +35,8 @@ public class Power extends Subsystem {
 	private double rioCurrentMax;
 	private int rioFaults;
 
-	public Power() {
+	public Power() {		
 		pdp = new PowerDistributionPanel();
-		pdp.clearStickyFaults();
-		pdp.resetTotalEnergy();
 
 		currents = new double[kNUM_CHANNELS];
 		currentsMax = new double[kNUM_CHANNELS];
@@ -54,9 +52,16 @@ public class Power extends Subsystem {
 		rioCurrent = Double.NaN;
 		rioCurrentMax = Double.NaN;
 		rioFaults = 0;
+
+		// Only address the PDP if we are enabled
+		if (!Robot.disableReadPower) {
+			pdp.clearStickyFaults();
+			pdp.resetTotalEnergy();
+		}
 	}
 
 	public void initDefaultCommand() {
+		// Only set a default command if we are enabled
 		if (!Robot.disableReadPower) {
 			setDefaultCommand(new ReadPower());
 		}
