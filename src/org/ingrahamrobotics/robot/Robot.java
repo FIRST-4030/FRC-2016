@@ -119,8 +119,10 @@ public class Robot extends IterativeRobot {
 
 		// Start manual drive control
 		try {
-			Command drive = driveCmd.newInstance();
-			drive.start();
+			if (driveCmd != null) {
+				Command drive = driveCmd.newInstance();
+				drive.start();
+			}
 		} catch (InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
 		}

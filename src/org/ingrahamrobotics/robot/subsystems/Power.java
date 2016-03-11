@@ -35,7 +35,7 @@ public class Power extends Subsystem {
 	private double rioCurrentMax;
 	private int rioFaults;
 
-	public Power() {		
+	public Power() {
 		pdp = new PowerDistributionPanel();
 
 		currents = new double[kNUM_CHANNELS];

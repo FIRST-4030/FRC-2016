@@ -13,6 +13,7 @@ public class DriveTest extends DriveTank {
 	protected void initialize() {
 		stick = Robot.oi.joyTest;
 		stick.setAxisChannel(Joystick.AxisType.kZ, 5);
+		Robot.driveCmd = this.getClass();
 	}
 
 	@Override

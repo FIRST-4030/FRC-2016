@@ -18,6 +18,7 @@ public class DriveTank extends Command {
 	protected void initialize() {
 		left = Robot.oi.joyLeft;
 		right = Robot.oi.joyRight;
+		Robot.driveCmd = this.getClass();
 	}
 
 	protected void execute() {
