@@ -35,18 +35,29 @@ public class CameraTarget extends Subsystem {
 	public static final String kDEFAULT_HOME = "/home/lvuser";
 	public static final String kVISION_DIR_NAME = "vision";
 
-	// Camera settings (some of these may need to be exposed on the dashboard)
+	// Camera settings - Static
 	public static final int width = 640;
 	public static final int height = 480;
 	public static final int fps = 4;
-	public static int brightness = -1; // 0 - 100, -1 is "do not set"
-	public static int exposure = -1; // 0 - 100, -1 is "auto"
-	public static int whitebalance = 4700; // Color temperature in K, -1 is auto
+
+	// Camera settings - Dynamic
+	private static int whitebalance = 4700; // Color temperature in K, -1 is
+											// auto
+	private static int brightness = -1; // 0 - 100, -1 is "do not set"
+	private static int exposure = 0; // 0 - 100, -1 is "auto"
+
+	// Threshold settings
+	private static int h_min = 0;
+	private static int h_max = 0;
+	private static int s_min = 0;
+	private static int s_max = 0;
+	private static int l_min = 0;
+	private static int l_max = 0;
 
 	// Analysis constants (not tunable without algorithm adjustments)
 	public static final int kBINARY_COLOR = 255;
 	public static final int kMIN_BLOB_AREA = 2500;
-	public static final int kNOMINAL_BLOB_AREA = kMIN_BLOB_AREA * 4;
+	public static final int kNOMINAL_BLOB_AREA = kMIN_BLOB_AREA * 2;
 
 	// Structures
 	public enum Confidence {
@@ -59,18 +70,32 @@ public class CameraTarget extends Subsystem {
 		public int distance = 0;
 		public double azimuth = 0;
 		public double altitude = 0;
+		public int exposure = 0;
+		public int brightness = 0;
+		public int whitebalance = 0;
+		public int h_min = 0;
+		public int h_max = 0;
+		public int s_min = 0;
+		public int s_max = 0;
+		public int l_min = 0;
+		public int l_max = 0;
 		public long start = 0;
 		public long end = 0;
 
 		@Override
 		public String toString() {
-			return new String("V:" + valid + ";C:" + confidence + ";D" + distance + ";Z" + azimuth + ";L" + altitude);
+			String str = new String();
+			str += "V:" + valid + ";C:" + confidence + "\n";
+			str += "D:" + distance + ";Z:" + azimuth + ";L:" + altitude + "\n";
+			str += "B" + brightness + ";E" + exposure + ";W" + whitebalance + "\n";
+			str += "HL" + h_min + ";HH" + h_max + ";SL" + s_min + ";SH" + s_max + ";LL" + l_min + ";LH" + l_max + "\n";
+			return str;
 		}
 
 		public void save(Path file) {
 			try {
 				PrintWriter out = new PrintWriter(file.toFile());
-				out.println(toString());
+				out.print(toString());
 				out.close();
 			} catch (FileNotFoundException e) {
 				System.err.println("Unable to save analysis file");
@@ -98,6 +123,13 @@ public class CameraTarget extends Subsystem {
 		return dirVision;
 	}
 
+	private void resetVisionLog(Path dir) {
+		// Not fully recursive -- assumes only one layer of files
+		for (File file : dir.toFile().listFiles()) {
+			file.delete();
+		}
+	}
+
 	public void cleanVision() {
 		if (!kENABLE_VISION_LOG) {
 			return;
@@ -111,20 +143,16 @@ public class CameraTarget extends Subsystem {
 				continue;
 			}
 
-			// Die if there is an existing naming error
+			// Die if there is a naming error
 			if (!Files.isDirectory(dir)) {
 				System.err.println("Existing non-directory vision log: " + dir.toString());
 				kENABLE_VISION_LOG = false;
 				return;
 			}
 
-			// Move the numbered logs, deleting the oldest
+			// Rotate numbered logs, deleting the oldest
 			if (i == kNUM_VISION_LOGS) {
-				// Delete (not fully recursive -- assumes only one layer of
-				// files)
-				for (File file : dir.toFile().listFiles()) {
-					file.delete();
-				}
+				resetVisionLog(dir);
 				try {
 					Files.delete(dir);
 				} catch (IOException e) {
@@ -182,7 +210,7 @@ public class CameraTarget extends Subsystem {
 		}
 		cam = new USBCamera(RobotMap.usbCameraTarget);
 		cam.openCamera();
-		updateSettings();
+		updateCamera();
 		cam.startCapture();
 		Output.output(OutputLevel.VISION, getName() + "-camera", RobotMap.usbCameraTarget);
 	}
@@ -195,7 +223,38 @@ public class CameraTarget extends Subsystem {
 		Output.output(OutputLevel.VISION, getName() + "-camera", "<Disabled>");
 	}
 
+	public void warmup() {
+		updateSettings();
+		analyze();
+		analyze();
+		analyze();
+
+		// Reset once things are stable
+		resetVisionLog(dirVision);
+		analyze();
+	}
+
 	public void updateSettings() {
+		h_min = Settings.Key.VISION_H_LOW.getInt();
+		h_max = Settings.Key.VISION_H_HIGH.getInt();
+		s_min = Settings.Key.VISION_S_LOW.getInt();
+		s_max = Settings.Key.VISION_S_HIGH.getInt();
+		l_min = Settings.Key.VISION_L_LOW.getInt();
+		l_max = Settings.Key.VISION_L_HIGH.getInt();
+
+		// Only reset the camera when something changes
+		int e = Settings.Key.VISION_EXPOSURE.getInt();
+		int b = Settings.Key.VISION_BRIGHTNESS.getInt();
+		int w = Settings.Key.VISION_WHITETEMP.getInt();
+		if (e != exposure || b != brightness || w != whitebalance) {
+			exposure = e;
+			brightness = b;
+			whitebalance = w;
+			updateCamera();
+		}
+	}
+
+	private void updateCamera() {
 		if (!isRunning()) {
 			return;
 		}
@@ -239,9 +298,9 @@ public class CameraTarget extends Subsystem {
 
 	public Image thresholdHSL(Image image) {
 		Image binary = NIVision.imaqCreateImage(ImageType.IMAGE_U8, 0);
-		Range range1 = new Range(Settings.Key.VISION_H_LOW.getInt(), Settings.Key.VISION_H_HIGH.getInt());
-		Range range2 = new Range(Settings.Key.VISION_S_LOW.getInt(), Settings.Key.VISION_S_HIGH.getInt());
-		Range range3 = new Range(Settings.Key.VISION_L_LOW.getInt(), Settings.Key.VISION_L_HIGH.getInt());
+		Range range1 = new Range(h_min, h_max);
+		Range range2 = new Range(s_min, s_max);
+		Range range3 = new Range(l_min, l_max);
 		NIVision.imaqColorThreshold(binary, image, kBINARY_COLOR, NIVision.ColorMode.HSL, range1, range2, range3);
 		range1.free();
 		range2.free();
@@ -256,8 +315,18 @@ public class CameraTarget extends Subsystem {
 		Output.output(OutputLevel.VISION, getName() + "-tsStart", data.start);
 
 		// Capture
+		data.brightness = brightness;
+		data.exposure = exposure;
+		data.whitebalance = whitebalance;
 		Image image = capture();
+
 		// Reduce to binary colors with HSL threshold processing
+		data.h_min = Settings.Key.VISION_H_LOW.getInt();
+		data.h_max = Settings.Key.VISION_H_HIGH.getInt();
+		data.s_min = Settings.Key.VISION_S_LOW.getInt();
+		data.s_max = Settings.Key.VISION_S_HIGH.getInt();
+		data.l_min = Settings.Key.VISION_L_LOW.getInt();
+		data.l_max = Settings.Key.VISION_L_HIGH.getInt();
 		Image binary = thresholdHSL(image);
 
 		// Find contiguous blobs

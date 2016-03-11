@@ -48,11 +48,14 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         KICKER_SHOOT("Kicker: Shoot Time", "750"),
         
         VISION_INTERVAL("Vision: Interval", "750"),
-        VISION_H_LOW("Vision: H Min","100"),
-        VISION_H_HIGH("Vision: H Max","150"),
-        VISION_S_LOW("Vision: S Min","40"),
+        VISION_EXPOSURE("Vision: Exposure", "0"),
+        VISION_BRIGHTNESS("Vision: Brightness", "-1"),
+        VISION_WHITETEMP("Vision: White Temp", "5000"),
+        VISION_H_LOW("Vision: H Min","250"),
+        VISION_H_HIGH("Vision: H Max","110"),
+        VISION_S_LOW("Vision: S Min","75"),
         VISION_S_HIGH("Vision: S Max","255"),
-        VISION_L_LOW("Vision: L Min","100"),
+        VISION_L_LOW("Vision: L Min","75"),
         VISION_L_HIGH("Vision: L Max", "255"),
         
 		// Comment to let ; be on new line

@@ -71,12 +71,9 @@ public class Robot extends IterativeRobot {
 			camDriver.start();
 		}
 
-		// Analyze at boot so we can test without a driver station
-		// Run more than once so we get valid timing data and better
-		// whitebalance
+		// Get the target camera warmed up
 		if (!disableCamTarget) {
-			camTarget.analyze();
-			camTarget.analyze();
+			camTarget.warmup();
 		}
 	}
 

@@ -92,6 +92,7 @@ public class CameraAnalyze extends Command {
 	}
 
 	protected void execute() {
+		Robot.camTarget.updateSettings();
 	}
 
 	protected boolean isFinished() {
