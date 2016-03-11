@@ -17,11 +17,11 @@ public class Drive2016 extends DriveFull {
 
 		// Left-right tank drive
 		// Temporarily use the right encoder for both sides
-		drives[Side.kLEFT.i] = new DriveHalf(Side.kLEFT.name, RobotMap.pwmDriveLeft, true,
+		drives[Side.kLEFT.ordinal()] = new DriveHalf(Side.kLEFT.name, RobotMap.pwmDriveLeft, true,
+				Sensors.Sensor.DRIVE_ENCODER_LEFT);
+		drives[Side.kRIGHT.ordinal()] = new DriveHalf(Side.kRIGHT.name, RobotMap.pwmDriveRight, false,
 				Sensors.Sensor.DRIVE_ENCODER_RIGHT);
-		drives[Side.kRIGHT.i] = new DriveHalf(Side.kRIGHT.name, RobotMap.pwmDriveRight, false,
-				Sensors.Sensor.DRIVE_ENCODER_RIGHT);
-		tank = new RobotDrive(drives[Side.kLEFT.i].getMotor(), drives[Side.kRIGHT.i].getMotor());
+		tank = new RobotDrive(drives[Side.kLEFT.ordinal()].getMotor(), drives[Side.kRIGHT.ordinal()].getMotor());
 	}
 
 	public void tankDrive(double left, double right) {
@@ -49,13 +49,13 @@ public class Drive2016 extends DriveFull {
 	public void set(double left, double right) {
 		HalfTarget[] targets = new HalfTarget[2];
 
-		targets[Side.kLEFT.i] = new HalfTarget();
-		targets[Side.kLEFT.i].side = Side.kLEFT;
-		targets[Side.kLEFT.i].setpoint = left;
+		targets[Side.kLEFT.ordinal()] = new HalfTarget();
+		targets[Side.kLEFT.ordinal()].side = Side.kLEFT;
+		targets[Side.kLEFT.ordinal()].setpoint = left;
 
-		targets[Side.kRIGHT.i] = new HalfTarget();
-		targets[Side.kRIGHT.i].side = Side.kRIGHT;
-		targets[Side.kRIGHT.i].setpoint = right;
+		targets[Side.kRIGHT.ordinal()] = new HalfTarget();
+		targets[Side.kRIGHT.ordinal()].side = Side.kRIGHT;
+		targets[Side.kRIGHT.ordinal()].setpoint = right;
 
 		set(targets);
 	}

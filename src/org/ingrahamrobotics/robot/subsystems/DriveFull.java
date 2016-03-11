@@ -12,12 +12,10 @@ public class DriveFull extends PIDSubsystem {
 	private Class<? extends Command> manualCtrl;
 
 	public enum Side {
-		kLEFT(0, "Left"), kRIGHT(1, "Right");
-		public final int i;
+		kLEFT("Left"), kRIGHT("Right");
 		public final String name;
 
-		private Side(int i, String name) {
-			this.i = i;
+		private Side(String name) {
 			this.name = name;
 		}
 	}
@@ -96,13 +94,13 @@ public class DriveFull extends PIDSubsystem {
 			start();
 			this.setSetpoint(targets[0].setpoint);
 			for (HalfTarget target : targets) {
-				drives[target.side.i].set(target.setpoint);
+				drives[target.side.ordinal()].set(target.setpoint);
 			}
 		}
 	}
 
 	public double returnPIDInput(Side side) {
-		return drives[side.i].returnPIDInput();
+		return drives[side.ordinal()].returnPIDInput();
 	}
 
 	// Return something reasonable in case anyone asks
