@@ -5,11 +5,11 @@ import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.ingrahamrobotics.robot.Robot;
 import org.ingrahamrobotics.robot.RobotMap;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
 import org.ingrahamrobotics.robot.output.Settings;
+import org.ingrahamrobotics.robot.vision.Log;
 
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -30,11 +30,11 @@ public class Kicker extends Subsystem {
 	}
 
 	private void save() {
-		if (!CameraTarget.kENABLE_VISION_LOG) {
+		if (!Log.kENABLE_VISION_LOG) {
 			return;
 		}
 
-		Path file = Paths.get(Robot.camTarget.getVisionDir().toString(), System.currentTimeMillis() + "-kick.txt");
+		Path file = Paths.get(Log.getPath().toString(), System.currentTimeMillis() + "-kick.txt");
 		try {
 			PrintWriter out = new PrintWriter(file.toFile());
 			out.println("A:" + Sensors.Sensor.ARM_ENCODER.getInt() + ";S:" + Sensors.Sensor.SHOOTER_ENCODER.getDouble());
