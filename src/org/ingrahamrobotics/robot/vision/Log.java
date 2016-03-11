@@ -15,6 +15,7 @@ public class Log {
 	public static final int kNUM_VISION_LOGS = 3;
 	public static final String kDEFAULT_HOME = "/home/lvuser";
 	public static final String kVISION_DIR_NAME = "vision";
+	public static final long kMIN_FREE_BYTES = 1024 * 1024 * 10; // 10 MB
 
 	private static Path vision = null;
 	private String home;
@@ -29,20 +30,31 @@ public class Log {
 		trans = new Transform();
 	}
 
+	private boolean checkFreeSpace() {
+		if (vision.toFile().getFreeSpace() < kMIN_FREE_BYTES) {
+			kENABLE_VISION_LOG = false;
+			System.err.println("Disabled vision log due to limited free space");
+			return false;
+		}
+		return true;
+	}
+
 	public static Path getPath() {
 		return vision;
 	}
-	
+
 	public void save(Image image, String name) {
+		checkFreeSpace();
 		if (!kENABLE_VISION_LOG) {
 			return;
 		}
-		
+
 		Path file = Paths.get(vision.toString(), name);
 		trans.save(image, file);
 	}
-	
+
 	public void save(String str, String name) {
+		checkFreeSpace();
 		if (!kENABLE_VISION_LOG) {
 			return;
 		}
