@@ -68,7 +68,7 @@ public class OI {
 		if (Robot.disableProdControls && Robot.disableTestControls) {
 			System.err.println("All controls disabled.");
 			System.err.println("I hope you aren't trying to drive a robot today.");
-			
+
 			// Disable all drive commands (which otherwise poll joysticks)
 			Robot.driveCmd = null;
 		}
@@ -77,6 +77,13 @@ public class OI {
 		if (Robot.disableProdControls) {
 			System.err.println("Production controls disabled");
 		} else {
+
+			// Set production tank drive as the default
+			Robot.driveCmd = DriveTank.class;
+
+			// Arm override
+			bTestArmInit.whenReleased(new ArmInit());
+
 			drive.whenReleased(new DriveTank());
 			shoot.whenReleased(new ShooterShoot());
 			collect.toggleWhenPressed(new ShooterCollect());
@@ -86,7 +93,7 @@ public class OI {
 			armDown.whenReleased(new ArmPreset_Down());
 
 			// Drive buttons
-			
+
 			// Ensure the production drive joysticks are active
 			Robot.driveCmd = DriveTank.class;
 		}
@@ -104,7 +111,6 @@ public class OI {
 
 			testEncoderDrive.toggleWhenPressed(new DriveEncoderTest());
 			testArmInit.whenReleased(new ArmInit());
-			bTestArmInit.whenReleased(new ArmInit());
 
 			testFire.whenPressed(new ShooterShoot());
 			testCollect.toggleWhenPressed(new ShooterCollect());
