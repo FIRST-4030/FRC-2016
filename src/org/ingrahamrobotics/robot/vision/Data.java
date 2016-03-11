@@ -27,7 +27,6 @@ public class Data {
 	public double width = 0;
 	public double rotation = 0;
 	public long start = 0;
-	public long end = 0;
 	
 	@Override
 	public String toString() {
