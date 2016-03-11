@@ -36,13 +36,16 @@ public class Robot extends IterativeRobot {
 	// User input
 	public static OI oi;
 
+	// Master switch
+	private static final boolean production = false;
+
 	// Global state
 	public static Class<? extends Command> driveCmd = DriveTank.class;
-	public static final boolean disableShooterPID = true;
-	public static final boolean disableReadPower = true;
+	public static final boolean disableShooterPID = true; // True until the encoder works
+	public static final boolean disableReadPower = !production; // False in production
+	public static final boolean disableProdControls = !production; // False in production
+	public static final boolean disableTestControls = true | production; // True in production
 	public static final boolean disableCamTarget = false;
-	public static final boolean disableProdControls = true;
-	public static final boolean disableTestControls = true | (!disableProdControls);
 
 	@SuppressWarnings("unused")
 	public void robotInit() {
