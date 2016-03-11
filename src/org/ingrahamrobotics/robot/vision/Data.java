@@ -11,7 +11,7 @@ public class Data {
 
 	public boolean valid = false;
 	public Confidence confidence = Confidence.kNONE;
-	public int distance = 0;
+	public double distance = 0;
 	public double plane = 0;
 	public double azimuth = 0;
 	public double altitude = 0;

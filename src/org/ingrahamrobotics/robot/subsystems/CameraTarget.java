@@ -30,6 +30,7 @@ public class CameraTarget extends Subsystem {
 	// Analysis constants (probably not tunable without algorithm adjustments)
 	public static final int kMIN_BLOB_AREA = 2500;
 	public static final int kNOMINAL_BLOB_AREA = kMIN_BLOB_AREA * 2;
+	public static final double kDISTANCE_SCALE = 1.0;
 
 	// Members
 	private Camera cam;
@@ -177,16 +178,25 @@ public class CameraTarget extends Subsystem {
 			}
 		}
 
-		// Distance calculation
-		Output.output(OutputLevel.VISION, getName() + "-distance", data.distance);
-
-		// Target plane angle calculation
+		// Target plane angle calculation (NOT DONE)
+		data.plane = data.left - data.right;
 		Output.output(OutputLevel.VISION, getName() + "-angle", data.plane);
 
-		// Azimuth calculation
+		// Distance calculation (NOT DONE)
+		if (data.plane >= 0) {
+			data.distance = data.left;
+		} else {
+			data.distance = data.right;
+		}
+		data.distance /= kDISTANCE_SCALE;
+		Output.output(OutputLevel.VISION, getName() + "-distance", data.distance);
+
+		// Azimuth calculation (NOT DONE)
+		data.azimuth = ((data.y - (Camera.width / 2)) * Camera.fovH) / Camera.width;
 		Output.output(OutputLevel.VISION, getName() + "-azimuth", data.azimuth);
 
-		// Altitude calculation
+		// Altitude calculation (NOT DONE)
+		data.altitude = ((data.x - (Camera.height / 2)) * Camera.fovV) / Camera.height;
 		Output.output(OutputLevel.VISION, getName() + "-altitude", data.altitude);
 
 		// Finalize

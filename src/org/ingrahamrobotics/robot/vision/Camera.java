@@ -18,6 +18,8 @@ public class Camera {
 	// Camera settings - Static
 	public static final int width = 640;
 	public static final int height = 480;
+	public static final double fovH = 70.0;
+	public static final double fovV = 50.0;
 	public static final int fps = 4;
 
 	// Camera settings - Dynamic
