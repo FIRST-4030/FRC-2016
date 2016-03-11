@@ -6,9 +6,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.ingrahamrobotics.robot.RobotMap;
-import org.ingrahamrobotics.robot.output.Output;
-import org.ingrahamrobotics.robot.output.OutputLevel;
-import org.ingrahamrobotics.robot.output.Settings;
+import org.ingrahamrobotics.robot.dashboard.Output;
+import org.ingrahamrobotics.robot.dashboard.OutputLevel;
+import org.ingrahamrobotics.robot.dashboard.Settings;
+import org.ingrahamrobotics.robot.sensors.Sensors;
 import org.ingrahamrobotics.robot.vision.Log;
 
 import edu.wpi.first.wpilibj.Talon;

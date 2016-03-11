@@ -1,13 +1,12 @@
-package org.ingrahamrobotics.robot.subsystems;
+package org.ingrahamrobotics.robot.pid;
 
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
-import org.ingrahamrobotics.robot.output.Output;
-import org.ingrahamrobotics.robot.output.OutputLevel;
-import org.ingrahamrobotics.robot.subsystems.Sensors.Sensor;
+import org.ingrahamrobotics.robot.dashboard.Output;
+import org.ingrahamrobotics.robot.dashboard.OutputLevel;
+import org.ingrahamrobotics.robot.sensors.Sensors.Sensor;
 
-public class DriveHalf extends PIDSubsystem {
+public class DriveHalf extends PIDPresetSubsystem {
 
 	// Not configurable because these are programming features
 	public static final int kSTOP = 0;

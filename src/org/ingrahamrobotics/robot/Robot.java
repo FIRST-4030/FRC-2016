@@ -3,8 +3,10 @@ package org.ingrahamrobotics.robot;
 
 import org.ingrahamrobotics.robot.subsystems.*;
 import org.ingrahamrobotics.robot.commands.*;
-import org.ingrahamrobotics.robot.output.Output;
-import org.ingrahamrobotics.robot.output.Settings;
+import org.ingrahamrobotics.robot.dashboard.Output;
+import org.ingrahamrobotics.robot.dashboard.Settings;
+import org.ingrahamrobotics.robot.sensors.Power;
+import org.ingrahamrobotics.robot.sensors.Sensors;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;

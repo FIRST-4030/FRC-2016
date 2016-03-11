@@ -1,14 +1,15 @@
 package org.ingrahamrobotics.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 import org.ingrahamrobotics.robot.RobotMap;
-import org.ingrahamrobotics.robot.output.Output;
-import org.ingrahamrobotics.robot.output.OutputLevel;
-import org.ingrahamrobotics.robot.output.Settings;
+import org.ingrahamrobotics.robot.dashboard.Output;
+import org.ingrahamrobotics.robot.dashboard.OutputLevel;
+import org.ingrahamrobotics.robot.dashboard.Settings;
+import org.ingrahamrobotics.robot.pid.PIDPresetSubsystem;
+import org.ingrahamrobotics.robot.sensors.Sensors;
 
-public class Arm extends PIDSubsystem {
+public class Arm extends PIDPresetSubsystem {
 
 	private Talon motor;
 	private boolean ready = false;
@@ -68,6 +69,10 @@ public class Arm extends PIDSubsystem {
 	}
 
 	public void set(double setpoint) {
+		if (!ready) {
+			System.err.println("ArmPreset called while arm not ready");
+			return;
+		}
 		start();
 		this.setSetpoint(setpoint);
 		Output.output(OutputLevel.ARM_PID, getName() + "-setpoint", setpoint);

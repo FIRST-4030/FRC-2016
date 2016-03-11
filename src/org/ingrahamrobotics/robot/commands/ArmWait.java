@@ -1,6 +1,7 @@
 package org.ingrahamrobotics.robot.commands;
 
 import org.ingrahamrobotics.robot.Robot;
+import org.ingrahamrobotics.robot.pid.WaitPID;
 
 public class ArmWait extends WaitPID {
 

@@ -1,8 +1,8 @@
 package org.ingrahamrobotics.robot.vision;
 
-import org.ingrahamrobotics.robot.output.Output;
-import org.ingrahamrobotics.robot.output.OutputLevel;
-import org.ingrahamrobotics.robot.output.Settings;
+import org.ingrahamrobotics.robot.dashboard.Output;
+import org.ingrahamrobotics.robot.dashboard.OutputLevel;
+import org.ingrahamrobotics.robot.dashboard.Settings;
 
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;

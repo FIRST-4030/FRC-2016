@@ -1,4 +1,4 @@
-package org.ingrahamrobotics.robot.output;
+package org.ingrahamrobotics.robot.dashboard;
 
 import java.util.HashMap;
 import java.util.Map;

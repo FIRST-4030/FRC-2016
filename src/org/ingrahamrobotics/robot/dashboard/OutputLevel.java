@@ -1,4 +1,4 @@
-package org.ingrahamrobotics.robot.output;
+package org.ingrahamrobotics.robot.dashboard;
 
 public enum OutputLevel {
     DEBUG(0, "Debug", false),

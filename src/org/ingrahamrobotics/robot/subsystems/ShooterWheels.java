@@ -2,14 +2,15 @@ package org.ingrahamrobotics.robot.subsystems;
 
 import org.ingrahamrobotics.robot.Robot;
 import org.ingrahamrobotics.robot.RobotMap;
-import org.ingrahamrobotics.robot.output.Output;
-import org.ingrahamrobotics.robot.output.OutputLevel;
-import org.ingrahamrobotics.robot.output.Settings;
+import org.ingrahamrobotics.robot.dashboard.Output;
+import org.ingrahamrobotics.robot.dashboard.OutputLevel;
+import org.ingrahamrobotics.robot.dashboard.Settings;
+import org.ingrahamrobotics.robot.pid.PIDPresetSubsystem;
+import org.ingrahamrobotics.robot.sensors.Sensors;
 
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
-public class ShooterWheels extends PIDSubsystem {
+public class ShooterWheels extends PIDPresetSubsystem {
 
 	// Not configurable because these are safety features
 	public static final double kMIN_SHOOTER_SPEED = 0.1;

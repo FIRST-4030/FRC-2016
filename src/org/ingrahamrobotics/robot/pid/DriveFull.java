@@ -1,6 +1,6 @@
-package org.ingrahamrobotics.robot.subsystems;
+package org.ingrahamrobotics.robot.pid;
 
-import org.ingrahamrobotics.robot.output.Settings;
+import org.ingrahamrobotics.robot.dashboard.Settings;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
