@@ -32,6 +32,7 @@ public class ShooterPreset extends Command {
 
 	@Override
 	protected void initialize() {
+		done = false;
 	}
 
 	@Override
