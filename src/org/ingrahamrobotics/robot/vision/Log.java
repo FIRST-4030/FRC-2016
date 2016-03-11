@@ -1,41 +1,78 @@
 package org.ingrahamrobotics.robot.vision;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import com.ni.vision.NIVision.Image;
 
 public class Log {
 	public static boolean kENABLE_VISION_LOG = true;
 	public static final int kNUM_VISION_LOGS = 3;
 	public static final String kDEFAULT_HOME = "/home/lvuser";
 	public static final String kVISION_DIR_NAME = "vision";
-	
-	private static String home;
-	private static Path vision;
-	
+
+	private static Path vision = null;
+	private String home;
+	private Transform trans;
+
 	public Log() {
+		if (!kENABLE_VISION_LOG || vision != null) {
+			return;
+		}
 		home = System.getProperty("user.home", kDEFAULT_HOME);
 		vision = Paths.get(home, kVISION_DIR_NAME);
+		trans = new Transform();
 	}
-	
+
 	public static Path getPath() {
 		return vision;
 	}
 	
-	public static void reset() {
+	public void save(Image image, String name) {
+		if (!kENABLE_VISION_LOG) {
+			return;
+		}
+		
+		Path file = Paths.get(vision.toString(), name);
+		trans.save(image, file);
+	}
+	
+	public void save(String str, String name) {
+		if (!kENABLE_VISION_LOG) {
+			return;
+		}
+
+		Path file = Paths.get(vision.toString(), name);
+		try {
+			PrintWriter out = new PrintWriter(file.toFile());
+			out.print(str);
+			out.close();
+		} catch (FileNotFoundException e) {
+			System.err.println("Unable to save log string file");
+		}
+	}
+
+	public void reset() {
 		reset(vision);
 	}
 
-	private static void reset(Path dir) {
+	private void reset(Path dir) {
+		if (!kENABLE_VISION_LOG) {
+			return;
+		}
+
 		// Not fully recursive -- assumes only one layer of files
 		for (File file : dir.toFile().listFiles()) {
 			file.delete();
 		}
 	}
 
-	public static void rotate() {
+	public void rotate() {
 		if (!kENABLE_VISION_LOG) {
 			return;
 		}

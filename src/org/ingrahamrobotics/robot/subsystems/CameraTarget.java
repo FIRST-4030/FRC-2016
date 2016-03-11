@@ -36,6 +36,7 @@ public class CameraTarget extends Subsystem {
 	private Camera cam;
 	private Data data;
 	private Transform trans;
+	private Log log;
 
 	// Subsystem control
 	public CameraTarget() {
@@ -43,7 +44,8 @@ public class CameraTarget extends Subsystem {
 		cam = new Camera(RobotMap.usbCameraTarget);
 		data = new Data();
 		trans = new Transform();
-		Log.rotate();
+		log = new Log();
+		log.rotate();
 	}
 
 	public void initDefaultCommand() {
@@ -67,7 +69,7 @@ public class CameraTarget extends Subsystem {
 		analyze();
 
 		// Reset once things are stable
-		Log.reset();
+		log.reset();
 		analyze();
 
 		// Run a static analysis, if the input file exists
@@ -204,12 +206,10 @@ public class CameraTarget extends Subsystem {
 		data.valid = true;
 
 		// Vision log
-		if (Log.kENABLE_VISION_LOG && (data.confidence != Confidence.kNONE || kDEBUG)) {
-			Path file = Paths.get(Log.getPath().toString(), data.start + "-capture.jpg");
-			trans.save(image, file);
-			file = Paths.get(Log.getPath().toString(), data.start + "-threshold.jpg");
-			trans.save(binary, file);
-			data.save(Paths.get(Log.getPath().toString(), data.start + "-analysis.txt"));
+		if (data.confidence != Confidence.kNONE || kDEBUG) {
+			log.save(image, data.start + "-capture.jpg");
+			log.save(binary, data.start + "-threshold.jpg");
+			log.save(data.toString(), data.start + "-analysis.txt");
 		}
 
 		// Buffer cleanup

@@ -1,9 +1,5 @@
 package org.ingrahamrobotics.robot.vision;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.nio.file.Path;
-
 public class Data {
 	public enum Confidence {
 		kNONE(), kMINIMAL(), kNOMINAL();
@@ -42,15 +38,5 @@ public class Data {
 		str += "B" + brightness + ";E" + exposure + ";W" + whitebalance + "\n";
 		str += "HL" + h_min + ";HH" + h_max + ";SL" + s_min + ";SH" + s_max + ";LL" + l_min + ";LH" + l_max + "\n";
 		return str;
-	}
-
-	public void save(Path file) {
-		try {
-			PrintWriter out = new PrintWriter(file.toFile());
-			out.print(toString());
-			out.close();
-		} catch (FileNotFoundException e) {
-			System.err.println("Unable to save analysis file");
-		}
 	}
 }
