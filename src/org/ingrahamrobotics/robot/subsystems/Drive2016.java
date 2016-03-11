@@ -2,9 +2,12 @@ package org.ingrahamrobotics.robot.subsystems;
 
 import org.ingrahamrobotics.robot.Robot;
 import org.ingrahamrobotics.robot.RobotMap;
-import org.ingrahamrobotics.robot.output.Output;
-import org.ingrahamrobotics.robot.output.OutputLevel;
-import org.ingrahamrobotics.robot.output.Settings;
+import org.ingrahamrobotics.robot.dashboard.Output;
+import org.ingrahamrobotics.robot.dashboard.OutputLevel;
+import org.ingrahamrobotics.robot.dashboard.Settings;
+import org.ingrahamrobotics.robot.pid.DriveFull;
+import org.ingrahamrobotics.robot.pid.DriveHalf;
+import org.ingrahamrobotics.robot.sensors.Sensors;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 

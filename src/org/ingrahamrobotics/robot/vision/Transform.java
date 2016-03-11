@@ -2,7 +2,7 @@ package org.ingrahamrobotics.robot.vision;
 
 import java.nio.file.Path;
 
-import org.ingrahamrobotics.robot.output.Settings;
+import org.ingrahamrobotics.robot.dashboard.Settings;
 
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;

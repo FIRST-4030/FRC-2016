@@ -1,10 +1,6 @@
 package org.ingrahamrobotics.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
+import org.ingrahamrobotics.robot.pid.PIDPresetCtrl;
 
-public class ShooterPresetCtrl extends Subsystem {
-	// Required method in subsystems
-	public void initDefaultCommand() {
-		// No default command
-	}
+public class ShooterPresetCtrl extends PIDPresetCtrl {
 }

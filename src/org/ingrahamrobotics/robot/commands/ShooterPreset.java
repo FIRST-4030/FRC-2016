@@ -1,66 +1,16 @@
 package org.ingrahamrobotics.robot.commands;
 
 import org.ingrahamrobotics.robot.Robot;
-import org.ingrahamrobotics.robot.output.Settings.Key;
+import org.ingrahamrobotics.robot.dashboard.Settings.Key;
+import org.ingrahamrobotics.robot.pid.PIDPreset;
 
-import edu.wpi.first.wpilibj.command.Command;
-
-public class ShooterPreset extends Command {
-
-	private Key key;
-	private double target;
-	private boolean done;
-
-	private void init(Key key, int target) {
-
-		// This code uses Robot.shooter to modify the shooter setpoint
-		// The Robot.shooterRun command should *also* be running
-		requires(Robot.shooterPreset);
-
-		done = false;
-		this.key = key;
-		this.target = target;
-	}
+public class ShooterPreset extends PIDPreset {
 
 	public ShooterPreset(Key key) {
-		init(key, 0);
+		super(Robot.shooter, Robot.shooterRun, Robot.shooterPreset, key);
 	}
 
 	public ShooterPreset(int target) {
-		init(null, target);
-	}
-
-	@Override
-	protected void initialize() {
-	}
-
-	@Override
-	protected void execute() {
-		if (!Robot.shooterRun.isRunning()) {
-			Robot.shooterRun.start();
-			System.err.println("ShooterPreset called while shooterRun not running");
-			return;
-		}
-
-		double setpoint = target;
-		if (key != null) {
-			setpoint = key.getDouble();
-		}
-		Robot.shooter.set(setpoint);
-		done = true;
-	}
-
-	@Override
-	protected boolean isFinished() {
-		return done;
-	}
-
-	@Override
-	protected void end() {
-	}
-
-	@Override
-	protected void interrupted() {
-		end();
+		super(Robot.shooter, Robot.shooterRun, Robot.shooterPreset, (double)target);
 	}
 }

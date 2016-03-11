@@ -1,6 +1,6 @@
 package org.ingrahamrobotics.robot.commands;
 
-import org.ingrahamrobotics.robot.output.Settings;
+import org.ingrahamrobotics.robot.dashboard.Settings;
 
 public class ArmPreset_Home extends ArmPreset {
 	public ArmPreset_Home() {

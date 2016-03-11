@@ -1,4 +1,4 @@
-package org.ingrahamrobotics.robot.commands;
+package org.ingrahamrobotics.robot.sensors;
 
 import org.ingrahamrobotics.robot.Robot;
 
