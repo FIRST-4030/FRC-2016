@@ -11,7 +11,8 @@ public class ShooterRun extends Command {
 	}
 
 	protected void initialize() {
-		Robot.shooter.stop();
+		Robot.shooterRun = this;
+		Robot.shooter.start();
 	}
 
 	protected void execute() {

@@ -11,6 +11,7 @@ public class ArmRun extends Command {
 	}
 
 	protected void initialize() {
+		Robot.armRun = this;
 		Robot.arm.start();
 	}
 

@@ -2,6 +2,7 @@ package org.ingrahamrobotics.robot.subsystems;
 
 import org.ingrahamrobotics.robot.Robot;
 import org.ingrahamrobotics.robot.RobotMap;
+import org.ingrahamrobotics.robot.commands.ShooterRun;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
 import org.ingrahamrobotics.robot.output.Settings;
@@ -18,6 +19,7 @@ public class ShooterWheels extends PIDSubsystem {
 	public static final int kSTOP = 0;
 
 	private Talon motor;
+	private boolean ready;
 
 	public ShooterWheels() {
 		super(1.0, 0.0, 0.0);
@@ -34,6 +36,7 @@ public class ShooterWheels extends PIDSubsystem {
 	}
 
 	public void start() {
+		ready = false;
 		this.getPIDController().enable();
 		enabled();
 	}
@@ -52,6 +55,7 @@ public class ShooterWheels extends PIDSubsystem {
 		} else {
 			start();
 			this.setSetpoint(setpoint);
+			ready = true;
 		}
 		Output.output(OutputLevel.SHOOTER_PID, getName() + "-setpoint", setpoint);
 	}
@@ -88,7 +92,7 @@ public class ShooterWheels extends PIDSubsystem {
 			output = 1.0;
 		}
 
-		if (enabled()) {
+		if (enabled() && ready) {
 			motor.set(output);
 			Output.output(OutputLevel.MOTORS, getName() + "-speed", output);
 		}
@@ -96,6 +100,6 @@ public class ShooterWheels extends PIDSubsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		// No default command
+		this.setDefaultCommand(new ShooterRun());
 	}
 }

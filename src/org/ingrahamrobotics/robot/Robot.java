@@ -40,11 +40,11 @@ public class Robot extends IterativeRobot {
 	private static final boolean production = true;
 
 	// Global state
-	public static Class<? extends Command> driveCmd = DriveTank.class;
+	public static Class<? extends Command> driveCmd = null;
 	public static final boolean disableShooterPID = true; // True until the encoder works
 	public static final boolean disableReadPower = !production;
 	public static final boolean disableProdControls = !production;
-	public static final boolean disableTestControls = false; // True in production
+	public static final boolean disableTestControls = true; // True in production
 	public static final boolean disableCamTarget = true;
 
 	@SuppressWarnings("unused")
@@ -86,7 +86,7 @@ public class Robot extends IterativeRobot {
 		// Init the shooter
 		Command cmd = new ShooterStop();
 		cmd.start();
-
+		
 		// Start the target camera, if available
 		if (camAnalyze != null) {
 			camAnalyze.start();
