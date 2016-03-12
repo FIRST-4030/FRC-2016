@@ -35,12 +35,12 @@ public class ShooterWheels extends PIDSubsystem {
 
 	public void start() {
 		this.getPIDController().enable();
-		isEnabled();
+		enabled();
 	}
 
 	public void stop() {
 		this.getPIDController().disable();
-		isEnabled();
+		enabled();
 
 		motor.disable();
 		Output.output(OutputLevel.MOTORS, getName() + "-speed", 0);
@@ -56,7 +56,7 @@ public class ShooterWheels extends PIDSubsystem {
 		Output.output(OutputLevel.SHOOTER_PID, getName() + "-setpoint", setpoint);
 	}
 
-	public boolean isEnabled() {
+	public boolean enabled() {
 		boolean enabled = this.getPIDController().isEnabled();
 		Output.output(OutputLevel.SHOOTER_PID, getName() + "-enabled", enabled);
 		return enabled;
@@ -88,7 +88,7 @@ public class ShooterWheels extends PIDSubsystem {
 			output = 1.0;
 		}
 
-		if (isEnabled()) {
+		if (enabled()) {
 			motor.set(output);
 			Output.output(OutputLevel.MOTORS, getName() + "-speed", output);
 		}
