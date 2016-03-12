@@ -41,7 +41,8 @@ public class Robot extends IterativeRobot {
 
 	// Global state
 	public static Class<? extends Command> driveCmd = null;
-	public static final boolean disableShooterPID = true; // True until the encoder works
+	public static final boolean disableShooterPID = true; // True until the
+															// encoder works
 	public static final boolean disableReadPower = !production;
 	public static final boolean disableProdControls = !production;
 	public static final boolean disableTestControls = production;
@@ -81,10 +82,16 @@ public class Robot extends IterativeRobot {
 	// Code to run at init of each DS-controlled mode
 	public void modeInit() {
 
+		// Init the arm, if needed
+		if (!arm.ready()) {
+			Command cmd = new ArmZero();
+			cmd.start();
+		}
+
 		// Init the shooter
 		Command cmd = new ShooterStop();
 		cmd.start();
-		
+
 		// Start the target camera, if available
 		if (camAnalyze != null) {
 			camAnalyze.start();
