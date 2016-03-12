@@ -82,7 +82,7 @@ public class OI {
 			Robot.driveCmd = DriveTank.class;
 
 			// Arm override
-			bTestArmInit.whenReleased(new ArmInit());
+			bTestArmInit.whenReleased(new ArmZero());
 
 			drive.whenReleased(new DriveTank());
 			shoot.whenReleased(new ShooterShoot());
@@ -116,7 +116,7 @@ public class OI {
 			testArmShoot.whenReleased(new ArmPreset_Shoot());
 
 			testEncoderDrive.toggleWhenPressed(new DriveEncoderTest());
-			testArmInit.whenReleased(new ArmInit());
+			testArmInit.whenReleased(new ArmZero());
 
 			testFire.whenPressed(new ShooterShoot());
 			testCollect.toggleWhenPressed(new ShooterCollect());
