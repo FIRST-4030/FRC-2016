@@ -18,7 +18,7 @@ public class Drive2016 extends DriveFull {
 		// Left-right tank drive
 		// Temporarily use the right encoder for both sides
 		drives[Side.kLEFT.ordinal()] = new DriveHalf(Side.kLEFT.name, RobotMap.pwmDriveLeft, true,
-				Sensors.Sensor.DRIVE_ENCODER_LEFT);
+				Sensors.Sensor.DRIVE_ENCODER_RIGHT);
 		drives[Side.kRIGHT.ordinal()] = new DriveHalf(Side.kRIGHT.name, RobotMap.pwmDriveRight, false,
 				Sensors.Sensor.DRIVE_ENCODER_RIGHT);
 		tank = new RobotDrive(drives[Side.kLEFT.ordinal()].getMotor(), drives[Side.kRIGHT.ordinal()].getMotor());
