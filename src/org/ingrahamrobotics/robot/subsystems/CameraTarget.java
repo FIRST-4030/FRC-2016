@@ -124,6 +124,7 @@ public class CameraTarget extends Subsystem {
 			data.exposure = cam.getExposure();
 			data.whitebalance = cam.getWhitebalance();
 			image = cam.capture();
+			System.err.println("Analyzing new capture");
 		}
 
 		// Reduce to binary colors with HSL threshold processing
@@ -157,6 +158,10 @@ public class CameraTarget extends Subsystem {
 
 		// Sanity check
 		if (particleIndex < 0) {
+			System.err.println("No particles found");
+			log.save(image, data.start + "-empty.jpg");
+			image.free();
+			binary.free();
 			return;
 		}
 

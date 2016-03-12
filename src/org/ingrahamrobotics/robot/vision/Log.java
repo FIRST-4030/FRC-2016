@@ -22,9 +22,6 @@ public class Log {
 	private Transform trans;
 
 	public Log() {
-		if (!kENABLE_VISION_LOG || vision != null) {
-			return;
-		}
 		home = System.getProperty("user.home", kDEFAULT_HOME);
 		vision = Paths.get(home, kVISION_DIR_NAME);
 		trans = new Transform();
@@ -46,6 +43,7 @@ public class Log {
 	public void save(Image image, String name) {
 		checkFreeSpace();
 		if (!kENABLE_VISION_LOG) {
+			System.err.println("Vision log disabled. Did not save: " + name);
 			return;
 		}
 
@@ -56,6 +54,7 @@ public class Log {
 	public void save(String str, String name) {
 		checkFreeSpace();
 		if (!kENABLE_VISION_LOG) {
+			System.err.println("Vision log disabled. Did not save: " + name);
 			return;
 		}
 
@@ -74,10 +73,6 @@ public class Log {
 	}
 
 	private void reset(Path dir) {
-		if (!kENABLE_VISION_LOG) {
-			return;
-		}
-
 		// Not fully recursive -- assumes only one layer of files
 		for (File file : dir.toFile().listFiles()) {
 			file.delete();
@@ -85,10 +80,6 @@ public class Log {
 	}
 
 	public void rotate() {
-		if (!kENABLE_VISION_LOG) {
-			return;
-		}
-
 		for (int i = kNUM_VISION_LOGS; i > 0; i--) {
 			Path dir = Paths.get(vision.toString() + "." + i);
 
