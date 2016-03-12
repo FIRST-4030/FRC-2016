@@ -23,10 +23,10 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         ARM_PID_D("Arm: D", "0.0"),
         ARM_ZERO_SPEED("Arm: Homing Speed", "-0.65"),
 
-        ARM_PRESET_DOWN("Arm Preset: Down", "-1200"),
-        ARM_PRESET_HOME("Arm Preset: Home", "-200"),
+        ARM_PRESET_DOWN("Arm Preset: Down", "-800"),
+        ARM_PRESET_HOME("Arm Preset: Home", "-100"),
         ARM_PRESET_SHOOT("Arm Preset: Shoot", "2500"),
-        ARM_PRESET_UP("Arm Preset: Up", "4500"),
+        ARM_PRESET_UP("Arm Preset: Up", "4100"),
         
         ARM_SPEED_HEIGHT("Arm Speed: Height", "3000"),
         ARM_SPEED_FACTOR("Arm Speed: Factor", "0.65"),
@@ -40,7 +40,7 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         DRIVE_PID_D("Drive: D", "0.00"),
 
         SHOOTER_SPEED("Shooter: Shoot", "150"),
-        SHOOTER_COLLECT("Shooter: Collect", "-0.4"),
+        SHOOTER_COLLECT("Shooter: Collect", "-0.7"),
         SHOOTER_WAIT("Shooter: Wait", "1000"),
         
         KICKER_SPEED("Kicker: Speed", "0.75"),
