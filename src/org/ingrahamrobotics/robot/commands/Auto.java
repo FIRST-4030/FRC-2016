@@ -23,6 +23,6 @@ public class Auto extends CommandGroup {
 		addSequential(new DriveStop());
 		
 		// Arm down
-		addSequential(new ShooterShoot());
+		addSequential(new ArmPreset_Home());
 	}
 }
