@@ -24,9 +24,9 @@ public class DriveEncoderTest extends CommandGroup {
 		addSequential(new ShooterShoot());
 
 		// Drive backward
-		addSequential(new DriveToTarget(-ticks, -ticks));
+		addSequential(new DriveToTarget(ticks * -0.5, ticks * -0.5));
 		addSequential(new DriveWait());
-		
+
 		// Return to manual control
 		addSequential(new DriveStop());
 	}
