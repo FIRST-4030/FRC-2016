@@ -44,7 +44,7 @@ public class Robot extends IterativeRobot {
 	public static final boolean disableShooterPID = true; // True until the encoder works
 	public static final boolean disableReadPower = !production;
 	public static final boolean disableProdControls = !production;
-	public static final boolean disableTestControls = true; // True in production
+	public static final boolean disableTestControls = production;
 	public static final boolean disableCamTarget = true;
 
 	@SuppressWarnings("unused")
@@ -61,9 +61,6 @@ public class Robot extends IterativeRobot {
 		armRun = new ArmRun();
 		shooterRun = new ShooterRun();
 		camAnalyze = null;
-		if (!disableCamTarget) {
-			camAnalyze = new CameraAnalyze();
-		}
 
 		// Autonomous command
 		autoCmd = new Auto();
@@ -76,6 +73,7 @@ public class Robot extends IterativeRobot {
 
 		// Get the target camera warmed up
 		if (!disableCamTarget) {
+			camAnalyze = new CameraAnalyze();
 			camTarget.warmup();
 		}
 	}

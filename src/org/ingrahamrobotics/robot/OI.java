@@ -102,6 +102,12 @@ public class OI {
 		if (Robot.disableTestControls) {
 			System.err.println("Test controls disabled");
 		} else {
+
+			// Set test tank drive as the default if production is not available
+			if (!Robot.disableProdControls) {
+				Robot.driveCmd = DriveTank.class;
+			}
+
 			testDrive.whenReleased(new DriveTest());
 
 			testArmUp.whenReleased(new ArmPreset_Up());
