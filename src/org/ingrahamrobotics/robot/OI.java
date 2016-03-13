@@ -34,6 +34,7 @@ public class OI {
 	public Button driverArmDownL = new JoystickButton(joyLeft, 1);
 	public Button driverArmDownR = new JoystickButton(joyRight, 1);
 	public Button drive = new JoystickButton(joyLeft, 2);
+	public Button driverArmDisable = new JoystickButton(joyRight, 2);
 	// The rest will be those ideally would be preset actions for the defenses
 
 	// Test buttons
@@ -83,6 +84,7 @@ public class OI {
 
 			// Arm override
 			bTestArmInit.whenReleased(new ArmZero());
+			driverArmDisable.whileHeld(new ArmDisable());
 
 			drive.whenReleased(new DriveTank());
 			shoot.whenReleased(new ShooterShoot());
