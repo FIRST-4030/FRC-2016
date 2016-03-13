@@ -13,7 +13,7 @@ public class RobotMap {
 
 	// USB
 	public static final String usbCameraDriver = "cam0";
-	public static final String usbCameraTarget = "cam1";
+	public static final String usbCameraTarget = "cam0";
 
 	// PWM
 	public static final int pwmDriveLeft = 0;
