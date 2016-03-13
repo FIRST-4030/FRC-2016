@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class Auto extends CommandGroup {
 	
-	private static final int ticks = 4500;
+	private static final int ticks = 8000;
 
 	public Auto() {
 		
@@ -21,8 +21,5 @@ public class Auto extends CommandGroup {
 		
 		// Stop any twitching from PID drive now that we are in position
 		addSequential(new DriveStop());
-		
-		// Arm down
-		addSequential(new ArmPreset_Home());
 	}
 }
