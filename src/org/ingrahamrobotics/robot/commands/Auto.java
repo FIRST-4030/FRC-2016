@@ -13,7 +13,8 @@ public class Auto extends CommandGroup {
 		
 		// Arm up
 		addSequential(new ArmPreset_Shoot());
-		addSequential(new ArmWait());
+		// This should arm-wait, but with the encoder being frequently down...
+		addSequential(new Wait(750));
 
 		// Drive forward
 		addSequential(new DriveToTarget(ticks, ticks));
