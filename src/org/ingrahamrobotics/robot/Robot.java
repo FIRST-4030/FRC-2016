@@ -37,7 +37,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
 	// Master switch
-	private static final boolean production = false;
+	private static final boolean production = true;
 
 	// Global state
 	public static Class<? extends Command> driveCmd = null;
