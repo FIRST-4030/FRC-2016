@@ -6,6 +6,7 @@ import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -17,10 +18,11 @@ public class Sensors extends Subsystem {
 	private static final Encoder armEncoder = new Encoder(RobotMap.dioArmA, RobotMap.dioArmB);
 	private static final DigitalInput armSwitch = new DigitalInput(RobotMap.dioArmSwitch);
 	private static final Counter shooterEncoder = new Counter(RobotMap.dioShooter);
-	private static final Encoder driveLeftEncoder = new Encoder(RobotMap.dioDriveLeftA,
-			RobotMap.dioDriveLeftB);
-	private static final Encoder driveRightEncoder = new Encoder(RobotMap.dioDriveRightA,
-			RobotMap.dioDriveRightB);
+	private static final Encoder driveLeftEncoder =
+			new Encoder(RobotMap.dioDriveLeftA, RobotMap.dioDriveLeftB);
+	private static final Encoder driveRightEncoder =
+			new Encoder(RobotMap.dioDriveRightA, RobotMap.dioDriveRightB);
+	private static final ADXRS450_Gyro gyro = new ADXRS450_Gyro(RobotMap.spiGyro);
 
 	public enum Sensor {
 		ARM_SWITCH(
@@ -33,6 +35,8 @@ public class Sensors extends Subsystem {
 			"Drive Encoder Left", driveLeftEncoder, SensorType.ENCODER),
 		DRIVE_ENCODER_RIGHT(
 			"Drive Encoder Right", driveRightEncoder, SensorType.ENCODER),
+		GYRO(
+			"Gyro", gyro, SensorType.GYRO)
 		;
 
 		public final String name;
@@ -66,9 +70,29 @@ public class Sensors extends Subsystem {
 			case ENCODER_RATE:
 				((Encoder) device).reset();
 				break;
-			default:
+			case GYRO:
+			case GYRO_RATE:
+				((ADXRS450_Gyro) device).reset();
+				break;
+			case SWITCH:
 				break;
 			}
+		}
+
+		public void calibrate() {
+			switch (type) {
+			case COUNTER:
+			case COUNTER_RATE:
+			case ENCODER:
+			case ENCODER_RATE:
+			case SWITCH:
+				break;
+			case GYRO:
+			case GYRO_RATE:
+				((ADXRS450_Gyro) device).calibrate();
+				break;
+			}
+			reset();
 		}
 
 		public String get() {
@@ -108,7 +132,9 @@ public class Sensors extends Subsystem {
 		COUNTER_RATE("Counter Rate"),
 		ENCODER("Encoder"),
 		ENCODER_RATE("Encoder Rate"),
-		SWITCH("Switch");
+		SWITCH("Switch"),
+		GYRO("Gyroscope"),
+		GYRO_RATE("Gyroscope Rate");
 
 		public final String name;
 
@@ -121,6 +147,12 @@ public class Sensors extends Subsystem {
 		}
 	}
 
+	public void calibrate() {
+		for (Sensor sensor : Sensor.values()) {
+			sensor.calibrate();
+		}
+	}
+
 	public void update() {
 		long now = System.currentTimeMillis();
 
@@ -130,6 +162,16 @@ public class Sensors extends Subsystem {
 			double d;
 
 			switch (sensor.type) {
+			case GYRO:
+				d = ((ADXRS450_Gyro) sensor.device).getAngle();
+				Output.output(OutputLevel.SENSORS, sensor.name, d);
+				sensor.value = Double.toString(d);
+				break;
+			case GYRO_RATE:
+				d = ((ADXRS450_Gyro) sensor.device).getRate();
+				Output.output(OutputLevel.SENSORS, sensor.name, d);
+				sensor.value = Double.toString(d);
+				break;
 			case SWITCH:
 				b = !((DigitalInput) sensor.device).get();
 				Output.output(OutputLevel.SENSORS, sensor.name, b);

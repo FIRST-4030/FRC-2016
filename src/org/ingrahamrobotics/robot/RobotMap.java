@@ -1,5 +1,7 @@
 package org.ingrahamrobotics.robot;
 
+import edu.wpi.first.wpilibj.SPI;
+
 public class RobotMap {
 
 	// Joysticks
@@ -29,10 +31,11 @@ public class RobotMap {
 	public static final int dioArmA = 1;
 	public static final int dioArmB = 2;
 	public static final int dioShooter = 3;
-
-	// Speculative DIO
 	public static final int dioDriveLeftA = 4;
 	public static final int dioDriveLeftB = 5;
 	public static final int dioDriveRightA = 6;
 	public static final int dioDriveRightB = 7;
+
+	// SPI
+	public static final SPI.Port spiGyro = SPI.Port.kOnboardCS0;
 }
