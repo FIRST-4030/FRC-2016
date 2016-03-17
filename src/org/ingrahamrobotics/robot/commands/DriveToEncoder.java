@@ -8,13 +8,12 @@ public class DriveToEncoder extends Command {
 
 	public static final int kTicksPerRotation = 21600;
 	public static final int kTicksPerDegree = kTicksPerRotation / 360;
-
-	private static final int kSTOP = 0;
+	public static final int kSTOP = 0;
 
 	private int left;
 	private int right;
 
-	public DriveToEncoder(int angle) {
+	public DriveToEncoder(double angle) {
 		this(kSTOP, kSTOP, angle);
 	}
 
@@ -22,10 +21,10 @@ public class DriveToEncoder extends Command {
 		this((int) left, (int) right, 0);
 	}
 
-	private DriveToEncoder(int left, int right, int angle) {
+	private DriveToEncoder(int left, int right, double angle) {
 		requires(Robot.drive);
 		if (left == kSTOP && right == kSTOP) {
-			left = angle * kTicksPerDegree;
+			left = (int)(angle * kTicksPerDegree);
 			right = left * -1;
 		}
 		this.left = left;

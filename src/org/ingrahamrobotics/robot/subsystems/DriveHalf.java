@@ -16,6 +16,9 @@ public class DriveHalf extends PIDSubsystem {
 	private Talon motor;
 	private String name;
 	private Sensor sensor;
+	private DriveHalf partner;
+	private double output;
+	private double offset;
 
 	public DriveHalf(String name, int motorIndex, boolean invert) {
 		super(1.0, 0.0, 0.0);
@@ -23,12 +26,18 @@ public class DriveHalf extends PIDSubsystem {
 		motor = new Talon(motorIndex);
 		motor.setInverted(invert);
 		sensor = null;
+		partner = null;
+	}
+
+	public void setPartner(DriveHalf partner) {
+		this.partner = partner;
+		Output.output(OutputLevel.MOTORS, fullName() + "-partner", partner);
 	}
 
 	public Talon getMotor() {
 		return motor;
 	}
-	
+
 	public boolean isSensorType(SensorType type) {
 		return (sensor.type == type);
 	}
@@ -84,14 +93,53 @@ public class DriveHalf extends PIDSubsystem {
 		return sensor.getDouble();
 	}
 
+	public double output() {
+		return output;
+	}
+
+	public void offset(double offset) {
+		// Ensure the offset doesn't change between check and use
+		synchronized (this) {
+			this.offset = offset;
+		}
+	}
+
 	@Override
 	protected void usePIDOutput(double output) {
 		if (enabled()) {
+
+			// Ensure the offset doesn't change between check and use
+			synchronized (this) {
+				if (partner != null) {
+					// Work with our partner to adjust our relative speeds
+					double diff = output / 2.0;
+					partner.offset(diff);
+					Output.output(OutputLevel.MOTORS, fullName() + "-offset", 0.0);
+					Output.output(OutputLevel.MOTORS, fullName() + "-diff", diff);
+
+					// Our speed is differential
+					output = partner.output() + diff;
+				} else {
+					Output.output(OutputLevel.MOTORS, fullName() + "-diff", 0.0);
+					Output.output(OutputLevel.MOTORS, fullName() + "-offset", offset);
+
+					// Slow down if our partner asks us to
+					if (offset != kSTOP) {
+						output -= offset;
+						// But only for this round
+						offset = kSTOP;
+					}
+				}
+			}
+
+			// Invert as final step
 			if (motor.getInverted()) {
 				output *= -1.0;
 			}
-			motor.set(output);
-			Output.output(OutputLevel.MOTORS, fullName() + "-speed", output);
+
+			this.output = output;
+			motor.set(this.output);
+			Output.output(OutputLevel.MOTORS, fullName() + "-speed", this.output);
 		}
 	}
 

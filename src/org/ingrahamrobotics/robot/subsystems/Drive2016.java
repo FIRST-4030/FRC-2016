@@ -42,7 +42,25 @@ public class Drive2016 extends DriveFull {
 		Output.output(OutputLevel.MOTORS, getName() + "-right", right);
 		tank.tankDrive(left, right);
 	}
-	
+
+	// Gyro + Encoder PID (i.e. drive straight to left encoder reading)
+	public void setStraight(double left) {
+		HalfTarget[] targets = new HalfTarget[2];
+
+		targets[Side.kLEFT.ordinal()] = new HalfTarget();
+		targets[Side.kLEFT.ordinal()].side = Side.kLEFT;
+		targets[Side.kLEFT.ordinal()].setpoint = left;
+		targets[Side.kLEFT.ordinal()].sensor = Sensors.Sensor.DRIVE_ENCODER_LEFT;
+
+		targets[Side.kRIGHT.ordinal()] = new HalfTarget();
+		targets[Side.kRIGHT.ordinal()].side = Side.kRIGHT;
+		targets[Side.kRIGHT.ordinal()].setpoint = 0.0;
+		targets[Side.kRIGHT.ordinal()].sensor = Sensors.Sensor.GYRO;
+		targets[Side.kRIGHT.ordinal()].partner = Side.kLEFT;
+
+		set(targets);
+	}
+
 	// Gyro PID
 	public void set(double angle) {
 		HalfTarget[] targets = new HalfTarget[2];
@@ -61,7 +79,7 @@ public class Drive2016 extends DriveFull {
 	}
 
 	// Encoder PID
-	public void set(double left, double right) {
+	public void set(int left, int right) {
 		HalfTarget[] targets = new HalfTarget[2];
 
 		targets[Side.kLEFT.ordinal()] = new HalfTarget();

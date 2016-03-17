@@ -26,6 +26,7 @@ public class DriveFull extends PIDSubsystem {
 		public Side side;
 		public double setpoint;
 		public Sensor sensor;
+		public Side partner = null;
 	}
 
 	public DriveFull(Class<? extends Command> manualCtrl) {
@@ -81,24 +82,21 @@ public class DriveFull extends PIDSubsystem {
 	}
 
 	public void updatePID() {
-		double p;
-		double i;
-		double d;
+		double p_encoder = Settings.Key.DRIVE_PID_P.getDouble();
+		double i_encoder = Settings.Key.DRIVE_PID_I.getDouble();
+		double d_encoder = Settings.Key.DRIVE_PID_D.getDouble();
+
+		double p_gyro = Settings.Key.GYRO_PID_P.getDouble();
+		double i_gyro = Settings.Key.GYRO_PID_I.getDouble();
+		double d_gyro = Settings.Key.GYRO_PID_D.getDouble();
 
 		// Allow different PID settings for Gyro vs Encoder
-		if (drives[0].isSensorType(SensorType.ENCODER)) {
-			p = Settings.Key.DRIVE_PID_P.getDouble();
-			i = Settings.Key.DRIVE_PID_I.getDouble();
-			d = Settings.Key.DRIVE_PID_D.getDouble();
-		} else {
-			p = Settings.Key.GYRO_PID_P.getDouble();
-			i = Settings.Key.GYRO_PID_I.getDouble();
-			d = Settings.Key.GYRO_PID_D.getDouble();
-		}
-
-		this.getPIDController().setPID(p, i, d);
 		for (DriveHalf drive : drives) {
-			drive.getPIDController().setPID(p, i, d);
+			if (drive.isSensorType(SensorType.ENCODER)) {
+				drive.getPIDController().setPID(p_encoder, i_encoder, d_encoder);
+			} else {
+				drive.getPIDController().setPID(p_gyro, i_gyro, d_gyro);
+			}
 		}
 	}
 
@@ -110,6 +108,7 @@ public class DriveFull extends PIDSubsystem {
 			this.setSetpoint(targets[0].setpoint);
 			for (HalfTarget target : targets) {
 				drives[target.side.ordinal()].set(target.setpoint, target.sensor);
+				drives[target.side.ordinal()].setPartner(drives[target.partner.ordinal()]);
 			}
 		}
 	}
