@@ -48,7 +48,7 @@ public class OI {
 	public Button testDrive = new JoystickButton(joyTest, 7); // Back
 	public Button testCollect = new JoystickButton(joyTest, 8); // Start
 	public Button testArmInit = new JoystickButton(joyTest, 9); // L-Stick
-	public Button testEncoderDrive = new JoystickButton(joyTest, 10); // R-Stick
+	public Button testVisionTurn = new JoystickButton(joyTest, 10); // R-Stick
 
 	/*
 	 * These were having some trouble; they triggered on ABXY We don't need them
@@ -118,7 +118,7 @@ public class OI {
 			testArmHome.whenReleased(new ArmPreset_Home());
 			testArmShoot.whenReleased(new ArmPreset_Shoot());
 
-			testEncoderDrive.toggleWhenPressed(new DriveEncoderTest());
+			testVisionTurn.whenReleased(new CameraTurn());
 			testArmInit.whenReleased(new ArmZero());
 
 			testFire.whenPressed(new ShooterShoot());
