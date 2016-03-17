@@ -32,10 +32,10 @@ public class CameraTurn extends Command {
 			done = true;
 			return;
 		}
-		
+
 		// Start the turn and schedule something to wait on it
 		Output.output(OutputLevel.VISION, getName() + "-azimuth", data.azimuth);
-		drive = new DriveToTarget((int)data.azimuth, true);
+		drive = new DriveToTarget((int) data.azimuth);
 		drive.start();
 		wait = new DriveWait();
 		wait.start();

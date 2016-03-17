@@ -111,15 +111,15 @@ public class OI {
 			}
 
 			testDrive.whenReleased(new DriveTest());
-			testTurn.whenReleased(new DriveTurnTest());
 
+			testTurn.whenReleased(new DriveTurnTest());
+			testVisionTurn.whenReleased(new CameraTurn());
+
+			testArmInit.whenReleased(new ArmZero());
 			testArmUp.whenReleased(new ArmPreset_Up());
 			testArmDown.whenReleased(new ArmPreset_Down());
 			testArmHome.whenReleased(new ArmPreset_Home());
 			testArmShoot.whenReleased(new ArmPreset_Shoot());
-
-			testVisionTurn.whenReleased(new CameraTurn());
-			testArmInit.whenReleased(new ArmZero());
 
 			testFire.whenPressed(new ShooterShoot());
 			testCollect.toggleWhenPressed(new ShooterCollect());

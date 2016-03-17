@@ -8,30 +8,28 @@ public class DriveToTarget extends Command {
 
 	public static final int kTicksPerRotation = 21600;
 	public static final int kTicksPerDegree = kTicksPerRotation / 360;
-	
+
+	private static final double kSTOP = 0.0;
+
 	private double left;
 	private double right;
 
-	private void set(double left, double right) {
-		this.left = left;
-		this.right = right;		
-	}
-	
-	public DriveToTarget(int angle, boolean clockwise) {
+	private DriveToTarget(double left, double right, int angle) {
 		requires(Robot.drive);
-		double left = angle * kTicksPerDegree;
-		double right = left;
-		if (clockwise) {
-			right *= -1;
-		} else {
-			left *= -1;
+		if (left == kSTOP && right == kSTOP) {
+			left = angle * kTicksPerDegree;
+			right = left * -1.0;
 		}
-		set(left, right);
+		this.left = left;
+		this.right = right;
 	}
-	
+
+	public DriveToTarget(int angle) {
+		this(kSTOP, kSTOP, angle);
+	}
+
 	public DriveToTarget(double left, double right) {
-		requires(Robot.drive);
-		set(left, right);
+		this(left, right, 0);
 	}
 
 	protected void initialize() {
