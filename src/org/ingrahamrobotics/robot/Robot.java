@@ -37,12 +37,11 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
 	// Master switch
-	private static final boolean production = true;
+	private static final boolean production = false;
 
 	// Global state
 	public static Class<? extends Command> driveCmd = null;
-	public static final boolean disableShooterPID = true; // True until the
-															// encoder works
+	public static final boolean disableShooterPID = true; // True until the encoder works
 	public static final boolean disableReadPower = !production;
 	public static final boolean disableProdControls = !production;
 	public static final boolean disableTestControls = production;

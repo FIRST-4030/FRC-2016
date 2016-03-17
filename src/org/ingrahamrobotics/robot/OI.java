@@ -25,6 +25,7 @@ public class OI {
 	 */
 	public Button collect = new JoystickButton(joyArm, 1);
 	public Button shoot = new JoystickButton(joyArm, 2);
+	public Button bTestArmInit = new JoystickButton(joyArm, 4);
 	public Button armHome = new JoystickButton(joyArm, 5);
 	public Button armUp = new JoystickButton(joyArm, 6);
 	public Button armShoot = new JoystickButton(joyArm, 7);
@@ -42,12 +43,11 @@ public class OI {
 	public Button testArmHome = new JoystickButton(joyTest, 2); // B
 	public Button testArmShoot = new JoystickButton(joyTest, 3); // X
 	public Button testArmUp = new JoystickButton(joyTest, 4); // Y
-	public Button testCameraArm = new JoystickButton(joyTest, 5); // LB
+	public Button testTurn = new JoystickButton(joyTest, 5); // LB
 	public Button testFire = new JoystickButton(joyTest, 6); // RB
 	public Button testDrive = new JoystickButton(joyTest, 7); // Back
 	public Button testCollect = new JoystickButton(joyTest, 8); // Start
 	public Button testArmInit = new JoystickButton(joyTest, 9); // L-Stick
-	public Button bTestArmInit = new JoystickButton(joyArm, 4);
 	public Button testEncoderDrive = new JoystickButton(joyTest, 10); // R-Stick
 
 	/*
@@ -111,6 +111,7 @@ public class OI {
 			}
 
 			testDrive.whenReleased(new DriveTest());
+			testTurn.whenReleased(new DriveTurnTest());
 
 			testArmUp.whenReleased(new ArmPreset_Up());
 			testArmDown.whenReleased(new ArmPreset_Down());
