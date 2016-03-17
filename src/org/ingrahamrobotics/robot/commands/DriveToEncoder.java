@@ -4,7 +4,7 @@ import org.ingrahamrobotics.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveToTarget extends Command {
+public class DriveToEncoder extends Command {
 
 	public static final int kTicksPerRotation = 21600;
 	public static final int kTicksPerDegree = kTicksPerRotation / 360;
@@ -14,7 +14,15 @@ public class DriveToTarget extends Command {
 	private int left;
 	private int right;
 
-	private DriveToTarget(int left, int right, int angle) {
+	public DriveToEncoder(int angle) {
+		this(kSTOP, kSTOP, angle);
+	}
+
+	public DriveToEncoder(double left, double right) {
+		this((int) left, (int) right, 0);
+	}
+
+	private DriveToEncoder(int left, int right, int angle) {
 		requires(Robot.drive);
 		if (left == kSTOP && right == kSTOP) {
 			left = angle * kTicksPerDegree;
@@ -24,21 +32,11 @@ public class DriveToTarget extends Command {
 		this.right = right;
 	}
 
-	public DriveToTarget(int angle) {
-		this(kSTOP, kSTOP, angle);
-	}
-
-	public DriveToTarget(double left, double right) {
-		this((int) left, (int) right, 0);
-	}
-
 	protected void initialize() {
-		Robot.drive.updatePID();
 		Robot.drive.set(left, right);
 	}
 
 	protected void execute() {
-		Robot.drive.updatePID();
 	}
 
 	protected boolean isFinished() {

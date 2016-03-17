@@ -17,7 +17,7 @@ public class Auto extends CommandGroup {
 		addSequential(new Wait(750));
 
 		// Drive forward
-		addSequential(new DriveToTarget(ticks, ticks));
+		addSequential(new DriveToEncoder(ticks, ticks));
 		addSequential(new DriveWait());
 		
 		// Stop any twitching from PID drive now that we are in position

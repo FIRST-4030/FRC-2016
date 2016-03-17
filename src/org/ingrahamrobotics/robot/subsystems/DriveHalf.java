@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
 import org.ingrahamrobotics.robot.subsystems.Sensors.Sensor;
+import org.ingrahamrobotics.robot.subsystems.Sensors.SensorType;
 
 public class DriveHalf extends PIDSubsystem {
 
@@ -16,16 +17,20 @@ public class DriveHalf extends PIDSubsystem {
 	private String name;
 	private Sensor sensor;
 
-	public DriveHalf(String name, int motorIndex, boolean invert, Sensor sensor) {
+	public DriveHalf(String name, int motorIndex, boolean invert) {
 		super(1.0, 0.0, 0.0);
 		this.name = name;
 		motor = new Talon(motorIndex);
 		motor.setInverted(invert);
-		this.sensor = sensor;
+		sensor = null;
 	}
 
 	public Talon getMotor() {
 		return motor;
+	}
+	
+	public boolean isSensorType(SensorType type) {
+		return (sensor.type == type);
 	}
 
 	public String fullName() {
@@ -34,29 +39,30 @@ public class DriveHalf extends PIDSubsystem {
 
 	public void start() {
 		this.getPIDController().enable();
-		isEnabled();
+		enabled();
 	}
 
 	public void stop() {
 		this.getPIDController().disable();
-		isEnabled();
+		enabled();
 
 		motor.disable();
 		Output.output(OutputLevel.MOTORS, fullName() + "-speed", 0);
 	}
 
-	public void set(double setpoint) {
+	public void set(double setpoint, Sensor sensor) {
 		if (setpoint == kSTOP) {
 			stop();
 		} else {
-			sensor.reset();
+			this.sensor = sensor;
+			this.sensor.reset();
 			start();
 			this.setSetpoint(setpoint);
 		}
 		Output.output(OutputLevel.DRIVE_PID, fullName() + "-setpoint", setpoint);
 	}
 
-	public boolean isEnabled() {
+	public boolean enabled() {
 		boolean enabled = this.getPIDController().isEnabled();
 		Output.output(OutputLevel.DRIVE_PID, fullName() + "-enabled", enabled);
 		return enabled;
@@ -72,12 +78,15 @@ public class DriveHalf extends PIDSubsystem {
 
 	@Override
 	public double returnPIDInput() {
+		if (!enabled()) {
+			return 0.0;
+		}
 		return sensor.getDouble();
 	}
 
 	@Override
 	protected void usePIDOutput(double output) {
-		if (isEnabled()) {
+		if (enabled()) {
 			if (motor.getInverted()) {
 				output *= -1.0;
 			}

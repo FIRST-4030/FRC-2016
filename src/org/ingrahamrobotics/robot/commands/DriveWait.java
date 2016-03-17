@@ -4,6 +4,7 @@ import org.ingrahamrobotics.robot.Robot;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
 import org.ingrahamrobotics.robot.subsystems.DriveHalf;
+import org.ingrahamrobotics.robot.subsystems.Sensors.SensorType;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
@@ -11,7 +12,8 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 public class DriveWait extends Command {
 
 	// Not configurable because these are programming features
-	public static final int kTOLERANCE = 50;
+	public static final int kTOLERANCE_ENCODER = 50;
+	public static final int kTOLERANCE_GYRO = 5;
 	public static final int kMIN_SUCCESS = 3;
 
 	private DriveHalf[] drives;
@@ -19,8 +21,8 @@ public class DriveWait extends Command {
 	private int count;
 
 	public class DriveWaitHalf extends WaitPID {
-		public DriveWaitHalf(PIDSubsystem pid, String name) {
-			super(pid, kTOLERANCE, Mode.kABS_RANGE, kMIN_SUCCESS, name);
+		public DriveWaitHalf(PIDSubsystem pid, String name, double tolerance) {
+			super(pid, tolerance, Mode.kABS_RANGE, kMIN_SUCCESS, name);
 		}
 	}
 
@@ -33,7 +35,13 @@ public class DriveWait extends Command {
 
 		int i = 0;
 		for (DriveHalf drive : drives) {
-			waits[i] = new DriveWaitHalf(drive, drive.fullName());
+			double tolerance;
+			if (drive.isSensorType(SensorType.ENCODER)) {
+				tolerance = kTOLERANCE_ENCODER;
+			} else {
+				tolerance = kTOLERANCE_GYRO;
+			}
+			waits[i] = new DriveWaitHalf(drive, drive.fullName(), tolerance);
 			waits[i].start();
 			i++;
 		}

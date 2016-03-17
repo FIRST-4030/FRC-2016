@@ -10,14 +10,14 @@ public class DriveTurnTest extends CommandGroup {
 		addSequential(new ArmWaitReady());
 
 		// Turn
-		addSequential(new DriveToTarget(90));
+		addSequential(new DriveToEncoder(90));
 		addSequential(new DriveWait());
 
 		// Pause
 		addSequential(new Wait(750));
 
 		// Turn Back(ish)
-		addSequential(new DriveToTarget(-90));
+		addSequential(new DriveToEncoder(-90));
 		addSequential(new DriveWait());
 
 		// Stop any twitching from PID drive now that we are in position

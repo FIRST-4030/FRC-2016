@@ -13,7 +13,7 @@ public class CameraTurn extends Command {
 
 	private Data data;
 	private boolean done;
-	private DriveToTarget drive;
+	private DriveToEncoder drive;
 	private DriveWait wait;
 
 	public CameraTurn() {
@@ -35,7 +35,7 @@ public class CameraTurn extends Command {
 
 		// Start the turn and schedule something to wait on it
 		Output.output(OutputLevel.VISION, getName() + "-azimuth", data.azimuth);
-		drive = new DriveToTarget((int) data.azimuth);
+		drive = new DriveToEncoder((int) data.azimuth);
 		drive.start();
 		wait = new DriveWait();
 		wait.start();

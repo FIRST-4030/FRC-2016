@@ -1,6 +1,8 @@
 package org.ingrahamrobotics.robot.subsystems;
 
 import org.ingrahamrobotics.robot.output.Settings;
+import org.ingrahamrobotics.robot.subsystems.Sensors.Sensor;
+import org.ingrahamrobotics.robot.subsystems.Sensors.SensorType;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
@@ -23,6 +25,7 @@ public class DriveFull extends PIDSubsystem {
 	public class HalfTarget {
 		public Side side;
 		public double setpoint;
+		public Sensor sensor;
 	}
 
 	public DriveFull(Class<? extends Command> manualCtrl) {
@@ -59,6 +62,7 @@ public class DriveFull extends PIDSubsystem {
 	}
 
 	public void start() {
+		updatePID();
 		getPIDController().enable();
 		for (DriveHalf drive : drives) {
 			drive.start();
@@ -77,11 +81,22 @@ public class DriveFull extends PIDSubsystem {
 	}
 
 	public void updatePID() {
-		double p = Settings.Key.DRIVE_PID_P.getDouble();
-		double i = Settings.Key.DRIVE_PID_I.getDouble();
-		double d = Settings.Key.DRIVE_PID_D.getDouble();
-		this.getPIDController().setPID(p, i, d);
+		double p;
+		double i;
+		double d;
 
+		// Allow different PID settings for Gyro vs Encoder
+		if (drives[0].isSensorType(SensorType.ENCODER)) {
+			p = Settings.Key.DRIVE_PID_P.getDouble();
+			i = Settings.Key.DRIVE_PID_I.getDouble();
+			d = Settings.Key.DRIVE_PID_D.getDouble();
+		} else {
+			p = Settings.Key.GYRO_PID_P.getDouble();
+			i = Settings.Key.GYRO_PID_I.getDouble();
+			d = Settings.Key.GYRO_PID_D.getDouble();
+		}
+
+		this.getPIDController().setPID(p, i, d);
 		for (DriveHalf drive : drives) {
 			drive.getPIDController().setPID(p, i, d);
 		}
@@ -94,7 +109,7 @@ public class DriveFull extends PIDSubsystem {
 			start();
 			this.setSetpoint(targets[0].setpoint);
 			for (HalfTarget target : targets) {
-				drives[target.side.ordinal()].set(target.setpoint);
+				drives[target.side.ordinal()].set(target.setpoint, target.sensor);
 			}
 		}
 	}
