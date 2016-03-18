@@ -4,6 +4,7 @@ import org.ingrahamrobotics.robot.Robot;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
 import org.ingrahamrobotics.robot.vision.Data;
+import org.ingrahamrobotics.robot.vision.Log;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -15,8 +16,11 @@ public class CameraTurn extends Command {
 	private boolean done;
 	private DriveToTarget drive;
 	private DriveWait wait;
+	private Log log;
 
 	public CameraTurn() {
+		log = new Log();
+		
 		// We use the drive system, but indirectly
 		// requires(Robot.drive);
 	}
@@ -49,6 +53,7 @@ public class CameraTurn extends Command {
 	}
 
 	protected boolean isFinished() {
+		log.save("Complete: " + data.azimuth, System.currentTimeMillis() + "-turn.txt");
 		Output.output(OutputLevel.VISION, getName() + "-done", done);
 		return done;
 	}
