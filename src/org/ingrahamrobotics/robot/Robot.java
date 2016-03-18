@@ -67,8 +67,7 @@ public class Robot extends IterativeRobot {
 
 		// The driver camera is not controllable and does not have a command
 		// Start it at init unless it would interfere with the target camera
-		if (disableCamTarget
-				|| (RobotMap.usbCameraDriver != RobotMap.usbCameraTarget)) {
+		if (disableCamTarget || (RobotMap.usbCameraDriver != RobotMap.usbCameraTarget)) {
 			camDriver.start();
 		}
 
