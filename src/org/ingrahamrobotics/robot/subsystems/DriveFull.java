@@ -108,7 +108,11 @@ public class DriveFull extends PIDSubsystem {
 			this.setSetpoint(targets[0].setpoint);
 			for (HalfTarget target : targets) {
 				drives[target.side.ordinal()].set(target.setpoint, target.sensor);
-				drives[target.side.ordinal()].setPartner(drives[target.partner.ordinal()]);
+				DriveHalf partner = null;
+				if (target.partner != null) {
+					partner = drives[target.partner.ordinal()];
+				}
+				drives[target.side.ordinal()].setPartner(partner);
 			}
 		}
 	}

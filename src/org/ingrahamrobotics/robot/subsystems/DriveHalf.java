@@ -39,6 +39,9 @@ public class DriveHalf extends PIDSubsystem {
 	}
 
 	public boolean isSensorType(SensorType type) {
+		if (sensor == null) {
+			return false;
+		}
 		return (sensor.type == type);
 	}
 
