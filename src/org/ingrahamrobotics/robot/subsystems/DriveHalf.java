@@ -51,11 +51,13 @@ public class DriveHalf extends PIDSubsystem {
 	}
 
 	public void start() {
+		System.err.println(fullName() + ": start");
 		this.getPIDController().enable();
 		enabled();
 	}
 
 	public void stop() {
+		System.err.println(fullName() + ": stop");
 		this.getPIDController().disable();
 		enabled();
 
@@ -64,6 +66,7 @@ public class DriveHalf extends PIDSubsystem {
 	}
 
 	public void set(double setpoint, Sensor sensor) {
+		System.err.println(fullName() + " set: " + setpoint);
 		if (setpoint == kSTOP) {
 			stop();
 		} else {
@@ -82,6 +85,7 @@ public class DriveHalf extends PIDSubsystem {
 	}
 
 	public void setPower(double speed) {
+		System.err.println(fullName() + " setPower: " + speed);
 		stop();
 		if (speed != kSTOP) {
 			motor.set(speed);
@@ -94,6 +98,9 @@ public class DriveHalf extends PIDSubsystem {
 		if (!enabled()) {
 			return 0.0;
 		}
+		System.err.println(fullName() + " actual: " + sensor.getDouble());
+		System.err.println(fullName() + " setpoint: " + this.getSetpoint());
+		System.err.println(fullName() + " p: " + this.getPIDController().getP());
 		return sensor.getDouble();
 	}
 
@@ -110,6 +117,7 @@ public class DriveHalf extends PIDSubsystem {
 
 	@Override
 	protected void usePIDOutput(double output) {
+		System.err.println(fullName() + " raw speed: " + output);
 		if (enabled()) {
 
 			// Ensure the offset doesn't change between check and use
@@ -147,6 +155,7 @@ public class DriveHalf extends PIDSubsystem {
 			}
 
 			this.output = output;
+			System.err.println(fullName() + " actual speed: " + output);
 			motor.set(this.output);
 			Output.output(OutputLevel.MOTORS, fullName() + "-speed", this.output);
 		}
