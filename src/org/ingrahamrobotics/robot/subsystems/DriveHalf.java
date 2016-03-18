@@ -16,6 +16,8 @@ public class DriveHalf extends PIDSubsystem {
 	private String name;
 	private Sensor sensor;
 	private DriveHalf partner;
+	private double output;
+	private double offset;
 
 	public DriveHalf(String name, int motorIndex, boolean invert, Sensor sensor) {
 		super(1.0, 0.0, 0.0);
@@ -84,6 +86,9 @@ public class DriveHalf extends PIDSubsystem {
 
 	@Override
 	public double returnPIDInput() {
+		if (!enabled()) {
+			return 0.0;
+		}
 		System.err.println(fullName() + " actual: " + sensor.getDouble());
 		System.err.println(fullName() + " setpoint: " + this.getSetpoint());
 		System.err.println(fullName() + " p: " + this.getPIDController().getP());
