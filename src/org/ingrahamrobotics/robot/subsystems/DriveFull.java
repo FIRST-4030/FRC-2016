@@ -1,6 +1,7 @@
 package org.ingrahamrobotics.robot.subsystems;
 
 import org.ingrahamrobotics.robot.output.Settings;
+import org.ingrahamrobotics.robot.subsystems.DriveSide.Side;
 import org.ingrahamrobotics.robot.subsystems.Sensors.Sensor;
 import org.ingrahamrobotics.robot.subsystems.Sensors.SensorType;
 
@@ -12,15 +13,6 @@ public class DriveFull extends PIDSubsystem {
 	protected DriveHalf[] drives;
 	private boolean manualEnable;
 	private Class<? extends Command> manualCtrl;
-
-	public enum Side {
-		kLEFT("Left"), kRIGHT("Right");
-		public final String name;
-
-		private Side(String name) {
-			this.name = name;
-		}
-	}
 
 	public class HalfTarget {
 		public Side side;

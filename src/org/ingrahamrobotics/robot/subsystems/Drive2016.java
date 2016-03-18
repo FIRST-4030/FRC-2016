@@ -5,6 +5,7 @@ import org.ingrahamrobotics.robot.RobotMap;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
 import org.ingrahamrobotics.robot.output.Settings;
+import org.ingrahamrobotics.robot.subsystems.DriveSide.Side;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 
@@ -16,8 +17,8 @@ public class Drive2016 extends DriveFull {
 		super(Robot.driveCmd);
 
 		// Left-right tank drive
-		drives[Side.kLEFT.ordinal()] = new DriveHalf(Side.kLEFT.name, RobotMap.pwmDriveLeft, true);
-		drives[Side.kRIGHT.ordinal()] = new DriveHalf(Side.kRIGHT.name, RobotMap.pwmDriveRight, false);
+		drives[Side.kLEFT.ordinal()] = new DriveHalf(Side.kLEFT, RobotMap.pwmDriveLeft, true);
+		drives[Side.kRIGHT.ordinal()] = new DriveHalf(Side.kRIGHT, RobotMap.pwmDriveRight, false);
 		tank = new RobotDrive(drives[Side.kLEFT.ordinal()].getMotor(), drives[Side.kRIGHT.ordinal()].getMotor());
 	}
 

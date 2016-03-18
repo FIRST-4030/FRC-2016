@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
+import org.ingrahamrobotics.robot.subsystems.DriveSide.Side;
 import org.ingrahamrobotics.robot.subsystems.Sensors.Sensor;
 import org.ingrahamrobotics.robot.subsystems.Sensors.SensorType;
 
@@ -14,15 +15,15 @@ public class DriveHalf extends PIDSubsystem {
 	public static final int kSTOP = 0;
 
 	private Talon motor;
-	private String name;
+	private Side side;
 	private Sensor sensor;
 	private DriveHalf partner;
 	private double output;
 	private double offset;
 
-	public DriveHalf(String name, int motorIndex, boolean invert) {
+	public DriveHalf(Side side, int motorIndex, boolean invert) {
 		super(1.0, 0.0, 0.0);
-		this.name = name;
+		this.side = side;
 		motor = new Talon(motorIndex);
 		motor.setInverted(invert);
 		sensor = null;
@@ -46,7 +47,7 @@ public class DriveHalf extends PIDSubsystem {
 	}
 
 	public String fullName() {
-		return getName() + name;
+		return getName() + side.name;
 	}
 
 	public void start() {
@@ -135,7 +136,12 @@ public class DriveHalf extends PIDSubsystem {
 				}
 			}
 
-			// Invert as final step
+			// Turn invert if regulating to an angle
+			if (isSensorType(SensorType.GYRO) && side.invertTurn) {
+				output *= -1.0;
+			}
+
+			// Frame invert as final step
 			if (motor.getInverted()) {
 				output *= -1.0;
 			}
