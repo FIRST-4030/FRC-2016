@@ -75,6 +75,9 @@ public class ShooterWheels extends PIDSubsystem {
 
 	@Override
 	protected double returnPIDInput() {
+		if (Robot.disableShooterPID) {
+			return 0.0;
+		}
 		return Sensors.Sensor.SHOOTER_ENCODER.getDouble();
 	}
 

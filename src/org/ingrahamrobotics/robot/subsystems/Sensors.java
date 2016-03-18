@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Sensors extends Subsystem {
 
 	public static final int kRATE_PERIOD = 10;
+	
+	private boolean calibrated;
 
 	private static final Encoder armEncoder = new Encoder(RobotMap.dioArmA, RobotMap.dioArmB);
 	private static final DigitalInput armSwitch = new DigitalInput(RobotMap.dioArmSwitch);
@@ -146,11 +148,26 @@ public class Sensors extends Subsystem {
 			return name;
 		}
 	}
+	
+	public Sensors() {
+		calibrated = false;
+	}
+
+	public void reset() {
+		for (Sensor sensor : Sensor.values()) {
+			sensor.reset();
+		}
+	}
 
 	public void calibrate() {
 		for (Sensor sensor : Sensor.values()) {
 			sensor.calibrate();
 		}
+		calibrated = true;
+	}
+
+	public boolean calibrated() {
+		return calibrated;
 	}
 
 	public void update() {

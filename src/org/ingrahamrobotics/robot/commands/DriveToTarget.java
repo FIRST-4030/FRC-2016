@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveToTarget extends Command {
 
-	public static final int kTicksPerRotation = 22500;
+	public static final int kTicksPerRotation = 25000;
 	public static final int kTicksPerDegree = kTicksPerRotation / 360;
 
 	private static final int kSTOP = 0;
