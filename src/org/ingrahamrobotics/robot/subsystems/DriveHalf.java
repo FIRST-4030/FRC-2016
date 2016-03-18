@@ -15,6 +15,7 @@ public class DriveHalf extends PIDSubsystem {
 	private Talon motor;
 	private String name;
 	private Sensor sensor;
+	private DriveHalf partner;
 
 	public DriveHalf(String name, int motorIndex, boolean invert, Sensor sensor) {
 		super(1.0, 0.0, 0.0);
@@ -22,7 +23,13 @@ public class DriveHalf extends PIDSubsystem {
 		motor = new Talon(motorIndex);
 		motor.setInverted(invert);
 		this.sensor = sensor;
+		this.partner = null;
 		System.err.println(fullName() + ": init");
+	}
+
+	public void setPartner(DriveHalf partner) {
+		this.partner = partner;
+		Output.output(OutputLevel.MOTORS, fullName() + "-partner", partner);
 	}
 
 	public Talon getMotor() {
