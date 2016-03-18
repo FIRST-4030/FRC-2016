@@ -36,7 +36,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
 	// Master switch
-	private static final boolean production = false;
+	private static final boolean production = true;
 
 	// Global state
 	public static Class<? extends Command> driveCmd = null;
@@ -45,7 +45,7 @@ public class Robot extends IterativeRobot {
 	public static final boolean disableReadPower = !production;
 	public static final boolean disableProdControls = !production;
 	public static final boolean disableTestControls = production;
-	public static final boolean disableCamTarget = false;
+	public static final boolean disableCamTarget = true;
 
 	@SuppressWarnings("unused")
 	public void robotInit() {
