@@ -25,7 +25,7 @@ public class DriveHalf extends PIDSubsystem {
 		motor = new Talon(motorIndex);
 		motor.setInverted(invert);
 		this.sensor = sensor;
-		this.partner = null;
+		partner = null;
 		System.err.println(fullName() + ": init");
 	}
 
