@@ -30,6 +30,7 @@ public class OI {
 	public Button armUp = new JoystickButton(joyArm, 6);
 	public Button armShoot = new JoystickButton(joyArm, 7);
 	public Button armDown = new JoystickButton(joyArm, 10);
+	public Button visionTurn = new JoystickButton(joyArm, 11);
 
 	// Drive buttons
 	public Button driverArmDownL = new JoystickButton(joyLeft, 1);
@@ -81,6 +82,11 @@ public class OI {
 
 			// Set production tank drive as the default
 			Robot.driveCmd = DriveTank.class;
+
+			// Dangerous camera buttons -- only enable when test controls are enabled
+			if (!Robot.disableTestControls) {
+				visionTurn.whenReleased(new CameraTurn());
+			}
 
 			// Arm override
 			bTestArmInit.whenReleased(new ArmZero());

@@ -44,7 +44,7 @@ public class Robot extends IterativeRobot {
 	public static final boolean disableReadPower = !production;
 	public static final boolean disableProdControls = false; //!production;
 	public static final boolean disableTestControls = production;
-	public static final boolean disableCamTarget = false;
+	public static final boolean disableCamTarget = true;
 
 	@SuppressWarnings("unused")
 	public void robotInit() {
