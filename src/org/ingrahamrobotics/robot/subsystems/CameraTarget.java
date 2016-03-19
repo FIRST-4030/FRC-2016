@@ -25,7 +25,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class CameraTarget extends Subsystem {
 
 	// Debug
-	private static final boolean kDEBUG = true;
+	private static final boolean kDEBUG = false;
+	private static final boolean kKEEP_IMAGES = kDEBUG | true;
 
 	// Analysis constants (probably not tunable without algorithm adjustments)
 	public static final int kMIN_BLOB_AREA = 1000;
@@ -221,7 +222,7 @@ public class CameraTarget extends Subsystem {
 		data.valid = true;
 
 		// Vision log
-		if (data.confidence != Confidence.kNONE || kDEBUG) {
+		if (data.confidence != Confidence.kNONE || kKEEP_IMAGES) {
 			log.save(image, data.start + "-capture.jpg");
 			log.save(binary, data.start + "-threshold.jpg");
 			log.save(data.toString(), data.start + "-analysis.txt");
