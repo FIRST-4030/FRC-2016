@@ -196,11 +196,11 @@ public class CameraTarget extends Subsystem {
 		}
 
 		// Azimuth calculation
-		data.azimuth = ((data.x - (Camera.width / 2)) / (Camera.width / 2)) * Camera.fovH;
+		data.azimuth = ((data.x - (Camera.width / 2)) / (Camera.width / 2)) * (Camera.fovH / 2.0);
 		Output.output(OutputLevel.VISION, getName() + "-azimuth", data.azimuth);
 
 		// Altitude calculation
-		data.altitude = ((data.y - (Camera.height / 2)) / (Camera.height / 2)) * Camera.fovV;
+		data.altitude = ((data.y - (Camera.height / 2)) / (Camera.height / 2)) * (Camera.fovV / 2.0);
 		Output.output(OutputLevel.VISION, getName() + "-altitude", data.altitude);
 
 		// Confidence

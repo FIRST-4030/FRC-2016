@@ -18,7 +18,7 @@ public class Camera {
 	// Camera settings - Static
 	public static final int width = 640;
 	public static final int height = 480;
-	public static final double fovH = 48.0;
+	public static final double fovH = 59.7;
 	public static final double fovV = fovH / 16 * 9;
 	public static final int fps = 4;
 
