@@ -43,7 +43,7 @@ public class OI {
 	public Button testArmHome = new JoystickButton(joyTest, 2); // B
 	public Button testArmShoot = new JoystickButton(joyTest, 3); // X
 	public Button testArmUp = new JoystickButton(joyTest, 4); // Y
-	public Button testTurn = new JoystickButton(joyTest, 5); // LB
+	public Button testTurn = new JoystickButton(joyArm, 11); // LB
 	public Button testFire = new JoystickButton(joyTest, 6); // RB
 	public Button testDrive = new JoystickButton(joyTest, 7); // Back
 	public Button testCollect = new JoystickButton(joyTest, 8); // Start
