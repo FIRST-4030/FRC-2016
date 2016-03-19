@@ -43,7 +43,7 @@ public class Robot extends IterativeRobot {
 	public static Class<? extends Command> driveCmd = null;
 	public static final boolean disableShooterPID = true; // True until the encoder works
 	public static final boolean disableReadPower = !production;
-	public static final boolean disableProdControls = !production;
+	public static final boolean disableProdControls = false;//!production;
 	public static final boolean disableTestControls = production;
 	public static final boolean disableCamTarget = false;
 
