@@ -1,7 +1,7 @@
 package org.ingrahamrobotics.robot.output;
 
 public enum OutputLevel {
-    DEBUG(0, "Debug", false),
+    DEBUG(0, "Debug", true),
     POWER(0, "Power", false),
     DRIVE_PID(1, "Drive PID", true),
     ARM_PID(2, "Arm PID", true),

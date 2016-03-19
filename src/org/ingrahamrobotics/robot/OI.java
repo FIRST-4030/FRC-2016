@@ -30,6 +30,7 @@ public class OI {
 	public Button armUp = new JoystickButton(joyArm, 6);
 	public Button armShoot = new JoystickButton(joyArm, 7);
 	public Button armDown = new JoystickButton(joyArm, 10);
+	public Button visionTurn = new JoystickButton(joyArm, 11);
 
 	// Drive buttons
 	public Button driverArmDownL = new JoystickButton(joyLeft, 1);
@@ -114,6 +115,7 @@ public class OI {
 
 			testTurn.whenReleased(new DriveTurnTest());
 			testVisionTurn.whenReleased(new CameraTurn());
+			visionTurn.whenReleased(new CameraTurn());
 
 			testArmInit.whenReleased(new ArmZero());
 			testArmUp.whenReleased(new ArmPreset_Up());
