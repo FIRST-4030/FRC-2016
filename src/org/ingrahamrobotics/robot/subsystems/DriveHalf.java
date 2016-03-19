@@ -99,9 +99,6 @@ public class DriveHalf extends PIDSubsystem {
 		if (!enabled()) {
 			return 0.0;
 		}
-		System.err.println(fullName() + " actual: " + sensor.getDouble());
-		System.err.println(fullName() + " setpoint: " + this.getSetpoint());
-		System.err.println(fullName() + " p: " + this.getPIDController().getP());
 		return sensor.getDouble();
 	}
 
@@ -118,7 +115,6 @@ public class DriveHalf extends PIDSubsystem {
 
 	@Override
 	protected void usePIDOutput(double output) {
-		System.err.println(fullName() + " raw speed: " + output);
 		if (enabled()) {
 
 			// Ensure the offset doesn't change between check and use

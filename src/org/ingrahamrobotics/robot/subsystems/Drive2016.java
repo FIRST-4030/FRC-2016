@@ -46,9 +46,9 @@ public class Drive2016 extends DriveFull {
 		Output.output(OutputLevel.MOTORS, getName() + "-left", left);
 		Output.output(OutputLevel.MOTORS, getName() + "-right", right);
 		if (tank == null) {
-			tank = new RobotDrive(drives[Side.kLEFT.ordinal()].getMotor(), drives[Side.kRIGHT.ordinal()].getMotor());
+			//tank = new RobotDrive(drives[Side.kLEFT.ordinal()].getMotor(), drives[Side.kRIGHT.ordinal()].getMotor());
 		}
-		tank.tankDrive(left, right);
+		//tank.tankDrive(left, right);
 	}
 
 	// Gyro + Encoder PID (i.e. drive straight to left encoder reading)

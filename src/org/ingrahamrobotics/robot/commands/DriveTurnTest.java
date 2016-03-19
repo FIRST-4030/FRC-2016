@@ -10,7 +10,7 @@ public class DriveTurnTest extends CommandGroup {
 		addSequential(new ArmWaitReady());
 
 		// Turn
-		addSequential(new DriveToGyro(90));
+		addSequential(new DriveToGyro(10));
 		addSequential(new DriveWait());
 
 		// Stop any twitching from PID drive now that we are in position
