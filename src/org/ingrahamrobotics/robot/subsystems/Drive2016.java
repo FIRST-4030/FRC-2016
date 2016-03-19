@@ -14,20 +14,24 @@ public class Drive2016 extends DriveFull {
 
 	public Drive2016() {
 		super(Robot.driveCmd);
+		tank = null;
 
-		// Left-right tank drive
-		// Temporarily use the right encoder for both sides
+		// Define our DriveHalf sub-subsystems
 		drives[Side.kLEFT.ordinal()] = new DriveHalf(Side.kLEFT.name, RobotMap.pwmDriveLeft, true,
 				Sensors.Sensor.DRIVE_ENCODER_LEFT);
 		drives[Side.kRIGHT.ordinal()] = new DriveHalf(Side.kRIGHT.name, RobotMap.pwmDriveRight, false,
 				Sensors.Sensor.DRIVE_ENCODER_RIGHT);
-		tank = new RobotDrive(drives[Side.kLEFT.ordinal()].getMotor(), drives[Side.kRIGHT.ordinal()].getMotor());
 	}
 
 	public void tankDrive(double left, double right) {
 
 		// Do not allow tank drive when we are in PID mode
 		if (!manualCtrlEnabled()) {
+			if (tank != null) {
+				System.err.println(getName() + ": Stopping tank drive");
+				tank.free();
+				tank = null;
+			}
 			return;
 		}
 
@@ -41,6 +45,11 @@ public class Drive2016 extends DriveFull {
 		}
 
 		// Drive
+		if (tank == null) {
+			// Ensure tank exists when we need it
+			System.err.println(getName() + ": Starting tank drive");
+			tank = new RobotDrive(drives[Side.kLEFT.ordinal()].getMotor(), drives[Side.kRIGHT.ordinal()].getMotor());
+		}
 		Output.output(OutputLevel.MOTORS, getName() + "-left", left);
 		Output.output(OutputLevel.MOTORS, getName() + "-right", right);
 		tank.tankDrive(left, right);
