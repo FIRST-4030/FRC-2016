@@ -59,12 +59,12 @@ public class DriveFull extends PIDSubsystem {
 	}
 
 	public void start() {
+		disableManualCtrl();
+
 		getPIDController().enable();
 		for (DriveHalf drive : drives) {
 			drive.start();
 		}
-
-		disableManualCtrl();
 	}
 
 	public void stop() {
