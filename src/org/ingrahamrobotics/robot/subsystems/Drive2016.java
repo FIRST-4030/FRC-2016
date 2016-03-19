@@ -15,17 +15,21 @@ public class Drive2016 extends DriveFull {
 
 	public Drive2016() {
 		super(Robot.driveCmd);
+		tank = null;
 
 		// Left-right tank drive
 		drives[Side.kLEFT.ordinal()] = new DriveHalf(Side.kLEFT, RobotMap.pwmDriveLeft, true);
 		drives[Side.kRIGHT.ordinal()] = new DriveHalf(Side.kRIGHT, RobotMap.pwmDriveRight, false);
-		tank = new RobotDrive(drives[Side.kLEFT.ordinal()].getMotor(), drives[Side.kRIGHT.ordinal()].getMotor());
 	}
 
 	public void tankDrive(double left, double right) {
 
 		// Do not allow tank drive when we are in PID mode
 		if (!manualCtrlEnabled()) {
+			if (tank != null) {
+				tank.free();
+				tank = null;
+			}
 			return;
 		}
 
@@ -41,6 +45,9 @@ public class Drive2016 extends DriveFull {
 		// Drive
 		Output.output(OutputLevel.MOTORS, getName() + "-left", left);
 		Output.output(OutputLevel.MOTORS, getName() + "-right", right);
+		if (tank == null) {
+			tank = new RobotDrive(drives[Side.kLEFT.ordinal()].getMotor(), drives[Side.kRIGHT.ordinal()].getMotor());
+		}
 		tank.tankDrive(left, right);
 	}
 
