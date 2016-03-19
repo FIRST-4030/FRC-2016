@@ -57,6 +57,7 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         VISION_S_HIGH("Vision: S High","255"),
         VISION_L_LOW("Vision: L Low", "50"),
         VISION_L_HIGH("Vision: L High", "255"),
+        VISION_AZIMUTH_OFFSET("Vision: H Offset", "0.0"),
         
 		// Comment to let ; be on new line
 		;

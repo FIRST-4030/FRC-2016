@@ -3,6 +3,7 @@ package org.ingrahamrobotics.robot.commands;
 import org.ingrahamrobotics.robot.Robot;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
+import org.ingrahamrobotics.robot.output.Settings;
 import org.ingrahamrobotics.robot.vision.Data;
 import org.ingrahamrobotics.robot.vision.Log;
 
@@ -38,8 +39,9 @@ public class CameraTurn extends Command {
 		}
 
 		// Start the turn and schedule something to wait on it
-		Output.output(OutputLevel.VISION, getName() + "-azimuth", data.azimuth);
-		drive = new DriveToTarget((int) data.azimuth);
+		double azimuth = data.azimuth + Settings.Key.VISION_AZIMUTH_OFFSET.getDouble();
+		Output.output(OutputLevel.VISION, getName() + "-azimuth", azimuth);
+		drive = new DriveToTarget((int) azimuth);
 		drive.start();
 		wait = new DriveWait();
 		wait.start();
@@ -60,7 +62,7 @@ public class CameraTurn extends Command {
 	protected void end() {
 		Command cmd = new DriveStop();
 		cmd.start();
-		log.save("Complete: " + data.azimuth, System.currentTimeMillis() + "-turn.txt");
+		log.save("Complete", System.currentTimeMillis() + "-turn.txt");
 		Output.output(OutputLevel.VISION, getName() + "-end", System.currentTimeMillis());
 	}
 
