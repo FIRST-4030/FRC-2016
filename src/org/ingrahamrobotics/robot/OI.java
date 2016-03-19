@@ -19,10 +19,6 @@ public class OI {
 	public Joystick joyTest = new Joystick(RobotMap.joyTest);
 
 	// Arm/Shooter buttons
-	/*
-	 * Hank wants there to be 2 shoot buttons: one for shoot from the outerworks
-	 * line and one for shooting from next to the castle
-	 */
 	public Button collect = new JoystickButton(joyArm, 1);
 	public Button shoot = new JoystickButton(joyArm, 2);
 	public Button bTestArmInit = new JoystickButton(joyArm, 4);
@@ -30,38 +26,28 @@ public class OI {
 	public Button armUp = new JoystickButton(joyArm, 6);
 	public Button armShoot = new JoystickButton(joyArm, 7);
 	public Button armDown = new JoystickButton(joyArm, 10);
-	public Button visionTurn = new JoystickButton(joyArm, 11);
 
 	// Drive buttons
 	public Button driverArmDownL = new JoystickButton(joyLeft, 1);
 	public Button driverArmDownR = new JoystickButton(joyRight, 1);
 	public Button drive = new JoystickButton(joyLeft, 2);
 	public Button driverArmDisable = new JoystickButton(joyRight, 2);
-	// The rest will be those ideally would be preset actions for the defenses
+
+	// Pseudo-test buttons
+	public Button visionTurn = new JoystickButton(joyArm, 11);
+	public Button gyroTurn = new JoystickButton(joyLeft, 11);
 
 	// Test buttons
 	public Button testArmDown = new JoystickButton(joyTest, 1); // A
 	public Button testArmHome = new JoystickButton(joyTest, 2); // B
 	public Button testArmShoot = new JoystickButton(joyTest, 3); // X
 	public Button testArmUp = new JoystickButton(joyTest, 4); // Y
-	public Button testTurn = new JoystickButton(joyArm, 11); // LB
+	public Button testGyroTurn = new JoystickButton(joyTest, 5); // LB
 	public Button testFire = new JoystickButton(joyTest, 6); // RB
 	public Button testDrive = new JoystickButton(joyTest, 7); // Back
 	public Button testCollect = new JoystickButton(joyTest, 8); // Start
 	public Button testArmInit = new JoystickButton(joyTest, 9); // L-Stick
 	public Button testStraight = new JoystickButton(joyTest, 10); // R-Stick
-
-	/*
-	 * These were having some trouble; they triggered on ABXY We don't need them
-	 * so just kill them for now
-	 * 
-	 * public Trigger foo = new Triggers(joyTest, Hand.kLeft); public Trigger
-	 * foo = new Triggers(joyTest, Hand.kRight);
-	 * 
-	 * public Trigger foo = new Dpad(joyTest, 0); public Trigger foo = new
-	 * Dpad(joyTest, 2); public Trigger foo = new Dpad(joyTest, 4); public
-	 * Trigger foo = new Dpad(joyTest, 6);
-	 */
 
 	@SuppressWarnings("unused")
 	public OI() {
@@ -83,9 +69,11 @@ public class OI {
 			// Set production tank drive as the default
 			Robot.driveCmd = DriveTank.class;
 
-			// Dangerous camera buttons -- only enable when test controls are enabled
+			// Dangerous camera buttons -- only enable when test controls are
+			// enabled
 			if (!Robot.disableTestControls) {
 				visionTurn.whenReleased(new CameraTurn());
+				gyroTurn.whenReleased(new DriveTurnTest());
 			}
 
 			// Arm override
@@ -118,7 +106,7 @@ public class OI {
 
 			testDrive.whenReleased(new DriveTest());
 
-			testTurn.whenReleased(new DriveTurnTest());
+			testGyroTurn.whenReleased(new DriveTurnTest());
 			testStraight.whenReleased(new DriveStraightTest());
 
 			testArmInit.whenReleased(new ArmZero());
