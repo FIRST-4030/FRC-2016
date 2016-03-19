@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ArmZero extends Command {
 
 	// Not configurable because these are safety features not a runtime features
-	public static final int kMIN_TICKS = -8000;
-	public static final int kTIMEOUT = 4000;
+	public static final int kMIN_TICKS = -10000;
+	public static final int kTIMEOUT = 4500;
 
 	private long timeout;
 
