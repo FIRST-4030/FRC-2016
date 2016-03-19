@@ -23,7 +23,7 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         ARM_PID_D("Arm: D", "0.0"),
         ARM_ZERO_SPEED("Arm: Homing Speed", "-0.65"),
 
-        ARM_PRESET_DOWN("Arm Preset: Down", "-600"),
+        ARM_PRESET_DOWN("Arm Preset: Down", "-400"),
         ARM_PRESET_HOME("Arm Preset: Home", "-100"),
         ARM_PRESET_SHOOT("Arm Preset: Shoot", "2000"),
         ARM_PRESET_UP("Arm Preset: Up", "5000"),
