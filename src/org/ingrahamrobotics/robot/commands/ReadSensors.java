@@ -11,7 +11,6 @@ public class ReadSensors extends Command {
 	}
 
 	protected void initialize() {
-		Robot.sensors.calibrate();
 	}
 
 	protected void execute() {

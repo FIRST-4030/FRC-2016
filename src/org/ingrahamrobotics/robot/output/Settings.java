@@ -21,15 +21,15 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         ARM_PID_P("Arm: P", "0.008"),
         ARM_PID_I("Arm: I", "0.0015"),
         ARM_PID_D("Arm: D", "0.0"),
-        ARM_ZERO_SPEED("Arm: Homing Speed", "-0.65"),
+        ARM_ZERO_SPEED("Arm: Homing Speed", "-0.85"),
 
-        ARM_PRESET_DOWN("Arm Preset: Down", "-600"),
+        ARM_PRESET_DOWN("Arm Preset: Down", "-400"),
         ARM_PRESET_HOME("Arm Preset: Home", "-100"),
-        ARM_PRESET_SHOOT("Arm Preset: Shoot", "1250"),
-        ARM_PRESET_UP("Arm Preset: Up", "2250"),
+        ARM_PRESET_SHOOT("Arm Preset: Shoot", "2000"),
+        ARM_PRESET_UP("Arm Preset: Up", "5000"),
         
         ARM_SPEED_HEIGHT("Arm Speed: Height", "1500"),
-        ARM_SPEED_FACTOR("Arm Speed: Factor", "0.65"),
+        ARM_SPEED_FACTOR("Arm Speed: Factor", "0.75"),
 
         SHOOTER_PID_P("Shooter: P", "0.01"),
         SHOOTER_PID_I("Shooter: I", "0.01"),
@@ -44,12 +44,12 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         GYRO_PID_D("Drive: D", "0.00"),
 
         SHOOTER_SPEED("Shooter: Shoot", "150"),
-        SHOOTER_COLLECT("Shooter: Collect", "-0.7"),
+        SHOOTER_COLLECT("Shooter: Collect", "-0.4"),
         SHOOTER_WAIT("Shooter: Wait", "1000"),
         
         KICKER_SPEED("Kicker: Speed", "0.75"),
         KICKER_TIME("Kicker: Kick Time", "300"),
-        KICKER_SHOOT("Kicker: Shoot Time", "750"),
+        KICKER_SHOOT("Kicker: Shoot Time", "1250"),
         
         VISION_INTERVAL("Vision: Interval", "750"),
         VISION_EXPOSURE("Vision: Exposure", "0"),
@@ -61,6 +61,7 @@ public class Settings implements ClientUpdateListener, TableUpdateListener {
         VISION_S_HIGH("Vision: S High","255"),
         VISION_L_LOW("Vision: L Low", "50"),
         VISION_L_HIGH("Vision: L High", "255"),
+        VISION_AZIMUTH_OFFSET("Vision: H Offset", "0.0"),
         
 		// Comment to let ; be on new line
 		;

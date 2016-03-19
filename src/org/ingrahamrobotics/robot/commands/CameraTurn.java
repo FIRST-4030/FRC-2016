@@ -3,7 +3,9 @@ package org.ingrahamrobotics.robot.commands;
 import org.ingrahamrobotics.robot.Robot;
 import org.ingrahamrobotics.robot.output.Output;
 import org.ingrahamrobotics.robot.output.OutputLevel;
+import org.ingrahamrobotics.robot.output.Settings;
 import org.ingrahamrobotics.robot.vision.Data;
+import org.ingrahamrobotics.robot.vision.Log;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -13,10 +15,13 @@ public class CameraTurn extends Command {
 
 	private Data data;
 	private boolean done;
-	private DriveToEncoder drive;
+	private DriveToGyro drive;
 	private DriveWait wait;
+	private Log log;
 
 	public CameraTurn() {
+		log = new Log();
+		
 		// We use the drive system, but indirectly
 		// requires(Robot.drive);
 	}
@@ -34,16 +39,17 @@ public class CameraTurn extends Command {
 		}
 
 		// Start the turn and schedule something to wait on it
-		Output.output(OutputLevel.VISION, getName() + "-azimuth", data.azimuth);
-		drive = new DriveToEncoder((int) data.azimuth);
+		double azimuth = data.azimuth + Settings.Key.VISION_AZIMUTH_OFFSET.getDouble();
+		Output.output(OutputLevel.VISION, getName() + "-azimuth", azimuth);
+		drive = new DriveToGyro(azimuth);
 		drive.start();
 		wait = new DriveWait();
 		wait.start();
 	}
 
 	protected void execute() {
-		// We're done when the turn is done
-		if (!wait.isRunning()) {
+		Output.output(OutputLevel.VISION, getName() + "-wait", System.currentTimeMillis());
+		if (wait.isFinished()) {
 			done = true;
 		}
 	}
@@ -54,6 +60,9 @@ public class CameraTurn extends Command {
 	}
 
 	protected void end() {
+		Command cmd = new DriveStop();
+		cmd.start();
+		log.save("Complete", System.currentTimeMillis() + "-turn.txt");
 		Output.output(OutputLevel.VISION, getName() + "-end", System.currentTimeMillis());
 	}
 

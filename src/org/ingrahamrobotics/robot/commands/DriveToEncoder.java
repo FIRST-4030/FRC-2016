@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveToEncoder extends Command {
 
-	public static final int kTicksPerRotation = 21600;
+	public static final int kTicksPerRotation = 25000;
 	public static final int kTicksPerDegree = kTicksPerRotation / 360;
 	public static final int kSTOP = 0;
 

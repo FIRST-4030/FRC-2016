@@ -1,4 +1,3 @@
-
 package org.ingrahamrobotics.robot;
 
 import org.ingrahamrobotics.robot.subsystems.*;
@@ -41,8 +40,9 @@ public class Robot extends IterativeRobot {
 
 	// Global state
 	public static Class<? extends Command> driveCmd = null;
-	public static final boolean disableShooterPID = true; // True until the encoder works
-	public static final boolean disableReadPower = !production;
+	public static final boolean disableShooterPID = true; // True until the
+															// encoder works
+	public static final boolean disableReadPower = true;
 	public static final boolean disableProdControls = !production;
 	public static final boolean disableTestControls = production;
 	public static final boolean disableCamTarget = false;
@@ -80,6 +80,12 @@ public class Robot extends IterativeRobot {
 
 	// Code to run at init of each DS-controlled mode
 	public void modeInit() {
+
+		// Calibrate sensors, if needed
+		if (!sensors.calibrated()) {
+			sensors.calibrate();
+		}
+		sensors.reset();
 
 		// Init the arm, if needed
 		if (!arm.ready()) {
@@ -130,6 +136,7 @@ public class Robot extends IterativeRobot {
 		} catch (InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
+		System.err.println("\n\n\nTeleop Ready\n\n\n");
 	}
 
 	public void teleopPeriodic() {

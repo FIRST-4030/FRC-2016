@@ -19,6 +19,7 @@ public class DriveWait extends Command {
 	private DriveHalf[] drives;
 	private DriveWaitHalf[] waits;
 	private int count;
+	private boolean done;
 
 	public class DriveWaitHalf extends WaitPID {
 		public DriveWaitHalf(PIDSubsystem pid, String name, double tolerance) {
@@ -26,13 +27,18 @@ public class DriveWait extends Command {
 		}
 	}
 
+	public DriveWait() {
+		done = false;
+	}
+
 	// Create a WaitPID command for each drive component
 	@Override
 	protected void initialize() {
+		done = false;
 		count = 0;
+
 		drives = Robot.drive.getDrives();
 		waits = new DriveWaitHalf[drives.length];
-
 		int i = 0;
 		for (DriveHalf drive : drives) {
 			double tolerance;
@@ -67,7 +73,9 @@ public class DriveWait extends Command {
 	// Wait for all drive components to finish
 	@Override
 	protected boolean isFinished() {
-		boolean done = (count > kMIN_SUCCESS);
+		if (!done && count > kMIN_SUCCESS) {
+			done = true;
+		}
 		Output.output(OutputLevel.DRIVE_PID, getName() + "-ready", done);
 		return done;	
 	}
