@@ -107,7 +107,9 @@ public class CameraTarget extends Subsystem {
 	private void analyze(Path src) {
 		Data data = new Data();
 		data.start = System.currentTimeMillis();
-		Output.output(OutputLevel.VISION, getName() + "-tsStart", data.start);
+		if (kDEBUG) {
+			Output.output(OutputLevel.VISION, getName() + "-tsStart", data.start);
+		}
 
 		// Capture or load
 		Image image = null;
@@ -143,12 +145,20 @@ public class CameraTarget extends Subsystem {
 			Output.output(OutputLevel.VISION, getName() + "-blobs", blobs);
 		}
 
+		// Sanity check
+		if (blobs < 1) {
+			System.err.println("No blobs found");
+			log.save(image, data.start + "-empty.jpg");
+			image.free();
+			binary.free();
+			return;
+		}
+
 		// Find the biggest blob
 		int particleIndex = -1;
 		data.area = 0;
 		for (int i = 0; i < blobs; i++) {
-			double area = NIVision.imaqMeasureParticle(binary, i, 0,
-					MeasurementType.MT_AREA);
+			double area = NIVision.imaqMeasureParticle(binary, i, 0, MeasurementType.MT_AREA);
 			if (area > data.area) {
 				data.area = area;
 				particleIndex = i;
@@ -158,55 +168,40 @@ public class CameraTarget extends Subsystem {
 			Output.output(OutputLevel.VISION, getName() + "-area", data.area);
 		}
 
-		// Sanity check
-		if (particleIndex < 0) {
-			System.err.println("No particles found");
-			log.save(image, data.start + "-empty.jpg");
-			image.free();
-			binary.free();
-			return;
-		}
-
 		// Position, size, and orientation extraction
-		data.x = NIVision.imaqMeasureParticle(binary, particleIndex, 0,
-				MeasurementType.MT_CENTER_OF_MASS_X);
-		data.y = NIVision.imaqMeasureParticle(binary, particleIndex, 0,
-				MeasurementType.MT_CENTER_OF_MASS_Y);
-		data.height = NIVision.imaqMeasureParticle(binary, particleIndex, 0,
-				MeasurementType.MT_BOUNDING_RECT_HEIGHT);
-		data.width = NIVision.imaqMeasureParticle(binary, particleIndex, 0,
-				MeasurementType.MT_BOUNDING_RECT_WIDTH);
-		data.rotation = NIVision.imaqMeasureParticle(binary, particleIndex, 0,
-				MeasurementType.MT_ORIENTATION);
+		data.x = NIVision.imaqMeasureParticle(binary, particleIndex, 0, MeasurementType.MT_CENTER_OF_MASS_X);
+		data.y = NIVision.imaqMeasureParticle(binary, particleIndex, 0, MeasurementType.MT_CENTER_OF_MASS_Y);
+		data.height = NIVision.imaqMeasureParticle(binary, particleIndex, 0, MeasurementType.MT_BOUNDING_RECT_HEIGHT);
+		data.width = NIVision.imaqMeasureParticle(binary, particleIndex, 0, MeasurementType.MT_BOUNDING_RECT_WIDTH);
+		data.rotation = NIVision.imaqMeasureParticle(binary, particleIndex, 0, MeasurementType.MT_ORIENTATION);
 		data.rotation = kROTATION_OFFSET - data.rotation;
 		if (kDEBUG) {
 			Output.output(OutputLevel.VISION, getName() + "-x", data.x);
 			Output.output(OutputLevel.VISION, getName() + "-y", data.y);
-			Output.output(OutputLevel.VISION, getName() + "-height",
-					data.rotation);
-			Output.output(OutputLevel.VISION, getName() + "-width",
-					data.rotation);
-			Output.output(OutputLevel.VISION, getName() + "-rotation",
-					data.rotation);
+			Output.output(OutputLevel.VISION, getName() + "-height", data.rotation);
+			Output.output(OutputLevel.VISION, getName() + "-width", data.rotation);
+			Output.output(OutputLevel.VISION, getName() + "-rotation", data.rotation);
 		}
 
 		// Target plane angle calculation (NOT DONE)
 		data.plane = data.rotation * kSOME_TRIG;
-		Output.output(OutputLevel.VISION, getName() + "-angle", data.plane);
+		if (kDEBUG) {
+			Output.output(OutputLevel.VISION, getName() + "-angle", data.plane);
+		}
 
 		// Distance calculation (NOT DONE)
 		data.distance = data.height * kSOME_TRIG;
-		Output.output(OutputLevel.VISION, getName() + "-distance",
-				data.distance);
+		if (kDEBUG) {
+			Output.output(OutputLevel.VISION, getName() + "-distance", data.distance);
+		}
 
-		// Azimuth calculation (NOT DONE)
-		data.azimuth = ((data.x - (Camera.width / 2)) / Camera.width) * (Camera.fovH * 2.0);
+		// Azimuth calculation
+		data.azimuth = ((data.x - (Camera.width / 2)) / (Camera.width / 2)) * Camera.fovH;
 		Output.output(OutputLevel.VISION, getName() + "-azimuth", data.azimuth);
 
-		// Altitude calculation (NOT DONE)
-		data.altitude = ((data.y - (Camera.height / 2)) / Camera.height) * (Camera.fovV * 2.0);
-		Output.output(OutputLevel.VISION, getName() + "-altitude",
-				data.altitude);
+		// Altitude calculation
+		data.altitude = ((data.y - (Camera.height / 2)) / (Camera.height / 2)) * Camera.fovV;
+		Output.output(OutputLevel.VISION, getName() + "-altitude", data.altitude);
 
 		// Confidence
 		if (data.area > kNOMINAL_BLOB_AREA) {
@@ -214,8 +209,7 @@ public class CameraTarget extends Subsystem {
 		} else if (data.area > kMIN_BLOB_AREA) {
 			data.confidence = Confidence.kMINIMAL;
 		}
-		Output.output(OutputLevel.VISION, getName() + "-confidence",
-				data.confidence);
+		Output.output(OutputLevel.VISION, getName() + "-confidence", data.confidence);
 
 		// Finalize
 		data.end = System.currentTimeMillis();
@@ -234,7 +228,8 @@ public class CameraTarget extends Subsystem {
 
 		// Publish
 		this.data = data;
-		Output.output(OutputLevel.VISION, getName() + "-duration", data.end
-				- data.start);
+		if (kDEBUG) {
+			Output.output(OutputLevel.VISION, getName() + "-duration", data.end - data.start);
+		}
 	}
 }
