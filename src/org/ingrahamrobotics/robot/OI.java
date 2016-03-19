@@ -83,6 +83,11 @@ public class OI {
 			// Set production tank drive as the default
 			Robot.driveCmd = DriveTank.class;
 
+			// Dangerous camera buttons -- only enable when test controls are enabled
+			if (!Robot.disableTestControls) {
+				visionTurn.whenReleased(new CameraTurn());
+			}
+
 			// Arm override
 			bTestArmInit.whenReleased(new ArmZero());
 			driverArmDisable.whileHeld(new ArmDisable());
@@ -115,7 +120,6 @@ public class OI {
 
 			testTurn.whenReleased(new DriveTurnTest());
 			testVisionTurn.whenReleased(new CameraTurn());
-			visionTurn.whenReleased(new CameraTurn());
 
 			testArmInit.whenReleased(new ArmZero());
 			testArmUp.whenReleased(new ArmPreset_Up());
