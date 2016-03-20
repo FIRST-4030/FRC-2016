@@ -7,6 +7,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ShooterShoot extends CommandGroup {
 
 	public ShooterShoot() {
+				
+		// Lock
+		addSequential(new ShooterLock());
 
 		// Spin up the shooter
 		addParallel(new ShooterPreset(Settings.Key.SHOOTER_SPEED));
@@ -22,5 +25,8 @@ public class ShooterShoot extends CommandGroup {
 
 		// Drop the arm
 		addSequential(new ArmPreset_Home());
+
+		// Unlock
+		addSequential(new ShooterUnlock());
 	}
 }

@@ -29,9 +29,6 @@ public class Robot extends IterativeRobot {
 	public static ShooterRun shooterRun;
 	public static CameraAnalyze camAnalyze;
 
-	// Autonomous support
-	private Command autoCmd;
-
 	// User input
 	public static OI oi;
 
@@ -39,9 +36,9 @@ public class Robot extends IterativeRobot {
 	private static final boolean production = true;
 
 	// Global state
+	public static boolean shooterLock = false;
 	public static Class<? extends Command> driveCmd = null;
-	public static final boolean disableShooterPID = true; // True until the
-															// encoder works
+	public static final boolean disableShooterPID = true; // Encoder busted
 	public static final boolean disableReadPower = true;
 	public static final boolean disableProdControls = !production;
 	public static final boolean disableTestControls = production;
@@ -61,9 +58,6 @@ public class Robot extends IterativeRobot {
 		armRun = new ArmRun();
 		shooterRun = new ShooterRun();
 		camAnalyze = null;
-
-		// Autonomous command
-		autoCmd = new Auto();
 
 		// The driver camera is not controllable and does not have a command
 		// Start it at init unless it would interfere with the target camera
@@ -114,8 +108,14 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		modeInit();
 
-		// Start the auto program, if available
-		if (autoCmd != null) {
+		// Start the auto program if enabled
+		if (Settings.Key.AUTO_ENABLE.getBoolean()) {
+			Command autoCmd;
+			if (Settings.Key.AUTO_LOW.getBoolean()) {
+				autoCmd = new AutoLow();
+			} else {
+				autoCmd = new Auto();
+			}
 			autoCmd.start();
 		}
 	}
