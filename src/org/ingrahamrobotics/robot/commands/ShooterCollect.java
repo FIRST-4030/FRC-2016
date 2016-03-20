@@ -6,20 +6,15 @@ import org.ingrahamrobotics.robot.output.Settings;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ShooterCollect extends Command {
+	
+	public ShooterCollect() {
+		requires(Robot.collector);
+		requires(Robot.shooter);		
+	}
 
 	protected void initialize() {
-		synchronized (Robot.shooter) {
-			if (Robot.shooterLock) {
-				this.cancel();
-				return;
-			}
-		}
-
-		requires(Robot.collector);
-		requires(Robot.shooter);
 		Command cmd = new ArmPreset_Down();
 		cmd.start();
-
 	}
 
 	protected void execute() {

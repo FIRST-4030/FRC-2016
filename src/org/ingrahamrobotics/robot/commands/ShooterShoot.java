@@ -27,6 +27,6 @@ public class ShooterShoot extends CommandGroup {
 		addSequential(new ShooterUnlock());
 
 		// Drop the arm
-		addSequential(new ArmPreset_Home());
+		//addSequential(new ArmPreset_Home());
 	}
 }

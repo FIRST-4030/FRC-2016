@@ -11,12 +11,6 @@ public class ArmPreset extends Command {
 	private int target;
 
 	private void init(Key key, int target) {
-		synchronized(Robot.shooter) {
-			if (Robot.shooterLock) {
-				return;
-			}
-		}
-
 		// This code uses Robot.arm to modify the arm setpoint
 		// The Robot.armRun command should *also* be running
 		requires(Robot.armPreset);
