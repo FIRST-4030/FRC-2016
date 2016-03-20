@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class Auto extends CommandGroup {
 	
-	private static final int ticks = 18002;
+	private static final int ticks = 22500;
 
 	public Auto() {
 		
