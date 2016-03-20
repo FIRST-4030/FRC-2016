@@ -23,10 +23,10 @@ public class ShooterShoot extends CommandGroup {
 		// Spin down
 		addSequential(new ShooterStop());
 
-		// Drop the arm
-		addSequential(new ArmPreset_Home());
-
 		// Unlock
 		addSequential(new ShooterUnlock());
+
+		// Drop the arm
+		addSequential(new ArmPreset_Home());
 	}
 }

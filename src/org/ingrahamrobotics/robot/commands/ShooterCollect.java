@@ -7,11 +7,6 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ShooterCollect extends Command {
 
-	public ShooterCollect() {
-		requires(Robot.collector);
-		requires(Robot.shooter);
-	}
-
 	protected void initialize() {
 		synchronized (Robot.shooter) {
 			if (Robot.shooterLock) {
@@ -20,6 +15,8 @@ public class ShooterCollect extends Command {
 			}
 		}
 
+		requires(Robot.collector);
+		requires(Robot.shooter);
 		Command cmd = new ArmPreset_Down();
 		cmd.start();
 
